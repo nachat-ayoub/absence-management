@@ -7,14 +7,16 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Start Laravel server
+
+<br />
+
+## Start Laravel server :
 > **`  npm start  `**
 
 > **`  yarn start  `**
 
+`*This will start the app on port 3000.`
 
-
-<br />
 <br />
 
 ## About Laravel
