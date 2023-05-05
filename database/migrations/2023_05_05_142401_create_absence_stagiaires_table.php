@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('formateur', function (Blueprint $table) {
+        Schema::create('absence_stagiaires', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('username');
-            $table->string('mot_de_passe');
-            $table->foreignId('id_admin')->constrained('admin')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('absence_id');
+            $table->foreign('absence_id')->references('id')->on('absences');
+            $table->unsignedBigInteger('stagiaire_id');
+            $table->foreign('stagiaire_id')->references('id')->on('stagiaires');
+            $table->text('preuve');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formateur');
+        Schema::dropIfExists('absence_stagiaires');
     }
 };

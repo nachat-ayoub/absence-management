@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('formateurs', function (Blueprint $table) {
             $table->id();
-            $table->String('nom');
-            $table->String('prenom');
+            $table->string('nom');
+            $table->string('prenom');
             $table->string('username');
             $table->string('mot_de_passe');
+            $table->foreignId('admin_id')->constrained('admins')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('formateurs');
     }
 };

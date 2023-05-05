@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('absences', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->foreignId('classe_id')->constrained('classes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('formateur_id')->constrained('formateur')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('branche');
+            $table->integer('num_group');
+            $table->string('annee_scolaire');
+            $table->foreignId('admin_id')->constrained('admins')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('absences');
+        Schema::dropIfExists('classes');
     }
 };
