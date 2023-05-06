@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,3 +40,8 @@ Route::get('/absence_stg', function () {
     $prv = App\Models\Absence_stagiaire::find(2);
     return "<p>". $prv->stagiaire->nom . "   ". $prv->absence->date ."</p>";
 });
+
+
+Route::get('formateurs', [AdminController::class , 'indexFormateur']);
+
+
