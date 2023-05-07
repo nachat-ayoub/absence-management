@@ -42,6 +42,24 @@ Route::get('/absence_stg', function () {
 });
 
 
-Route::get('formateurs', [AdminController::class , 'indexFormateur']);
+// Route::get('formateurs', [AdminController::class , 'indexFormateur']);
+// Route::get('formateurs/store', [AdminController::class , 'storeFormateur']);
+// Route::get('formateurs/update', [AdminController::class , 'updateFormateur']);
+// Route::get('formateurs/delete', [AdminController::class , 'destroyFormateur']);
 
 
+
+// Route::get('stagiaires', [AdminController::class , 'indexStagiaire']);
+// Route::get('stagiaires/store', [AdminController::class , 'storeStagiaire']);
+// Route::get('stagiaires/update', [AdminController::class , 'updateStagiaire']);
+// Route::get('stagiaires/delete', [AdminController::class , 'destroyStagiaire']);
+
+
+
+
+
+
+// Route::get('classes', [AdminController::class , 'indexClasses']);
+// Route::get('classes/store', [AdminController::class , 'storeClasse']);
+// Route::get('classes/update', [AdminController::class , 'updateClasse']);
+Route::get('stagiaires/delete', [AdminController::class , 'destroyClasse']);
