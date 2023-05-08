@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FormateurController;
 use Illuminate\Support\Facades\Route;
 
@@ -87,4 +88,5 @@ Route::get('formateurs', [AdminController::class, 'indexFormateur']);
 // Route::get('classes', [AdminController::class , 'indexClasses']);
 // Route::get('classes/store', [AdminController::class , 'storeClasse']);
 // Route::get('classes/update', [AdminController::class , 'updateClasse']);
-Route::get('stagiaires/delete', [AdminController::class , 'destroyClasse']);
+// Route::get('stagiaires/delete', [AdminController::class , 'destroyClasse']);
+Route::get('claasseStagiaires', [ AdminController::class , 'allStagiaires' ] );

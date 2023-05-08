@@ -178,7 +178,7 @@ public function indexStagiaire()
 
 
 
-        // ! create stagiaire
+    // ! create stagiaire
     public function createStagiaire()
     {
         //
@@ -297,6 +297,10 @@ public function indexStagiaire()
         // return 'good';
         return redirect('stagiaires')->with('success','Stagiaire deleted successfully!');
     }
+
+
+
+
 
 
 // todo ========================================== crud stagiaire ==========================================
@@ -439,6 +443,18 @@ public function indexStagiaire()
         return redirect('classes')->with('success','classe deleted successfully!');
     }
 
+
+
+
+
+
+    // ! select * from stagiaire where classe_id = 1
+    public function allStagiaires(Classe $classe)
+    {
+        $classe = Classe::find(6);
+        $stagiaire = $classe->stagiaires;
+        return $stagiaire;
+    }
 
 
 // todo ========================================== crud classe ============================================
