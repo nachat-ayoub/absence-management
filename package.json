@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "start": "npm run dev & php artisan serve --port 3000",
+        "serve": "npm run dev & php artisan serve",
         "build": "vite build"
     },
     "devDependencies": {
