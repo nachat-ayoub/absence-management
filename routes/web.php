@@ -84,9 +84,10 @@ Route::get('formateurs', [AdminController::class, 'indexFormateur']);
 // Route::get('stagiaires/store', [AdminController::class , 'storeStagiaire']);
 // Route::get('stagiaires/update', [AdminController::class , 'updateStagiaire']);
 // Route::delete('stagiaires/delete', [AdminController::class , 'destroyStagiaire']);
+// Route::get('stagiaires/branchStagiaire', [AdminController::class , 'searchStagiaire']);
 
 // Route::get('classes', [AdminController::class , 'indexClasses']);
 // Route::get('classes/store', [AdminController::class , 'storeClasse']);
 // Route::get('classes/update', [AdminController::class , 'updateClasse']);
 // Route::get('stagiaires/delete', [AdminController::class , 'destroyClasse']);
-Route::get('claasseStagiaires', [ AdminController::class , 'allStagiaires' ] );
+// Route::get('claasseStagiaires', [ AdminController::class , 'allStagiaires' ] );

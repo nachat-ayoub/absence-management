@@ -60,6 +60,9 @@ class AdminController extends Controller
         // $formateur->mot_de_passe=$request->mot_de_passe;
         // $formateur->admin_id= 1;
         // $formateur->save();
+        // ? Hash le met de passe
+        $formateur['mot_de_passe'] = Hash::make($request->mot_de_passe);
+
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
         return redirect('formateurs')->with('success','formateur created successfully!');
@@ -127,7 +130,7 @@ class AdminController extends Controller
         $formateur->nom=$request->nom;
         $formateur->prenom=$request->prenom;
         $formateur->username=$request->username;
-        $formateur->mot_de_passe=$request->mot_de_passe;
+        $formateur->mot_de_passe=Hash::make($request->mot_de_passe);
         $formateur->admin_id= 1;
         $formateur->save();
         return redirect('formateurs')->with('success','formateur updated successfully!');
@@ -301,6 +304,46 @@ public function indexStagiaire()
 
 
 
+
+
+     // ! search stagiaires de la branche 'nameBranch'
+        public function searchStagiaire(Request $request)
+        {
+
+            // * test good
+            // $stagiaires = Classe::join('stagiaires', 'stagiaires.classe_id', '=', 'classes.id')
+            // ->select('stagiaires.nom', 'classes.branche')
+            // ->where('classes.branche', '=', 'Est.')
+            // ->get();
+            // return $stagiaires;
+
+
+            // ! use idee
+
+            $element = $request->input('element');
+
+            $stagiaires = Classe::join('stagiaires', 'stagiaires.classe_id', '=', 'classes.id')
+                            ->select('stagiaires.nom', 'classes.branche')
+                            ->where('classes.branche', '=', $element)
+                            ->get();
+            return view('stagiaires.search_branche', ['stagiaires' => $stagiaires]);
+
+
+
+
+            // view
+            // <form action="{{ route('search_stagiaires_branche') }}" method="GET">
+            //     <input type="text" name="element" placeholder="Search for element...">
+            //     <button type="submit">Search</button>
+            // </form>
+
+
+
+            // route
+            // Route::get('/search_stagiaires_branche', [AdminController::class ,'search'])->name('search')
+
+
+        }
 
 
 // todo ========================================== crud stagiaire ==========================================
