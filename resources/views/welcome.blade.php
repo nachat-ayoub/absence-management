@@ -10,7 +10,6 @@
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -20,7 +19,7 @@
 </head>
 
 <body class="bg-slate-900 text-white">
-    <div class="w-full min-h-screen flex flex-col gap-12 justify-center items-center">
+    <div class="flex min-h-screen w-full flex-col items-center justify-center gap-12">
         <span>
             <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="h-16 w-auto text-gray-700 sm:h-20">
@@ -31,7 +30,24 @@
             </svg>
         </span>
 
-        <h1 class="text-3xl font-bold hover:text-[#ef3b2d] transition-colors duration-150">Gestion D'absences</h1>
+        <h1 class="text-3xl font-bold transition-colors duration-150 hover:text-[#ef3b2d]">Gestion D'absences</h1>
+
+        @auth
+            <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
+                <a href="/dashboard" class="capitalize hover:text-gray-200 hover:underline">Dashboard</a>
+            </div>
+        @else
+            <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
+                <a href="/login" class="capitalize hover:text-gray-200 hover:underline">Login</a>
+                <div class="flex items-center justify-center gap-x-2">
+                    <div class="h-0.5 w-16 bg-gray-600"></div>
+                    <span class="">Or</span>
+                    <div class="h-0.5 w-16 bg-gray-600"></div>
+                </div>
+                <a href="/register" class="capitalize hover:text-gray-200 hover:underline">Register</a>
+            </div>
+        @endauth
+
     </div>
 </body>
 
