@@ -10,16 +10,19 @@ use App\Models\Absence_stagiaire;
 class Stagiaire extends Model
 {
     use HasFactory;
+    protected $fillable = ['nom', 'prenom', 'classe_id'];
     /*
-        relationship  between  table of stagiaires and classes
+    relationship  between  table of stagiaires and classes
     */
-    public function  Classe() {
+    public function Classe()
+    {
         return $this->belongsTo(Classe::class);
     }
     /*
-        relationship  between  table of stagiaires and absence_stagiaires
+    relationship  between  table of stagiaires and absence_stagiaires
     */
-    public function absencesStagiaires() {
+    public function absencesStagiaires()
+    {
         return $this->hasMany(Absence_stagiaire::class);
     }
 }

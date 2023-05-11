@@ -10,6 +10,7 @@ use App\Models\Classe;
 class Admin extends Model
 {
     use HasFactory;
+    protected $fillable = ['nom' , 'prenom' , 'email' , 'password'];
     /*
         relationship  between  table of  admins and formateurs
     */

@@ -11,22 +11,27 @@ use App\Models\Absence;
 class Classe extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['branche', 'num_group', 'annee_scolaire', 'admin_id'];
     /*
-        relationship  between  table of classes and admins
+    relationship  between  table of classes and admins
     */
-    public function  admin() {
+    public function admin()
+    {
         return $this->belongsTo(Admin::class);
     }
     /*
-        relationship  between  table of classes and stagiaires
+    relationship  between  table of classes and stagiaires
     */
-    public function stagiaires() {
+    public function stagiaires()
+    {
         return $this->hasMany(Stagiaire::class);
     }
     /*
-        relationship  between  table of classes and absences
+    relationship  between  table of classes and absences
     */
-    public function absences() {
-        return  $this->hasMany(Absence::class);
+    public function absences()
+    {
+        return $this->hasMany(Absence::class);
     }
 }

@@ -10,16 +10,19 @@ use App\Models\Absence;
 class Formateur extends Model
 {
     use HasFactory;
+    protected $fillable = ['nom', 'prenom', 'email', 'password', 'admin_id'];
     /*
-        relationship  between  table of formateurs and admins
+    relationship  between  table of formateurs and admins
     */
-    public function admin(){
+    public function admin()
+    {
         return $this->belongsTo(Admin::class);
     }
     /*
-        relationship  between  table of  formateurs and absences
+    relationship  between  table of  formateurs and absences
     */
-    public function absences() {
-        return  $this->hasMany(Absence::class);
+    public function absences()
+    {
+        return $this->hasMany(Absence::class);
     }
 }

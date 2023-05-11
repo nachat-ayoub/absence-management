@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -17,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->String('nom');
             $table->String('prenom');
-            $table->string('username');
-            $table->string('mot_de_passe');
+            $table->string('email');
+            $table->string('password');
             $table->timestamps();
         });
     }
