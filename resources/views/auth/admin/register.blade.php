@@ -2,6 +2,8 @@
     <form method="POST" action="{{ route('admin.register') }}">
         @csrf
 
+        <h3 class="text-primary mb-4 text-center text-xl font-bold tracking-wider">Admin</h3>
+
         <div class="grid grid-cols-2 gap-x-6">
             <!-- Nom -->
             <div class="">

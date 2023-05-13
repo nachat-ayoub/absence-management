@@ -32,20 +32,37 @@
 
         <h1 class="text-3xl font-bold transition-colors duration-150 hover:text-[#ef3b2d]">Gestion D'absences</h1>
 
-        @auth
+        @auth('admin')
             <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
-                <a href="/dashboard" class="capitalize hover:text-gray-200 hover:underline">Dashboard</a>
+                <a href="/admin/dashboard" class="capitalize hover:text-gray-200 hover:underline">admin Dashboard</a>
             </div>
         @else
-            <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
-                <a href="/login" class="capitalize hover:text-gray-200 hover:underline">Login</a>
-                <div class="flex items-center justify-center gap-x-2">
-                    <div class="h-0.5 w-16 bg-gray-600"></div>
-                    <span class="">Or</span>
-                    <div class="h-0.5 w-16 bg-gray-600"></div>
+            @auth
+                <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
+                    <a href="/dashboard" class="capitalize hover:text-gray-200 hover:underline">Dashboard</a>
                 </div>
-                <a href="/register" class="capitalize hover:text-gray-200 hover:underline">Register</a>
-            </div>
+            @else
+                <div class="flex w-full flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
+                    <a href="/login" class="capitalize hover:text-gray-200 hover:underline">Login</a>
+                    <div class="flex items-center justify-center gap-x-2">
+                        <div class="h-0.5 w-16 bg-gray-600"></div>
+                        <span class="">Or</span>
+                        <div class="h-0.5 w-16 bg-gray-600"></div>
+                    </div>
+
+                    <a href="/register" class="capitalize hover:text-gray-200 hover:underline">Register</a>
+
+                    <div class="bg-primary/60 my-4 h-0.5 w-1/2"></div>
+
+                    <a href="/admin/login" class="capitalize hover:text-gray-200 hover:underline">admin Login</a>
+                    <div class="flex items-center justify-center gap-x-2">
+                        <div class="h-0.5 w-16 bg-gray-600"></div>
+                        <span class="">Or</span>
+                        <div class="h-0.5 w-16 bg-gray-600"></div>
+                    </div>
+                    <a href="/admin/register" class="capitalize hover:text-gray-200 hover:underline">admin Register</a>
+                </div>
+            @endauth
         @endauth
 
     </div>

@@ -24,7 +24,8 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
-                            <div>{{ Auth::guard('admin')->user()->nom . ' ' . Auth::guard('admin')->user()->prenom }}</div>
+                            <div>{{ Auth::guard('admin')->user()->nom . ' ' . Auth::guard('admin')->user()->prenom }}
+                            </div>
 
                             <div class="ml-1">
                                 <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -43,10 +44,10 @@
                         </x-dropdown-link>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('admin.logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
+                            <x-dropdown-link :href="route('admin.logout')"
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
@@ -94,10 +95,10 @@
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
+                    <x-responsive-nav-link :href="route('admin.logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
