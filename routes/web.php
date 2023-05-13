@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/adminAuthRoutes.php';
+require __DIR__ . '/formateurAuthRoutes.php';
 require __DIR__ . '/auth.php';

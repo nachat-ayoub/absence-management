@@ -43,14 +43,8 @@
                 </div>
             @else
                 <div class="flex w-full flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
-                    <a href="/login" class="capitalize hover:text-gray-200 hover:underline">Login</a>
-                    <div class="flex items-center justify-center gap-x-2">
-                        <div class="h-0.5 w-16 bg-gray-600"></div>
-                        <span class="">Or</span>
-                        <div class="h-0.5 w-16 bg-gray-600"></div>
-                    </div>
+                    <a href="{{route('formateur.login')}}" class="capitalize hover:text-gray-200 hover:underline">formateur Login</a>
 
-                    <a href="/register" class="capitalize hover:text-gray-200 hover:underline">Register</a>
 
                     <div class="bg-primary/60 my-4 h-0.5 w-1/2"></div>
 
