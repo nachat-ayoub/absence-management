@@ -12,14 +12,14 @@ class AdminController extends Controller
 {
 
 
-// todo ========================================== crud formateur ==========================================
+    // todo ========================================== crud formateur ==========================================
 
-// ! afficher les formateurs
+    // ! afficher les formateurs
     public function indexFormateur()
     {
         $formateurs = Formateur::all();
         // return $formateures;
-        return view('formateurs' , compact('formateurs'));
+        return view('formateurs', compact('formateurs'));
     }
 
 
@@ -47,10 +47,10 @@ class AdminController extends Controller
 
 
         $formateur = $request->validate([
-            'nom'=>'required',
-            'prenom'=>'required',
-            'username'=>'required',
-            'mot_de_passe'=>'required',
+            'nom' => 'required',
+            'prenom' => 'required',
+            'username' => 'required',
+            'mot_de_passe' => 'required',
             // 'admin_id'=>'required',
         ]);
         // $formateur=new Formateur();
@@ -65,7 +65,7 @@ class AdminController extends Controller
 
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
-        return redirect('formateurs')->with('success','formateur created successfully!');
+        return redirect('formateurs')->with('success', 'formateur created successfully!');
     }
 
 
@@ -83,7 +83,7 @@ class AdminController extends Controller
     {
         //
 
-        return view('showFormateur' , compact('formateur'));
+        return view('showFormateur', compact('formateur'));
     }
 
 
@@ -98,7 +98,7 @@ class AdminController extends Controller
     public function editFormateur(Request $request, Formateur $formateur)
     {
         //
-        return view('editFormateur' , compact('formateur'));
+        return view('editFormateur', compact('formateur'));
     }
 
 
@@ -119,35 +119,35 @@ class AdminController extends Controller
 
 
         $request->validate([
-            'id'=>'required',
-            'nom'=>'required',
-            'prenom'=>'required',
-            'username'=>'required',
-            'mot_de_passe'=>'required',
-            'admin_id'=>'required',
+            'id' => 'required',
+            'nom' => 'required',
+            'prenom' => 'required',
+            'username' => 'required',
+            'mot_de_passe' => 'required',
+            'admin_id' => 'required',
         ]);
-        $formateur->id=$request->id;
-        $formateur->nom=$request->nom;
-        $formateur->prenom=$request->prenom;
-        $formateur->username=$request->username;
-        $formateur->mot_de_passe=Hash::make($request->mot_de_passe);
-        $formateur->admin_id= 1;
+        $formateur->id = $request->id;
+        $formateur->nom = $request->nom;
+        $formateur->prenom = $request->prenom;
+        $formateur->username = $request->username;
+        $formateur->mot_de_passe = Hash::make($request->mot_de_passe);
+        $formateur->admin_id = 1;
         $formateur->save();
-        return redirect('formateurs')->with('success','formateur updated successfully!');
+        return redirect('formateurs')->with('success', 'formateur updated successfully!');
     }
 
 
-// ! delete formateur
+    // ! delete formateur
     public function destroyFormateur(Formateur $formateur)
     {
         //
         // $formateur=Formateur::find(1);
         $formateur->delete();
         // return 'good';
-        return redirect('formateurs')->with('success','formateur deleted successfully!');
+        return redirect('formateurs')->with('success', 'formateur deleted successfully!');
     }
 
-// todo ========================================== crud formateur ==========================================
+    // todo ========================================== crud formateur ==========================================
 
 
 
@@ -165,15 +165,15 @@ class AdminController extends Controller
 
 
 
-// todo ========================================== crud stagiaire ==========================================
+    // todo ========================================== crud stagiaire ==========================================
 
-// ! afficher les stagiaires
-public function indexStagiaire()
+    // ! afficher les stagiaires
+    public function indexStagiaire()
     {
         //
         $stagiaires = Stagiaire::all();
         // return $data;
-        return view('stagiaires' , compact('stagiaires'));
+        return view('stagiaires', compact('stagiaires'));
     }
 
 
@@ -207,11 +207,11 @@ public function indexStagiaire()
 
 
         $stagiaire = $request->validate([
-            'nom'=>'required',
-            'prenom'=>'required',
-            'classe_id'=>'required',
+            'nom' => 'required',
+            'prenom' => 'required',
+            'classe_id' => 'required',
         ]);
-        $stagiaire['classe_id'] = 1 ;
+        $stagiaire['classe_id'] = 1;
         Stagiaire::create($stagiaire);
 
         // $stagiaire = new Stagiaire();
@@ -220,7 +220,7 @@ public function indexStagiaire()
         // $stagiaire->Username = $request->username;
         // $stagiaire->filiere = $request->filiere;
         // $stagiaire->save();
-        return redirect('stagiaires')->with('success','Stagiaire created successfully!');
+        return redirect('stagiaires')->with('success', 'Stagiaire created successfully!');
     }
 
 
@@ -232,9 +232,7 @@ public function indexStagiaire()
     // ! Show detail of stagiaire
     public function showStagiaire(Stagiaire $stagiaire)
     {
-        //
-        // return $stagiaire;
-        return view('showStagiaire' , compact('stagiaire'));
+        return view('showStagiaire', compact('stagiaire'));
     }
 
 
@@ -247,8 +245,7 @@ public function indexStagiaire()
     // ! Show the form for editing the specified resource.
     public function editStagiaire(Stagiaire $stagiaire)
     {
-        //
-        return view('editStagiaire' , compact('stagiaire'));
+        return view('editStagiaire', compact('stagiaire'));
     }
 
 
@@ -261,29 +258,21 @@ public function indexStagiaire()
     // ! save update
     public function updateStagiaire(Request $request, Stagiaire $stagiaire)
     {
-        //
 
-        // $stagiaire=Stagiaire::find(62);
-        // $stagiaire->id=62;
-        // $stagiaire->nom='ZAARAOUI';
-        // $stagiaire->prenom="Mustapha";
-        // $stagiaire->classe_id=1;
-        // $stagiaire->save();
-        // return 'good';
 
 
         $request->validate([
-            'id'=>'required',
-            'nom'=>'required',
-            'prenom'=>'required',
-            'classe_id'=>'required',
+            'id' => 'required',
+            'nom' => 'required',
+            'prenom' => 'required',
+            'classe_id' => 'required',
         ]);
-        $stagiaire->id=$request->id;
-        $stagiaire->nom=$request->nom;
-        $stagiaire->prenom=$request->prenom;
-        $stagiaire->classe_id=$request->classe_id;
+        $stagiaire->id = $request->id;
+        $stagiaire->nom = $request->nom;
+        $stagiaire->prenom = $request->prenom;
+        $stagiaire->classe_id = $request->classe_id;
         $stagiaire->save();
-        return redirect('stagiaires')->with('success','Stagiaire updated successfully!');
+        return redirect('stagiaires')->with('success', 'Stagiaire updated successfully!');
     }
 
 
@@ -294,11 +283,9 @@ public function indexStagiaire()
     // ! delete stagiaire
     public function destroyStagiaire(Stagiaire $stagiaire)
     {
-        //
-        // $stagiaire=Stagiaire::find(1);
+
         $stagiaire->delete();
-        // return 'good';
-        return redirect('stagiaires')->with('success','Stagiaire deleted successfully!');
+        return redirect('stagiaires')->with('success', 'Stagiaire deleted successfully!');
     }
 
 
@@ -306,47 +293,42 @@ public function indexStagiaire()
 
 
 
-     // ! search stagiaires de la branche 'nameBranch'
-        public function searchStagiaire(Request $request)
-        {
+    // ! search stagiaires de la branche 'nameBranch'
+    public function searchStagiaire(Request $request)
+    {
 
-            // * test good
-            // $stagiaires = Classe::join('stagiaires', 'stagiaires.classe_id', '=', 'classes.id')
-            // ->select('stagiaires.nom', 'classes.branche')
-            // ->where('classes.branche', '=', 'Est.')
-            // ->get();
-            // return $stagiaires;
+        // * test good
 
 
-            // ! use idee
+        // ! use idee
 
-            $element = $request->input('element');
+        $element = $request->input('element');
 
-            $stagiaires = Classe::join('stagiaires', 'stagiaires.classe_id', '=', 'classes.id')
-                            ->select('stagiaires.nom', 'classes.branche')
-                            ->where('classes.branche', '=', $element)
-                            ->get();
-            return view('stagiaires.search_branche', ['stagiaires' => $stagiaires]);
+        $stagiaires = Classe::join('stagiaires', 'stagiaires.classe_id', '=', 'classes.id')
+            ->select('stagiaires.nom', 'classes.branche')
+            ->where('classes.branche', '=', $element)
+            ->get();
+        return view('stagiaires.search_branche', ['stagiaires' => $stagiaires]);
 
 
 
 
-            // view
-            // <form action="{{ route('search_stagiaires_branche') }}" method="GET">
-            //     <input type="text" name="element" placeholder="Search for element...">
-            //     <button type="submit">Search</button>
-            // </form>
+        // view
+        // <form action="{{ route('search_stagiaires_branche') }}" method="GET">
+        //     <input type="text" name="element" placeholder="Search for element...">
+        //     <button type="submit">Search</button>
+        // </form>
 
 
 
-            // route
-            // Route::get('/search_stagiaires_branche', [AdminController::class ,'search'])->name('search')
+        // route
+        // Route::get('/search_stagiaires_branche', [AdminController::class ,'search'])->name('search')
 
 
-        }
+    }
 
 
-// todo ========================================== crud stagiaire ==========================================
+    // todo ========================================== crud stagiaire ==========================================
 
 
 
@@ -358,15 +340,15 @@ public function indexStagiaire()
 
 
 
-// todo ========================================== crud classe ============================================
+    // todo ========================================== crud classe ============================================
 
-// ! afficher les classes
+    // ! afficher les classes
 
     public function indexClasses()
     {
-        $classes=Classe::all();
+        $classes = Classe::all();
         // return $classes;
-        return view('classes' , compact('classes'));
+        return view('classes', compact('classes'));
     }
 
 
@@ -376,7 +358,7 @@ public function indexStagiaire()
 
 
 
-// ! create classe
+    // ! create classe
     public function createClasse()
     {
         return view('createClasse');
@@ -387,7 +369,7 @@ public function indexStagiaire()
 
 
 
-// ! insert classe dans db
+    // ! insert classe dans db
     public function storeClasse(Request $request)
     {
         // $classe = new Classe();
@@ -400,14 +382,14 @@ public function indexStagiaire()
 
 
         $classe = $request->validate([
-            'branche'=>'required',
-            'num_group'=>'required',
-            'annee_scolaire'=>'required',
-            'admin_id'=>'required',
+            'branche' => 'required',
+            'num_group' => 'required',
+            'annee_scolaire' => 'required',
+            'admin_id' => 'required',
         ]);
-        $classe['admin_id']=1;
+        $classe['admin_id'] = 1;
         Classe::create($classe);
-        return redirect('classes')->with('success','Classe created successfully!');
+        return redirect('classes')->with('success', 'Classe created successfully!');
 
     }
 
@@ -419,7 +401,7 @@ public function indexStagiaire()
     public function showClasse(Classe $classe)
     {
         // return $classe;
-        return view('showClasse' , compact('classe'));
+        return view('showClasse', compact('classe'));
     }
 
 
@@ -434,7 +416,7 @@ public function indexStagiaire()
     public function editClasse(Request $request, Classe $classe)
     {
         //
-        return view('editClasse' , compact('classe'));
+        return view('editClasse', compact('classe'));
     }
 
 
@@ -447,11 +429,11 @@ public function indexStagiaire()
         //
 
         $request->validate([
-            'id'=>'required',
-            'branche'=>'required',
-            'num_group'=>'required',
-            'annee_scolaire'=>'required',
-            'admin_id'=>'required',
+            'id' => 'required',
+            'branche' => 'required',
+            'num_group' => 'required',
+            'annee_scolaire' => 'required',
+            'admin_id' => 'required',
         ]);
 
         // $classe = Classe::find(17);
@@ -463,13 +445,13 @@ public function indexStagiaire()
         // $classe->save();
 
 
-        $classe->id=$request->id;
-        $classe->branche=$request->branche;
-        $classe->num_group=$request->num_group;
-        $classe->annee_scolaire=$request->annee_scolaire;
-        $classe->admin_id= 1;
+        $classe->id = $request->id;
+        $classe->branche = $request->branche;
+        $classe->num_group = $request->num_group;
+        $classe->annee_scolaire = $request->annee_scolaire;
+        $classe->admin_id = 1;
         $classe->save();
-        return redirect('classes')->with('success','classe updated successfully!');
+        return redirect('classes')->with('success', 'classe updated successfully!');
     }
 
 
@@ -483,7 +465,7 @@ public function indexStagiaire()
         // $classe=Classe::find(13);
         $classe->delete();
         // return 'good';
-        return redirect('classes')->with('success','classe deleted successfully!');
+        return redirect('classes')->with('success', 'classe deleted successfully!');
     }
 
 
@@ -500,5 +482,5 @@ public function indexStagiaire()
     }
 
 
-// todo ========================================== crud classe ============================================
+    // todo ========================================== crud classe ============================================
 }

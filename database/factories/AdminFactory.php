@@ -20,8 +20,8 @@ class AdminFactory extends Factory
         return [
             'nom' => fake()->name(),
             'prenom' => fake()->name(),
-            'username' => fake()->unique()->username(),
-            'mot_de_passe' => fake()->password(),
+            'email' => fake()->unique()->email(),
+            'password' => fake()->password(),
         ];
     }
 }
