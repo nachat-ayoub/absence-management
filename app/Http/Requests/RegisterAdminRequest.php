@@ -1,18 +1,16 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
-class RegisterAdminRequest extends FormRequest
-{
+class RegisterAdminRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -21,13 +19,12 @@ class RegisterAdminRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'nom' => 'required|string',
-            'prenom' => 'required|string',
-            'email' => 'required|email|string',
-            'password' => 'required|string'
+            'nom' => 'required|string|min:3|max:255',
+            'prenom' => 'required|string|min:3|max:255',
+            'email' => 'required|email|string|max:255|unique:admins,email',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
 }
