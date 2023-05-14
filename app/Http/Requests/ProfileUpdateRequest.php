@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProfileUpdateRequest extends FormRequest
-{
+class ProfileUpdateRequest extends FormRequest {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,8 +16,18 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'max:255'],
-            'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'nom' => ['required', 'string', 'max:255'],
+            'prenom' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique(Admin::class)->ignore($this->user('admin')->id)],
         ];
+    }
+
+    /**
+     * Get the guard to be used during validation.
+     *
+     * @return string
+     */
+    protected function getGuard() {
+        return 'admin';
     }
 }

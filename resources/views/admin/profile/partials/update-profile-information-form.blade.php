@@ -19,26 +19,26 @@
 
         <div>
             <x-input-label for='nom' :value="__('Nom')" />
-            <x-text-input id='nom' name='nom' type="text" class="mt-1 block w-full" :value="old('nom', Auth::guard('admin')->user()->nom)"
+            <x-text-input id='nom' name='nom' type="text" class="mt-1 block w-full" :value="old('nom', auth('admin')->user()->nom)"
                 required autofocus autocomplete='nom' />
             <x-input-error class="mt-2" :messages="$errors->get('nom')" />
         </div>
         <div>
             <x-input-label for='prenom' :value="__('Prenom')" />
-            <x-text-input id='prenom' name='prenom' type="text" class="mt-1 block w-full" :value="old('prenom', Auth::guard('admin')->user()->prenom)"
+            <x-text-input id='prenom' name='prenom' type="text" class="mt-1 block w-full" :value="old('prenom', auth('admin')->user()->prenom)"
                 required autofocus autocomplete='prenom' />
             <x-input-error class="mt-2" :messages="$errors->get('prenom')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', Auth::guard('admin')->user()->email)"
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', auth('admin')->user()->email)"
                 required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if (
                 $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&
-                    !Auth::guard('admin')->user()->hasVerifiedEmail())
+                    !auth('admin')->user()->hasVerifiedEmail())
                 <div>
                     <p class="mt-2 text-sm text-gray-800 dark:text-gray-200">
                         {{ __('Your email address is unverified.') }}

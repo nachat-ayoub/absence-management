@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\admin\AuthController;
-//
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\admin\AdminProfileController;
+//
+use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -30,6 +31,13 @@ Route::prefix('admin')->middleware('guest')->name('admin.')->group(function () {
 Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    Route::prefix('/profile')->name('profile.')->group(function () {
+        Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
+        Route::get('/test', [AdminProfileController::class, 'test'])->name('test');
+        Route::patch('/', [AdminProfileController::class, 'update'])->name('update');
+        Route::delete('/', [AdminProfileController::class, 'destroy'])->name('destroy');
+    });
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
