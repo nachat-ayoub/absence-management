@@ -59,7 +59,6 @@
                             </x-dropdown>
                         </div>
 
-
                         {{-- Stagiaire --}}
                         <div class="">
                             <x-dropdown align="right" width="48">
@@ -153,9 +152,11 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
+                            @auth('admin')
+                                <x-dropdown-link :href="route('admin.profile.edit')">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+                            @endauth
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('admin.logout') }}">
