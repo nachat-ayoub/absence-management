@@ -2,14 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absence;
 use App\Models\Classe;
 use App\Models\Formateur;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
+use App\Models\Absence_stagiaire;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+
+    // ! Dashboard Admin
+    public function dashboard()
+    {
+        $nbr_absence = Absence_stagiaire::all()->count();
+
+        $nbr_absence_sans_preuve = DB::select('select COUNT(*) as nbr from absence_stagiaires where UPPER(preuve) =  "RIEN";');
+
+        $nbr_stagiaires = Stagiaire::all()->count();
+
+        $nbr_absences_par_stagiaire = ((float) $nbr_absence / (float) $nbr_stagiaires) * 100;
+        $nbr_classes = Classe::all()->count();
+
+        $nbr_absences_par_classe = DB::table('absences')->select('classe_id', DB::raw('count(*) as total'))->groupBy('classe_id')->get();
+
+        $stgClasse = DB::table('stagiaires')->select('classe_id', DB::raw('count(*) as stgDeClasse'))->groupBy('classe_id')->get(); // selection le nombre de stagiaire de chaque classe
+
+        $avg_absence_par_classe = 0.0;
+
+        foreach ($nbr_absences_par_classe as $absence) {
+            foreach ($stgClasse as $nbrStgClasse) {
+                if ($nbrStgClasse->classe_id == $absence->classe_id) {
+                    $avg_absence_par_classe += (float) ($absence->total / $nbrStgClasse->stgDeClasse);
+                }
+            }
+        }
+        $avg_absence_par_classe = ($avg_absence_par_classe / $nbr_classes) * 100;
+
+        $derniere_stagiaire_absencet = DB::table('absence_stagiaires')
+            ->select('absence_stagiaires.preuve', 'absences.date', 'stagiaires.nom', 'stagiaires.prenom', 'classes.branche', 'classes.num_group')
+            ->join('stagiaires', 'absence_stagiaires.stagiaire_id', '=', 'stagiaires.id')
+            ->join('classes', 'stagiaires.classe_id', '=', 'classes.id')
+            ->join('absences', 'classes.id', '=', 'absences.classe_id')
+            ->orderBy('absence_stagiaires.created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        $classes_en_fonction_absences = DB::table('absences')
+            ->select('classes.branche', 'classes.num_group', DB::raw('count(*) as absence_count'))
+            ->join('classes', 'absences.classe_id', '=', 'classes.id')
+            ->groupBy('num_group', 'branche')
+            ->orderBy('absence_count', 'desc')
+            ->take(5)
+            ->get();
+        return view('dashboard', [
+            'nbr_absence' => $nbr_absence,
+            'nbr_absence_sans_preuve' => $nbr_absence_sans_preuve[0]->nbr,
+            'nbr_absences_par_stagiaire' => $nbr_absences_par_stagiaire,
+            'avg_absence_par_classe' => $avg_absence_par_classe,
+            'derniere_stagiaire_absencet' => $derniere_stagiaire_absencet,
+            'classes_en_fonction_absences' => $classes_en_fonction_absences
+        ]);
+    }
 
 
     // todo ========================================== crud formateur ==========================================
@@ -39,8 +95,8 @@ class AdminController extends Controller
         // $formateur = new Formateur();
         // $formateur -> prenom = 'ABODO';
         // $formateur -> nom = 'Hatim';
-        // $formateur -> username = 'AHatim';
-        // $formateur -> mot_de_passe = Hash::make('hatim2002') ;
+        // $formateur -> email = 'AHatim';
+        // $formateur -> password = Hash::make('hatim2002') ;
         // $formateur -> admin_id = 1 ;
         // $formateur->save();
         // return'good';
@@ -49,19 +105,19 @@ class AdminController extends Controller
         $formateur = $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
-            'username' => 'required',
-            'mot_de_passe' => 'required',
+            'email' => 'required',
+            'password' => 'required',
             // 'admin_id'=>'required',
         ]);
         // $formateur=new Formateur();
         // $formateur->nom=$request->nom;
         // $formateur->prenom=$request->prenom;
-        // $formateur->username=$request->username;
-        // $formateur->mot_de_passe=$request->mot_de_passe;
+        // $formateur->email=$request->email;
+        // $formateur->password=$request->password;
         // $formateur->admin_id= 1;
         // $formateur->save();
         // ? Hash le met de passe
-        $formateur['mot_de_passe'] = Hash::make($request->mot_de_passe);
+        $formateur['password'] = Hash::make($request->password);
 
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
@@ -110,8 +166,8 @@ class AdminController extends Controller
         // $formateur->id=6;
         // $formateur->nom='NACHAT';
         // $formateur->prenom="Ayoub";
-        // $formateur->username='NAyoub';
-        // $formateur->mot_de_passe=Hash::make('nachat');
+        // $formateur->email='NAyoub';
+        // $formateur->password=Hash::make('nachat');
         // $formateur->admin_id= 1;
         // $formateur->save();
         // return 'good';
@@ -122,15 +178,15 @@ class AdminController extends Controller
             'id' => 'required',
             'nom' => 'required',
             'prenom' => 'required',
-            'username' => 'required',
-            'mot_de_passe' => 'required',
+            'email' => 'required',
+            'password' => 'required',
             'admin_id' => 'required',
         ]);
         $formateur->id = $request->id;
         $formateur->nom = $request->nom;
         $formateur->prenom = $request->prenom;
-        $formateur->username = $request->username;
-        $formateur->mot_de_passe = Hash::make($request->mot_de_passe);
+        $formateur->email = $request->email;
+        $formateur->password = Hash::make($request->password);
         $formateur->admin_id = 1;
         $formateur->save();
         return redirect('formateurs')->with('success', 'formateur updated successfully!');
@@ -217,7 +273,7 @@ class AdminController extends Controller
         // $stagiaire = new Stagiaire();
         // $stagiaire->nom = $request->nom;
         // $stagiaire->prenom = $request->prenom;
-        // $stagiaire->Username = $request->username;
+        // $stagiaire->email = $request->email;
         // $stagiaire->filiere = $request->filiere;
         // $stagiaire->save();
         return redirect('stagiaires')->with('success', 'Stagiaire created successfully!');

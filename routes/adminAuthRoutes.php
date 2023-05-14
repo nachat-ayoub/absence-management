@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AuthController;
 //
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -28,9 +29,7 @@ Route::prefix('admin')->middleware('guest')->name('admin.')->group(function () {
 
 Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
