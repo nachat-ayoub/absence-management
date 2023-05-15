@@ -59,4 +59,10 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+
+    Route::get('formateur/formateurs', [AdminController::class , 'indexFormateur'])->name('formateurs');
+
+    Route::get('formateur/create', [AdminController::class , 'createFormateur'])->name('createFormateur');
+    Route::post('formateur/store', [AdminController::class , 'storeFormateur'])->name('storeFormateur');
 });

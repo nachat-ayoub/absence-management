@@ -68,14 +68,14 @@ class AdminController extends Controller
     }
 
 
-    // todo ========================================== crud formateur ==========================================
+    // todo ========================================== crud formateur =======================================
 
     // ! afficher les formateurs
     public function indexFormateur()
     {
-        $formateurs = Formateur::all();
+        $formateurs = Formateur::paginate(5);
         // return $formateures;
-        return view('formateurs', compact('formateurs'));
+        return view('admin.formateurs.formateurs', compact('formateurs'));
     }
 
 
@@ -84,7 +84,7 @@ class AdminController extends Controller
     // ! create formateur
     public function createFormateur()
     {
-        return view('createFormateur');
+        return view('admin.formateurs.createFormateur');
     }
 
 
@@ -121,7 +121,7 @@ class AdminController extends Controller
 
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
-        return redirect('formateurs')->with('success', 'formateur created successfully!');
+        return redirect('/')->with('success', 'formateur created successfully!');
     }
 
 
@@ -203,7 +203,7 @@ class AdminController extends Controller
         return redirect('formateurs')->with('success', 'formateur deleted successfully!');
     }
 
-    // todo ========================================== crud formateur ==========================================
+    // todo ========================================== crud formateur =======================================
 
 
 
@@ -221,7 +221,7 @@ class AdminController extends Controller
 
 
 
-    // todo ========================================== crud stagiaire ==========================================
+    // todo ========================================== crud stagiaire =======================================
 
     // ! afficher les stagiaires
     public function indexStagiaire()
@@ -384,7 +384,7 @@ class AdminController extends Controller
     }
 
 
-    // todo ========================================== crud stagiaire ==========================================
+    // todo ========================================== crud stagiaire =======================================
 
 
 
@@ -396,7 +396,7 @@ class AdminController extends Controller
 
 
 
-    // todo ========================================== crud classe ============================================
+    // todo ========================================== crud classe ==========================================
 
     // ! afficher les classes
 
@@ -538,5 +538,5 @@ class AdminController extends Controller
     }
 
 
-    // todo ========================================== crud classe ============================================
+    // todo ========================================== crud classe ==========================================
 }

@@ -55,6 +55,12 @@
                                         {{ __('Creé') }}
                                     </x-dropdown-link>
 
+                                    {{-- <x-dropdown-link href="route('admin.formateurs')"> --}}
+                                    <x-dropdown-link :href="'/admin/formateur/formateurs'">
+                                        {{ __('Les Formateurs') }}
+                                    </x-dropdown-link>
+
+
                                 </x-slot>
                             </x-dropdown>
                         </div>
