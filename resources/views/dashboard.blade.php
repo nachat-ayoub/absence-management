@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
     @auth('admin')
-        
-    
+
+
     <div class="flex flex-col-reverse mt-8 md:flex-col">
         <div class="flex flex-col justify-between gap-y-3  px-2 mx-6 md:flex-row md:mx-12 md:px-12">
             <div class="font-medium p-8 mt-4 text-center shadow rounded-lg bg-slate-50 dark:bg-slate-950 dark:text-slate-50 md:py-6 md:px-8 md:text-start md:mt-0">
@@ -50,10 +50,10 @@
                             <td class="md:px-6 md:py-4 px-3 py-2 whitespace-nowrap dark:bg-gray-800 dark:text-gray-100 text-sm text-gray-500 hidden md:block">{{$stg->preuve}}</td>
                         </tr>
                         @endforeach
-                      
+
                     </tbody>
                   </table>
-                  
+
             </div>
             <div>
                 <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100 " title="Le classement des classes en fonction de l'absence">
@@ -74,7 +74,7 @@
                         @endforeach
                     </tbody>
                   </table>
-                  
+
             </div>
         </div>
     </div>

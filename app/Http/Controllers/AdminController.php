@@ -73,9 +73,9 @@ class AdminController extends Controller
     // ! afficher les formateurs
     public function indexFormateur()
     {
-        $formateurs = Formateur::paginate(5);
+        $formateurs = Formateur::paginate(7);
         // return $formateures;
-        return view('admin.formateurs.formateurs', compact('formateurs'));
+        return view('admin.formateurs.indexformateur', compact('formateurs'));
     }
 
 
@@ -121,7 +121,7 @@ class AdminController extends Controller
 
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
-        return redirect('/')->with('success', 'formateur created successfully!');
+        return redirect()->route('admin.formateurs')->with('success', 'formateur created successfully!');
     }
 
 
@@ -138,8 +138,8 @@ class AdminController extends Controller
     public function showFormateur(Request $request, Formateur $formateur)
     {
         //
-
-        return view('showFormateur', compact('formateur'));
+// dd($formateur);
+        return view('admin.formateurs.showFormateur', compact('formateur'));
     }
 
 
@@ -154,7 +154,7 @@ class AdminController extends Controller
     public function editFormateur(Request $request, Formateur $formateur)
     {
         //
-        return view('editFormateur', compact('formateur'));
+        return view('admin.formateurs.editFormateur', compact('formateur'));
     }
 
 
@@ -175,21 +175,24 @@ class AdminController extends Controller
 
 
         $request->validate([
-            'id' => 'required',
+            // 'id' => 'required',
             'nom' => 'required',
             'prenom' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'admin_id' => 'required',
+            // 'admin_id' => 'required',
         ]);
-        $formateur->id = $request->id;
+        // dd($request);
+        // $formateur->id = $request->id;
         $formateur->nom = $request->nom;
         $formateur->prenom = $request->prenom;
         $formateur->email = $request->email;
-        $formateur->password = Hash::make($request->password);
-        $formateur->admin_id = 1;
+        // $formateur->password = Hash::make($request->password);
+        // $formateur->admin_id = 1;
+        $formateur['password'] = Hash::make($request->password);
+        $formateur['admin_id'] = 1;
         $formateur->save();
-        return redirect('formateurs')->with('success', 'formateur updated successfully!');
+        return redirect()->route('admin.formateurs')->with('success', 'formateur updated successfully!');
     }
 
 
@@ -200,7 +203,7 @@ class AdminController extends Controller
         // $formateur=Formateur::find(1);
         $formateur->delete();
         // return 'good';
-        return redirect('formateurs')->with('success', 'formateur deleted successfully!');
+        return redirect()->route('admin.formateurs')->with('success', 'formateur deleted successfully!');
     }
 
     // todo ========================================== crud formateur =======================================

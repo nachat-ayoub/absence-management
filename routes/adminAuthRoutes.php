@@ -61,8 +61,13 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
         ->name('logout');
 
 
-    Route::get('formateur/formateurs', [AdminController::class , 'indexFormateur'])->name('formateurs');
 
-    Route::get('formateur/create', [AdminController::class , 'createFormateur'])->name('createFormateur');
+    Route::get('formateur/formateurs', [AdminController::class , 'indexFormateur'])->name('formateurs');
+    Route::get('formateur/show/{formateur}', [AdminController::class , 'showFormateur'])->name('showFormateur');
     Route::post('formateur/store', [AdminController::class , 'storeFormateur'])->name('storeFormateur');
+    Route::get('formateur/create', [AdminController::class , 'createFormateur'])->name('createFormateur');
+    Route::get('formateur/{formateur}/edit', [AdminController::class , 'editFormateur'])->name('editFormateur');
+    Route::put('formateur/{formateur}', [AdminController::class , 'updateFormateur'])->name('updateFormateur');
+    Route::delete('formateur/delete/{formateur}', [AdminController::class, 'destroyFormateur'])->name('destroyFormateur');
+
 });
