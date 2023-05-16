@@ -47,7 +47,7 @@ return [
         'formateur' => [
             'driver' => 'session',
             'provider' => 'formateurs',
-        ]
+        ],
     ],
 
     /*
@@ -79,7 +79,7 @@ return [
         'formateurs' => [
             'driver' => 'eloquent',
             'model' => App\Models\Formateur::class,
-        ]
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

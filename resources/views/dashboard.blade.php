@@ -4,9 +4,19 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    @auth('admin')
 
-        <div class="mt-8 flex flex-col-reverse md:flex-col">
+    <div class="py-12">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ __("You're logged in!") }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @auth('admin')
+        <div class="flex flex-col-reverse py-12 md:flex-col">
             <div class="mx-6 flex flex-col justify-between gap-y-3 px-2 md:mx-12 md:flex-row md:px-12">
                 <div
                     class="dark:bg-slate-950 mt-4 rounded-lg bg-slate-50 p-8 text-center font-medium shadow dark:text-slate-50 md:mt-0 md:py-6 md:px-8 md:text-start">
@@ -60,22 +70,28 @@
                                 <tr>
                                     <td
                                         class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
-                                        {{ $stg->nom }}</td>
+                                        {{ $stg->nom }}
+                                    </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
-                                        {{ $stg->prenom }}</td>
+                                        {{ $stg->prenom }}
+                                    </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
-                                        {{ $stg->branche }}</td>
+                                        {{ $stg->branche }}
+                                    </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
-                                        {{ $stg->num_group }}</td>
+                                        {{ $stg->num_group }}
+                                    </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
-                                        {{ $stg->date }}</td>
+                                        {{ $stg->date }}
+                                    </td>
                                     <td
                                         class="hidden whitespace-nowrap px-3 py-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100 md:block md:px-6 md:py-4">
-                                        {{ $stg->preuve }}</td>
+                                        {{ $stg->preuve }}
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -120,13 +136,4 @@
             </div>
         </div>
     @endauth
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
 </x-app-layout>

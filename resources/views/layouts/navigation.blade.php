@@ -13,7 +13,7 @@
 
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
@@ -59,7 +59,6 @@
                                     <x-dropdown-link :href="'/admin/formateur/formateurs'">
                                         {{ __('Les Formateurs') }}
                                     </x-dropdown-link>
-
 
                                 </x-slot>
                             </x-dropdown>
@@ -248,7 +247,7 @@
 
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('formateur.dashboard')" :active="request()->routeIs('formateur.dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
