@@ -62,7 +62,7 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
 
 
 
-    Route::get('formateur/formateurs', [AdminController::class, 'indexFormateur'])->name('formateurs');
+    Route::get('formateur/search', [AdminController::class, 'indexFormateur'])->name('formateurs');
     Route::get('formateur/show/{formateur}', [AdminController::class, 'showFormateur'])->name('showFormateur');
     Route::post('formateur/store', [AdminController::class, 'storeFormateur'])->name('storeFormateur');
     Route::get('formateur/create', [AdminController::class, 'createFormateur'])->name('createFormateur');

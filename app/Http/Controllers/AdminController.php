@@ -185,8 +185,9 @@ class AdminController extends Controller
     // ! afficher les stagiaires
     public function indexStagiaire()
     {
-        $stagiaires = Stagiaire::paginate(7);
-        return view('admin.stagiaire.index', compact('stagiaires'));
+        $stagiaires = Stagiaire::paginate(6);
+        $stagiaires_localstor = Stagiaire::all();
+        return view('admin.stagiaire.index', compact('stagiaires'))->with('data', json_encode($stagiaires_localstor));
     }
 
 
@@ -276,6 +277,7 @@ class AdminController extends Controller
     // ! delete stagiaire
     public function destroyStagiaire(Stagiaire $stagiaire)
     {
+        dd("hi");
         $stagiaire->delete();
         return redirect()->route('admin.allStagiaire')->with('success', 'Stagiaire deleted successfully!');
     }
@@ -288,9 +290,7 @@ class AdminController extends Controller
     // ! search stagiaires de la branche 'nameBranch'
     public function searchStagiaire(Request $request)
     {
-
         // * test good
-
 
         // ! use idee
 
@@ -301,22 +301,6 @@ class AdminController extends Controller
             ->where('classes.branche', '=', $element)
             ->get();
         return view('stagiaires.search_branche', ['stagiaires' => $stagiaires]);
-
-
-
-
-        // view
-        // <form action="{{ route('search_stagiaires_branche') }}" method="GET">
-        //     <input type="text" name="element" placeholder="Search for element...">
-        //     <button type="submit">Search</button>
-        // </form>
-
-
-
-        // route
-        // Route::get('/search_stagiaires_branche', [AdminController::class ,'search'])->name('search')
-
-
     }
 
 
