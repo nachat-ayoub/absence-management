@@ -47,31 +47,29 @@
                                 <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
 
                                     <!-- show -->
-                                    <x-primary-button
-                                        class="w-full bg-slate-200 px-2 py-1 text-slate-400 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-700 dark:text-slate-400 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto">
-                                        <a class="text-lg" href="{{ route('admin.showFormateur', $formateur->id) }}">
+
+                                    <a class="text-lg mt-2 md:mt-0" href="{{ route('admin.showFormateur', $formateur->id) }}">
+                                    <div class="w-full  bg-slate-50 rounded-lg text-center items-center px-4 py-2 text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto " title="details de stagiaire">
                                             <i class="fa-regular fa-eye"></i>
-                                        </a>
-                                    </x-primary-button>
+                                        </div>
+                                    </a>
 
                                     <!-- update -->
-                                    <x-primary-button
-                                        class="w-full bg-slate-200 px-2 py-1 text-slate-400 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-700 dark:text-slate-400 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto">
-                                        <a class="text-lg" href="{{ route('admin.editFormateur', $formateur->id) }}">
+                                    <a class="text-lg" href="{{ route('admin.editFormateur', $formateur->id) }}">
+                                    <div class="w-full bg-slate-50 rounded-lg text-center items-center px-4 py-2 text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto" title="modifier les information de stagiaire">
                                             <i class="fa-regular fa-pen-to-square"></i>
-                                        </a>
-                                    </x-primary-button>
+                                        </div>
+                                    </a>
 
                                     <!-- delete -->
                                     <form action="{{ route('admin.destroyFormateur', $formateur->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <x-primary-button
-                                            class="w-full bg-slate-200 text-slate-400 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-700 dark:text-slate-400 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto">
-                                            <a class="text-lg">
-                                                <i class="fa-regular fa-trash-can"></i>
-                                            </a>
-                                        </x-primary-button>
+                                        <div class="w-full bg-slate-50 rounded-lg text-center items-center px-4 py-2 text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto" title="supprimer ce stagiaire">
+                                            <button type=""submit" class="text-lg">
+                                                <i class="fa-regular fa-trash-can "></i>
+                                            </button>
+                                        </div>
                                     </form>
 
                                 </div>

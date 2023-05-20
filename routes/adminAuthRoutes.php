@@ -68,7 +68,7 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     Route::get('formateur/create', [AdminController::class, 'createFormateur'])->name('createFormateur');
     Route::get('formateur/{formateur}/edit', [AdminController::class, 'editFormateur'])->name('editFormateur');
     Route::put('formateur/{formateur}', [AdminController::class, 'updateFormateur'])->name('updateFormateur');
-    Route::delete('formateur/delete/{formateur}', [AdminController::class, 'destroyFormateur'])->name('destroyFormateur');
+    Route::delete('formateur/{formateur}', [AdminController::class, 'destroyFormateur'])->name('destroyFormateur');
 
 
     // *  routes of admins/stagiaire

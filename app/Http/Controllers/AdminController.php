@@ -102,7 +102,7 @@ class AdminController extends Controller
 
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
-        return redirect()->route('admin.formateurs')->with('success', 'formateur created successfully!');
+        return redirect()->route('admin.createFormateur')->with('success', 'formateur created successfully!');
     }
 
 
