@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Admin;
-use App\Models\Absence;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,8 +24,15 @@ class Formateur extends Authenticatable
     /*
     relationship  between  table of  formateurs and absences
     */
-    public function absences()
+    public function presences()
     {
-        return $this->hasMany(Absence::class);
+        return $this->hasMany(Presence::class);
+    }
+    /**
+     * relationship between classes and formateurs
+     */
+    
+    public function classes(){
+        return $this->belongsToMany(Classe::class);
     }
 }

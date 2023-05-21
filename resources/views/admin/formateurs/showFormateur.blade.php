@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {{ __('Dashboard') }}
+            {{ __('Formateur') }}
         </h2>
     </x-slot>
     <div class="container mx-auto mb-10 mt-10 px-4">
@@ -16,23 +16,22 @@
             <div class="mt-6 flex flex-row gap-4">
 
                 <!-- update -->
-                <x-primary-button
-                    class="w-full bg-slate-200 px-2 py-1 text-slate-400 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-700 dark:text-slate-400 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto">
-                    <a class="text-lg" href="{{ route('admin.editFormateur', $formateur->id) }}">
+                <a class="text-lg" href="{{ route('admin.editFormateur', $formateur->id) }}">
+                    <div class="w-full bg-slate-50 rounded-lg text-center items-center px-4 py-2 text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto" title="modifier les information de stagiaire">
                         <i class="fa-regular fa-pen-to-square"></i>
-                    </a>
-                </x-primary-button>
+                    </div>
+                </a>
 
                 <!-- delete -->
                 <form action="{{ route('admin.destroyFormateur', $formateur->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <x-primary-button
-                        class="w-full bg-slate-200 text-slate-400 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-700 dark:text-slate-400 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto">
-                        <a class="text-lg">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </a>
-                    </x-primary-button>
+                    <div
+                    class="w-full bg-slate-50 rounded-lg text-center items-center px-4 py-2 text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto" title="supprimer ce stagiaire">
+                        <button type=""submit" class="text-lg">
+                            <i class="fa-regular fa-trash-can "></i>
+                        </button>
+                    </div>
                 </form>
             </div>
 

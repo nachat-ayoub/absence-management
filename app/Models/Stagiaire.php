@@ -19,10 +19,10 @@ class Stagiaire extends Model
         return $this->belongsTo(Classe::class);
     }
     /*
-    relationship  between  table of stagiaires and absence_stagiaires
+    relationship  between  table of stagiaires and presences
     */
-    public function absencesStagiaires()
+    public function presences()
     {
-        return $this->hasMany(Absence_stagiaire::class);
+        return $this->hasMany(Presence::class);
     }
 }

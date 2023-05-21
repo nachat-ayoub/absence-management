@@ -5,13 +5,15 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder {
+class DatabaseSeeder extends Seeder
+{
     /**
      * Seed the application's database.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
@@ -25,8 +27,7 @@ class DatabaseSeeder extends Seeder {
             FormateurSeeder::class,
             ClasseSeeder::class,
             StagiaireSeeder::class,
-            AbsenceSeeder::class,
-            Absence_stagiaireSeeder::class,
+            PresenceSeeder::class,
         ]);
     }
 }

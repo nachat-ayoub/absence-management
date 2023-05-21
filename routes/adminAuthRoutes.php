@@ -62,12 +62,21 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
 
 
 
-    Route::get('formateur/formateurs', [AdminController::class , 'indexFormateur'])->name('formateurs');
-    Route::get('formateur/show/{formateur}', [AdminController::class , 'showFormateur'])->name('showFormateur');
-    Route::post('formateur/store', [AdminController::class , 'storeFormateur'])->name('storeFormateur');
-    Route::get('formateur/create', [AdminController::class , 'createFormateur'])->name('createFormateur');
-    Route::get('formateur/{formateur}/edit', [AdminController::class , 'editFormateur'])->name('editFormateur');
-    Route::put('formateur/{formateur}', [AdminController::class , 'updateFormateur'])->name('updateFormateur');
-    Route::delete('formateur/delete/{formateur}', [AdminController::class, 'destroyFormateur'])->name('destroyFormateur');
+    Route::get('formateur/search', [AdminController::class, 'indexFormateur'])->name('formateurs');
+    Route::get('formateur/show/{formateur}', [AdminController::class, 'showFormateur'])->name('showFormateur');
+    Route::post('formateur/store', [AdminController::class, 'storeFormateur'])->name('storeFormateur');
+    Route::get('formateur/create', [AdminController::class, 'createFormateur'])->name('createFormateur');
+    Route::get('formateur/{formateur}/edit', [AdminController::class, 'editFormateur'])->name('editFormateur');
+    Route::put('formateur/{formateur}', [AdminController::class, 'updateFormateur'])->name('updateFormateur');
+    Route::delete('formateur/{formateur}', [AdminController::class, 'destroyFormateur'])->name('destroyFormateur');
 
+
+    // *  routes of admins/stagiaire
+    Route::get('stagiaire/search', [AdminController::class, 'indexStagiaire'])->name('allStagiaire');
+    Route::get('stagiaire/create', [AdminController::class, 'createStagiaire'])->name('createStagiaire');
+    Route::post('stagiaire/store', [AdminController::class, 'storeStagiaire'])->name('storeStagiaire');
+    Route::get('stagiaire/search/{stagiaire}', [AdminController::class, 'showStagiaire'])->name('showStagiaire');
+    Route::get('stagiaire/{stagiaire}/edit', [AdminController::class, 'editStagiaire'])->name('editStagiaire');
+    Route::PUT('stagiaire/{stagiaire}', [AdminController::class, 'updateStagiaire'])->name('updateStagiaire');
+    Route::delete('stagiaire/{stagiaire}', [AdminController::class, 'destroyStagiaire'])->name('destroyStagiaire');
 });
