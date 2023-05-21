@@ -5,15 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class Absence_stagiaireSeeder extends Seeder
+class PresenceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        \App\Models\Absence_stagiaire::factory(30)->create();
+        \App\Models\Presence::factory(40)->create();
     }
 }

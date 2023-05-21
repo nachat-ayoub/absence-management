@@ -28,10 +28,18 @@ class Classe extends Model
         return $this->hasMany(Stagiaire::class);
     }
     /*
-    relationship  between  table of classes and absences
+    relationship  between  table of classes and presences
     */
-    public function absences()
+    public function presences()
     {
-        return $this->hasMany(Absence::class);
+        return $this->hasMany(Presence::class);
+    }
+
+    /**
+     * reltionship  between classes and formateurs
+     */
+    public function formateurs()
+    {
+        return $this->belongsToMany(Formateur::class);
     }
 }

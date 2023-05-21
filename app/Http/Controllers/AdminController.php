@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Absence;
 use App\Models\Classe;
+use App\Models\Absence;
+use App\Models\Presence;
 use App\Models\Formateur;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
@@ -17,17 +18,17 @@ class AdminController extends Controller
     // ! Dashboard Admin
     public function dashboard()
     {
-        $nbr_absence = Absence_stagiaire::all()->count();
+        $nbr_absence = DB::table('presences')->where('isPresence', 0)->count();
 
-        $nbr_absence_sans_preuve = DB::select('select COUNT(*) as nbr from absence_stagiaires where UPPER(preuve) =  "RIEN";');
+        $nbr_absence_sans_preuve = DB::select('select COUNT(*) as nbr from presences where UPPER(preuve) =  "RIEN";');
 
         $nbr_stagiaires = Stagiaire::all()->count();
 
         $nbr_absences_par_stagiaire = ((float) $nbr_absence / (float) $nbr_stagiaires) * 100;
         $nbr_classes = Classe::all()->count();
 
-        $nbr_absences_par_classe = DB::table('absences')->select('classe_id', DB::raw('count(*) as total'))->groupBy('classe_id')->get();
-
+        $nbr_absences_par_classe = DB::table('presences')->select('classe_id', DB::raw('count(*) as total'))->where('isPresence', 0)->groupBy('classe_id')->get();
+        
         $stgClasse = DB::table('stagiaires')->select('classe_id', DB::raw('count(*) as stgDeClasse'))->groupBy('classe_id')->get(); // selection le nombre de stagiaire de chaque classe
 
         $avg_absence_par_classe = 0.0;
@@ -41,18 +42,16 @@ class AdminController extends Controller
         }
         $avg_absence_par_classe = ($avg_absence_par_classe / $nbr_classes) * 100;
 
-        $derniere_stagiaire_absencet = DB::table('absence_stagiaires')
-            ->select('absence_stagiaires.preuve', 'absences.date', 'stagiaires.nom', 'stagiaires.prenom', 'classes.branche', 'classes.num_group')
-            ->join('stagiaires', 'absence_stagiaires.stagiaire_id', '=', 'stagiaires.id')
+        $derniere_stagiaire_absencet = Presence::select('presences.preuve', 'presences.date', 'stagiaires.nom', 'stagiaires.prenom', 'classes.branche', 'classes.num_group')
+            ->join('stagiaires', 'presences.stagiaire_id', '=', 'stagiaires.id')
             ->join('classes', 'stagiaires.classe_id', '=', 'classes.id')
-            ->join('absences', 'classes.id', '=', 'absences.classe_id')
-            ->orderBy('absence_stagiaires.created_at', 'desc')
-            ->take(5)
+            ->orderBy('presences.created_at', 'DESC')
+            ->limit(5)
             ->get();
 
-        $classes_en_fonction_absences = DB::table('absences')
+        $classes_en_fonction_absences = DB::table('presences')
             ->select('classes.branche', 'classes.num_group', DB::raw('count(*) as absence_count'))
-            ->join('classes', 'absences.classe_id', '=', 'classes.id')
+            ->join('classes', 'presences.classe_id', '=', 'classes.id')
             ->groupBy('num_group', 'branche')
             ->orderBy('absence_count', 'desc')
             ->take(5)
@@ -74,7 +73,8 @@ class AdminController extends Controller
     public function indexFormateur()
     {
         $formateurs = Formateur::paginate(7);
-        return view('admin.formateurs.indexformateur', compact('formateurs'));
+        $data = Formateur::all();
+        return view('admin.formateurs.indexformateur', compact('formateurs'))->with('data', json_encode($data));
     }
 
 
@@ -277,7 +277,6 @@ class AdminController extends Controller
     // ! delete stagiaire
     public function destroyStagiaire(Stagiaire $stagiaire)
     {
-        dd("hi");
         $stagiaire->delete();
         return redirect()->route('admin.allStagiaire')->with('success', 'Stagiaire deleted successfully!');
     }
