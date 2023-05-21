@@ -4,7 +4,11 @@
 
     <form method="POST" action="{{ route('formateur.check') }}">
         @csrf
-        <h3 class="text-primary mb-4 text-center text-xl font-bold tracking-wider">Formateur</h3>
+        <h3 class="text-primary mb-4 text-center text-xl font-bold tracking-wider">Formateur
+
+            {{-- - isAuth: {{ Auth::guard('formateur')->check() ? 'authorized' : 'unauthorized' }} --}}
+
+        </h3>
 
         <!-- Email Address -->
         <div>
