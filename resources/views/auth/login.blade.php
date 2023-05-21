@@ -1,3 +1,4 @@
+@guest
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -45,3 +46,18 @@
         </div>
     </form>
 </x-guest-layout>
+@endguest
+@auth('admin')
+<script>
+    setTimeout(function() {
+        window.location.href = "{{ route('admin.dashboard') }}";
+    }, 3000);
+</script>
+@endauth
+@auth('formateur')
+<script>
+    setTimeout(function() {
+        window.location.href = "{{ route('formateur.dashboard') }}";
+    }, 3000);
+</script>
+@endauth

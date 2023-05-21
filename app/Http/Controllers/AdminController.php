@@ -28,7 +28,7 @@ class AdminController extends Controller
         $nbr_classes = Classe::all()->count();
 
         $nbr_absences_par_classe = DB::table('presences')->select('classe_id', DB::raw('count(*) as total'))->where('isPresence', 0)->groupBy('classe_id')->get();
-        
+
         $stgClasse = DB::table('stagiaires')->select('classe_id', DB::raw('count(*) as stgDeClasse'))->groupBy('classe_id')->get(); // selection le nombre de stagiaire de chaque classe
 
         $avg_absence_par_classe = 0.0;

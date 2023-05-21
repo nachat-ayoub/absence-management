@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Classe_formateur>
  */
-class ClasseFormateurFactory extends Factory
+class Classe_formateurFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class ClasseFormateurFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'classe_id' => random_int(1, 7),
+            'formateur_id' => random_int(1, 5),
         ];
     }
 }

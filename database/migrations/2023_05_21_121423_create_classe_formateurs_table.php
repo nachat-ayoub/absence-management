@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('classe_formateurs', function (Blueprint $table) {
+        Schema::create('classe_formateur', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('classe_id');
             $table->unsignedBigInteger('formateur_id');

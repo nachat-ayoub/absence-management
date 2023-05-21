@@ -58,7 +58,11 @@
                 </div>
             @endauth
         @endauth
-
+        @auth('formateur')
+        <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
+            <a href="/formateur/dashboard" class="capitalize hover:text-gray-200 hover:underline">Formateur Dashboard</a>
+        </div>
+        @endauth
     </div>
 </body>
 
