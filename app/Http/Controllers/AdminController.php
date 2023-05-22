@@ -321,9 +321,9 @@ class AdminController extends Controller
 
     public function indexClasses()
     {
-        $classes = Classe::all();
+        $classes = Classe::paginate(7);
         // return $classes;
-        return view('classes', compact('classes'));
+        return view('admin.classe.indexClasse', compact('classes'));
     }
 
 
@@ -376,8 +376,15 @@ class AdminController extends Controller
     public function showClasse(Classe $classe)
     {
         // return $classe;
-        return view('showClasse', compact('classe'));
+        $nbr_absence_sans_preuve = DB::select('select COUNT(*) from presences where stagiaire_id =  "1";');
+        $stagiaires = $classe->stagiaires;
+        // $presences = Presence::where('stagiaire_id', 13)->get();
+        return view('admin.classe.showClasse', compact('classe' , 'stagiaires' , 'nbr_absence_sans_preuve'));
     }
+
+
+
+
 
 
 
@@ -448,13 +455,7 @@ class AdminController extends Controller
 
 
 
-    // ! select * from stagiaire where classe_id = 1
-    public function allStagiaires(Classe $classe)
-    {
-        $classe = Classe::find(6);
-        $stagiaire = $classe->stagiaires;
-        return $stagiaire;
-    }
+
 
 
     // todo ========================================== crud classe ==========================================

@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ClasseSeeder::class,
             StagiaireSeeder::class,
             PresenceSeeder::class,
+            ClasseFormateurSeeder::class
         ]);
     }
 }

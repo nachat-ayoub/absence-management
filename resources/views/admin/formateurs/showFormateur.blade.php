@@ -40,7 +40,7 @@
         {{-- <div class="rounded-lg bg-white">
             <div class="m-5">
 
-                <i class="fa-solid fa-user fa-2xl inline" style="color: #1d4ed8;"></i>
+                <i class="fa-solid fa-user fa-2xl inline"></i>
                 <span class="text-2xl"># id {{ $formateur->id }}</span>
                 <h2 class="my-6 text-lg">nom & prenom : {{ $formateur->nom }} {{ $formateur->prenom }}</h2>
                 <h2 class="text-lg">email : {{ $formateur->email }} </h2>
@@ -49,7 +49,7 @@
                     <x-primary-button
                         class="text-slate-950 inline w-24 bg-slate-300 px-2 py-1 hover:bg-slate-400 dark:bg-slate-700 dark:text-white md:w-auto">
                         <a href="{{ route('admin.editFormateur', $formateur->id) }}" class="inline"><i
-                                class="fa-regular fa-pen-to-square fa-2xl" style="color: #15803d;"></i></a>
+                                class="fa-regular fa-pen-to-square fa-2xl"></i></a>
                     </x-primary-button>
 
                     <!-- delete -->
@@ -58,8 +58,7 @@
                         @method('DELETE')
                         <x-primary-button
                             class="text-slate-950 inline w-full bg-slate-300 px-2 py-1 hover:bg-slate-400 dark:bg-slate-700 dark:text-white md:w-auto">
-                            <a class="inline h-full w-full"><i class="fa-solid fa-trash-can fa-2xl"
-                                    style="color: #e60f0f;"></i></a>
+                            <a class="inline h-full w-full"><i class="fa-solid fa-trash-can fa-2xl"></i></a>
                         </x-primary-button>
                     </form>
                 </div>

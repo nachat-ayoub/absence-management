@@ -41,7 +41,7 @@
                     @foreach ($formateurs as $formateur)
                         <tr>
                             <td
-                                class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-4 md:py-1">
+                                class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
                                 {{ $formateur->id }}</td>
                             <td
                                 class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
@@ -65,6 +65,7 @@
                                     </a>
 
                                     <!-- update -->
+
                                     <a class="text-lg" href="{{ route('admin.editFormateur', $formateur->id) }}">
                                     <div class="w-full bg-slate-50 rounded-lg text-center items-center px-4 py-2 text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto" title="modifier les information de stagiaire">
                                             <i class="fa-regular fa-pen-to-square"></i>
@@ -72,6 +73,7 @@
                                     </a>
 
                                     <!-- delete -->
+
                                     <form action="{{ route('admin.destroyFormateur', $formateur->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -105,7 +107,7 @@
         for (var i = 0; i < data.length; i++) {
             if(data[i].nom.toLowerCase().includes(inputValue) || data[i].prenom.toLowerCase().includes(inputValue) || data[i].email.toLowerCase().includes(inputValue)){
                 idFormateur = data[i].id;
-                formateurs += 
+                formateurs +=
                 `
                 <tr>
                     <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-4 md:py-1">${data[i].id}</td>

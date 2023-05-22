@@ -116,12 +116,12 @@
 
                             <x-slot name="content">
                                 {{-- <x-dropdown-link href="route('admin.searchClasse')"> --}}
-                                <x-dropdown-link :href="'/admin/classe/search'">
+                                <x-dropdown-link :href="route('admin.allClasses')">
                                     {{ __('Chercher') }}
                                 </x-dropdown-link>
 
                                 {{-- <x-dropdown-link href="route('admin.createClasse')"> --}}
-                                <x-dropdown-link :href="'/admin/classe/create'">
+                                <x-dropdown-link :href="route('admin.allClasses')">
                                     {{ __('Creé') }}
                                 </x-dropdown-link>
 
