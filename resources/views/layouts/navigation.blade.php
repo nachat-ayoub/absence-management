@@ -121,7 +121,7 @@
                                 </x-dropdown-link>
 
                                 {{-- <x-dropdown-link href="route('admin.createClasse')"> --}}
-                                <x-dropdown-link :href="route('admin.allClasses')">
+                                <x-dropdown-link :href="route('admin.createClasse')">
                                     {{ __('Creé') }}
                                 </x-dropdown-link>
 

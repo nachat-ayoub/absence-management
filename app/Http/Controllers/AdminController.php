@@ -7,9 +7,10 @@ use App\Models\Absence;
 use App\Models\Presence;
 use App\Models\Formateur;
 use App\Models\Stagiaire;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Absence_stagiaire;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -18,7 +19,7 @@ class AdminController extends Controller
     // ! Dashboard Admin
     public function dashboard()
     {
-        $nbr_absence = DB::table('presences')->where('isPresence', 0)->count();
+        $nbr_absence = DB::table('presences')->where("isPresence", 0)->count();
 
         $nbr_absence_sans_preuve = DB::select('select COUNT(*) as nbr from presences where UPPER(preuve) =  "RIEN";');
 
@@ -52,6 +53,7 @@ class AdminController extends Controller
         $classes_en_fonction_absences = DB::table('presences')
             ->select('classes.branche', 'classes.num_group', DB::raw('count(*) as absence_count'))
             ->join('classes', 'presences.classe_id', '=', 'classes.id')
+            ->where('presences.isPresence', 0)
             ->groupBy('num_group', 'branche')
             ->orderBy('absence_count', 'desc')
             ->take(5)
@@ -286,23 +288,6 @@ class AdminController extends Controller
 
 
 
-    // ! search stagiaires de la branche 'nameBranch'
-    public function searchStagiaire(Request $request)
-    {
-        // * test good
-
-        // ! use idee
-
-        $element = $request->input('element');
-
-        $stagiaires = Classe::join('stagiaires', 'stagiaires.classe_id', '=', 'classes.id')
-            ->select('stagiaires.nom', 'classes.branche')
-            ->where('classes.branche', '=', $element)
-            ->get();
-        return view('stagiaires.search_branche', ['stagiaires' => $stagiaires]);
-    }
-
-
     // todo ========================================== crud stagiaire =======================================
 
 
@@ -336,7 +321,7 @@ class AdminController extends Controller
     // ! create classe
     public function createClasse()
     {
-        return view('createClasse');
+        return view('admin.classe.createClasse');
     }
 
 
@@ -347,24 +332,15 @@ class AdminController extends Controller
     // ! insert classe dans db
     public function storeClasse(Request $request)
     {
-        // $classe = new Classe();
-        // $classe->branche = 'AA';
-        // $classe->num_group = 102;
-        // $classe->annee_scolaire = '2022';
-        // $classe->admin_id = 1;
-        // $classe -> save();
-        // return 'good';
-
-
         $classe = $request->validate([
             'branche' => 'required',
             'num_group' => 'required',
             'annee_scolaire' => 'required',
             'admin_id' => 'required',
         ]);
-        $classe['admin_id'] = 1;
+        $classe["branche"] = Str::upper($request->branche);
         Classe::create($classe);
-        return redirect('classes')->with('success', 'Classe created successfully!');
+        return redirect()->route('admin.allClasses')->with('success', 'La classe a été crée avec success');
 
     }
 
@@ -375,7 +351,6 @@ class AdminController extends Controller
     // ! Show detail of classe
     public function showClasse(Classe $classe)
     {
-        // $totalabsence = $classe->presences->where('isPresence' , 0)->count();
 
         $stagiaires = $classe->stagiaires()->paginate(7);
         $stagiaireAbsence = [];
@@ -393,33 +368,8 @@ class AdminController extends Controller
             $totalAbsences += $absencesCount;
             $stagiaire->absencesCount = $absencesCount;
             // * absence avec preuv / son preuv
-            // $absences = $stagiaire->presences()
-            // ->where('classe_id', $classe->id)
-            // ->where('isPresence', 0)
-            // ->get();
-
-            // foreach ($absences as $absence) {
-            //     if ($absence->preuve !== 'rien') {
-            //         $absenceAvecPreuv++;
-            //     } else {
-            //         $absenceSonPreuv++;
-            //     }
-            // }
-            // $stagiaire->absencesCount = $absences->count();
-            // ======
-            // $absenceAvecPreuvCount = $stagiaire->presences()->where('classe_id', $classe->id)->where('stagiaire_id',$stagiaire->id)
-            // ->where('isPresence', 0)->where('preuve', '<>', 'rien')->count();
-            // $absenceAvecPreuv += $absenceAvecPreuvCount;
-
-            // $absencesWithoutProofCount = $absencesCount - $absenceAvecPreuvCount;
-            // $absenceSonPreuv += $absencesWithoutProofCount;
-
-            // $stagiaire->absencesCount = $absencesCount;
-            // $stagiaire->absenceAvecPreuvCount = $absenceAvecPreuvCount;
-            // $stagiaire->absencesWithoutProofCount = $absencesWithoutProofCount;
-            // =======
             $absenceSonPreuv = $stagiaire->presences()->where('classe_id', $classe->id)
-            ->where('isPresence', 0)->where('preuve', 'rien')->count();
+                ->where('isPresence', 0)->where('preuve', 'rien')->count();
 
             $absenceAvecPreuv = $stagiaire->presences()->where('classe_id', $classe->id)
                 ->where('isPresence', 0)->where('preuve', '<>', 'rien')->count();
@@ -429,8 +379,7 @@ class AdminController extends Controller
 
         }
 
-        // return view('admin.classe.showClasse', compact('classe' , 'totalAbsences' , 'stagiaireAbsence' , 'stagiaires' , 'absenceAvecPreuv' , 'absenceSonPreuv' ));
-        return view('admin.classe.showClasse', compact('classe' , 'totalAbsences' , 'stagiaireAbsence' , 'stagiaires' ));
+        return view('admin.classe.showClasse', compact('classe', 'totalAbsences', 'stagiaireAbsence', 'stagiaires'));
     }
 
 
@@ -444,8 +393,7 @@ class AdminController extends Controller
     // ! Show the form for editing the specified resource.
     public function editClasse(Request $request, Classe $classe)
     {
-        //
-        return view('editClasse', compact('classe'));
+        return view('admin.classe.editClasse', compact('classe'));
     }
 
 
@@ -455,32 +403,15 @@ class AdminController extends Controller
     // ! save update
     public function updateClasse(Request $request, Classe $classe)
     {
-        //
-
-        $request->validate([
-            'id' => 'required',
+        $formFill = $request->validate([
             'branche' => 'required',
             'num_group' => 'required',
             'annee_scolaire' => 'required',
             'admin_id' => 'required',
         ]);
-
-        // $classe = Classe::find(17);
-        // $classe->id = 17;
-        // $classe->branche = 'DD';
-        // $classe->num_group = 103;
-        // $classe->annee_scolaire = '2012';
-        // $classe->admin_id = 1;
-        // $classe->save();
-
-
-        $classe->id = $request->id;
-        $classe->branche = $request->branche;
-        $classe->num_group = $request->num_group;
-        $classe->annee_scolaire = $request->annee_scolaire;
-        $classe->admin_id = 1;
-        $classe->save();
-        return redirect('classes')->with('success', 'classe updated successfully!');
+        $formFill['branche'] = Str::upper($formFill['branche']);
+        $classe->fill($formFill)->save();
+        return redirect()->route('admin.allClasses')->with('success', 'classe updated successfully!');
     }
 
 
@@ -490,11 +421,8 @@ class AdminController extends Controller
     // ! delete classe
     public function destroyClasse(Classe $classe)
     {
-        //
-        // $classe=Classe::find(13);
         $classe->delete();
-        // return 'good';
-        return redirect('classes')->with('success', 'classe deleted successfully!');
+        return redirect('admin.allClasses')->with('success', 'classe deleted successfully!');
     }
 
 

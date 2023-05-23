@@ -11,6 +11,9 @@ class AuthController extends Controller
 {
     public function loginView()
     {
+        if (Auth::guard('formateur')) {
+            return redirect()->route('formateur.dashboard');
+        }
         return view('auth.formateur.login');
     }
 

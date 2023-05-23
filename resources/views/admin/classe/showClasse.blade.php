@@ -26,7 +26,7 @@
                 </a>
 
                 <!-- delete -->
-                <form action="{{ route('admin.destroyClasse', $classe->id) }}" method="POST">
+                <form action="{{ route('admin.destroyClasse', $classe->id) }}" method="POST" onsubmit="return confirm('Le nombre de stagiaires au niveau de cette classe est {{$classe->stagiaires->count()}} ! Voulez-vous supprimer cette classe ?')">
                     @csrf
                     @method('DELETE')
                     <div
@@ -67,7 +67,7 @@
                     <tbody class="bg-gray-100">
                         @foreach ($stagiaires as $key => $stagiaire)
                         <tr>
-                            <td class="whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 text-center dark:text-gray-100 md:px-2 md:py-1">{{ $stagiaire->id}}</td>
+                            <td class="whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 text-center dark:text-gray-100 md:px-2 md:py-1">{{ $key + 1}}</td>
                             <td class="whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">{{$stagiaire->nom}}</td>
                             <td class="whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">{{$stagiaire->prenom}}</td>
                             <td class="pl-24">{{ $stagiaire->absencesCount }}</td>

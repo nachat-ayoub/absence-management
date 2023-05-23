@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12" id="loginBox">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -14,7 +14,6 @@
             </div>
         </div>
     </div>
-
     @auth('admin')
         <div class="flex flex-col-reverse py-12 md:flex-col">
             <div class="mx-6 flex flex-col justify-between gap-y-3 px-2 md:mx-12 md:flex-row md:px-12">
@@ -131,9 +130,20 @@
                             @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     @endauth
 </x-app-layout>
+<script>
+    var login =  document.getElementById('loginBox');
+    var previousPage = document.referrer;
+    if(previousPage.includes("/login")){
+        login.style.display = "block";
+        setInterval(() => {
+            login.style.display = "none";
+        }, 3000);
+    }else{
+        login.style.display = "none";
+    }
+</script>
