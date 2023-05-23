@@ -33,12 +33,25 @@
                         <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
                     </div>
                 </div>
-                <!-- email -->
-                <div class="col-span-2 inline">
-                    <x-input-label for="email" :value="__('email')" />
-                    <x-text-input id="email" class="mt-1 block w-full" type="text" name="email" :value="old('email')"
+
+                <div class="col-span-2 mt-3 flex flex-col gap-2 md:flex-row">
+                    <!-- branche -->
+                    <div class="inline">
+                        <x-input-label for="classe[]" :value="__('Classe')" />
+                        <select name="classe[]" id="classe" multiple class=" w-full mt-1 h-11 rounded-lg border-gray-300 hover:h-32">
+                            <option value="none" class="mb-2 mt-1 -pl-2 pr-3">choisir classe</option>
+                            @foreach ($classes as $classe)
+                            <option  value="{{$classe->id}}">{{$classe->branche}} {{$classe->num_group}}</option>
+                            @endforeach
+                        </select>
+                    </div >
+                    <!-- email -->
+                    <div class="inline w-full">
+                        <x-input-label for="email" :value="__('email')" />
+                        <x-text-input id="email" class="mt-1 block w-full" type="text" name="email" :value="old('email')"
                         required autofocus autocomplete="email"  />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
                 </div>
                 <!-- password -->
                 <div class="col-span-2 inline">

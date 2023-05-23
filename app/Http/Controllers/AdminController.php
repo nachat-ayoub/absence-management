@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
-use App\Models\Absence;
+use App\Models\Classe_formateur;
 use App\Models\Presence;
 use App\Models\Formateur;
 use App\Models\Stagiaire;
@@ -68,7 +68,16 @@ class AdminController extends Controller
         ]);
     }
 
-
+    public function inserInClassesFormateurTable($classeData)
+    {
+        $formateur_id = DB::table('formateurs')->select('id')->orderBy('id', "desc")->take(1)->get();
+        $formateurId = $formateur_id[0]->id;
+        foreach ($classeData as $data) {
+            DB::table('classe_formateur')->insert(
+                ['classe_id' => $data, 'formateur_id' => $formateurId]
+            );
+        }
+    }
     // todo ========================================== crud formateur =======================================
 
     // ! afficher les formateurs
@@ -85,7 +94,8 @@ class AdminController extends Controller
     // ! create formateur
     public function createFormateur()
     {
-        return view('admin.formateurs.createFormateur');
+        $classes = Classe::all();
+        return view('admin.formateurs.createFormateur', compact('classes'));
     }
 
 
@@ -93,6 +103,7 @@ class AdminController extends Controller
     // ! insert formateur dans db
     public function storeFormateur(Request $request)
     {
+
         $formateur = $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -104,6 +115,12 @@ class AdminController extends Controller
 
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
+
+        $classes_ids = $request->input('classe');
+
+
+        $this->inserInClassesFormateurTable($classes_ids);
+
         return redirect()->route('admin.createFormateur')->with('success', 'formateur created successfully!');
     }
 
