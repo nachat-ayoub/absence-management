@@ -377,7 +377,7 @@ class AdminController extends Controller
     {
         // $totalabsence = $classe->presences->where('isPresence' , 0)->count();
 
-        $stagiaires = $classe->stagiaires()->paginate(2);
+        $stagiaires = $classe->stagiaires()->paginate(7);
         $stagiaireAbsence = [];
         $totalAbsences = 0;
         $absenceAvecPreuv = 0;
