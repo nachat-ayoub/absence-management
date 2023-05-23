@@ -66,9 +66,10 @@
 
                                     <!-- delete -->
 
-                                    <form action="{{ route('admin.destroyClasse', $classe->id) }}" method="POST">
+                                    <form action="{{ route('admin.destroyClasse', $classe->id) }}" method="POST" onsubmit="return confirm('Le nombre de stagiaires au niveau de cette classe est {{$classe->stagiaires->count()}} ! Voulez-vous supprimer cette classe ?')" >
                                         @csrf
                                         @method('DELETE')
+                                        {{-- {{dd($classe->stagiaires->count())}} --}}
                                         <div class="w-full bg-slate-50 rounded-lg text-center items-center px-4 py-2 text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto" title="supprimer ce stagiaire">
                                             <button type=""submit" class="text-lg">
                                                 <i class="fa-regular fa-trash-can "></i>
@@ -87,3 +88,9 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    var forms = document.querySelectorAll('.formDalete');
+    forms[0].addEventListener('mouseenter' , function(){
+        console.log(forms);
+    })
+</script>

@@ -10,12 +10,15 @@ use Auth;
 use Hash;
 use Illuminate\Auth\Events\Registered;
 
-class AuthController extends Controller {
-    public function registerView() {
+class AuthController extends Controller
+{
+    public function registerView()
+    {
         return view('auth.admin.register');
     }
 
-    public function register(RegisterAdminRequest $request) {
+    public function register(RegisterAdminRequest $request)
+    {
         $request->validate($request->rules());
 
         $admin = Admin::create([
@@ -30,12 +33,16 @@ class AuthController extends Controller {
 
         return redirect()->route('admin.dashboard');
     }
-
-    public function loginView() {
+    public function loginView()
+    {
+        if (Auth::guard('admin')) {
+            return redirect()->route('admin.dashboard');
+        }
         return view('auth.admin.login');
     }
 
-    public function login(LoginAdminRequest $request) {
+    public function login(LoginAdminRequest $request)
+    {
         // * code:
         $request->validate($request->rules());
 
@@ -46,7 +53,8 @@ class AuthController extends Controller {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::guard('admin')->logout();
 
         return redirect('/')->with('success', 'You Have Logout Success');

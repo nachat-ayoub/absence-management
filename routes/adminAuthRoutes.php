@@ -77,8 +77,8 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     Route::get('classe/search', [AdminController::class, 'indexClasses'])->name('allClasses');
     Route::get('classe/create', [AdminController::class, 'createClasse'])->name('createClasse');
     Route::post('classe/store', [AdminController::class, 'storeClasse'])->name('storeClasse');
-    Route::get('classe/show/{classe}', [AdminController::class, 'showClasse'])->name('showClasse');
     Route::get('classe/{classe}/edit', [AdminController::class, 'editClasse'])->name('editClasse');
+    Route::get('classe/show/{classe}', [AdminController::class, 'showClasse'])->name('showClasse');
     Route::put('classe/{classe}', [AdminController::class, 'updateClasse'])->name('updateClasse');
     Route::delete('classe/{classe}', [AdminController::class, 'destroyClasse'])->name('destroyClasse');
 
