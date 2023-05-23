@@ -375,16 +375,63 @@ class AdminController extends Controller
     // ! Show detail of classe
     public function showClasse(Classe $classe)
     {
-        // return $classe;
-        $nbr_absence_sans_preuve = DB::select('select COUNT(*) from presences where stagiaire_id =  "1";');
-        $stagiaires = $classe->stagiaires;
-        // $presences = Presence::where('stagiaire_id', 13)->get();
-        return view('admin.classe.showClasse', compact('classe' , 'stagiaires' , 'nbr_absence_sans_preuve'));
+        // $totalabsence = $classe->presences->where('isPresence' , 0)->count();
+
+        $stagiaires = $classe->stagiaires()->paginate(2);
+        $stagiaireAbsence = [];
+        $totalAbsences = 0;
+        $absenceAvecPreuv = 0;
+        $absenceSonPreuv = 0;
+
+        foreach ($stagiaires as $stagiaire) {
+            // * absence stagiaire
+            $absencesCount = $stagiaire->presences()->where('classe_id', $classe->id)
+                ->where('isPresence', 0)->count();
+            $stagiaire->absencesCount = $absencesCount;
+            $stagiaireAbsence[] = $stagiaire;
+            // * absence dans classe
+            $totalAbsences += $absencesCount;
+            $stagiaire->absencesCount = $absencesCount;
+            // * absence avec preuv / son preuv
+            // $absences = $stagiaire->presences()
+            // ->where('classe_id', $classe->id)
+            // ->where('isPresence', 0)
+            // ->get();
+
+            // foreach ($absences as $absence) {
+            //     if ($absence->preuve !== 'rien') {
+            //         $absenceAvecPreuv++;
+            //     } else {
+            //         $absenceSonPreuv++;
+            //     }
+            // }
+            // $stagiaire->absencesCount = $absences->count();
+            // ======
+            // $absenceAvecPreuvCount = $stagiaire->presences()->where('classe_id', $classe->id)->where('stagiaire_id',$stagiaire->id)
+            // ->where('isPresence', 0)->where('preuve', '<>', 'rien')->count();
+            // $absenceAvecPreuv += $absenceAvecPreuvCount;
+
+            // $absencesWithoutProofCount = $absencesCount - $absenceAvecPreuvCount;
+            // $absenceSonPreuv += $absencesWithoutProofCount;
+
+            // $stagiaire->absencesCount = $absencesCount;
+            // $stagiaire->absenceAvecPreuvCount = $absenceAvecPreuvCount;
+            // $stagiaire->absencesWithoutProofCount = $absencesWithoutProofCount;
+            // =======
+            $absenceSonPreuv = $stagiaire->presences()->where('classe_id', $classe->id)
+            ->where('isPresence', 0)->where('preuve', 'rien')->count();
+
+            $absenceAvecPreuv = $stagiaire->presences()->where('classe_id', $classe->id)
+                ->where('isPresence', 0)->where('preuve', '<>', 'rien')->count();
+
+            $stagiaire->absenceSonPreuv = $absenceSonPreuv;
+            $stagiaire->absenceAvecPreuv = $absenceAvecPreuv;
+
+        }
+
+        // return view('admin.classe.showClasse', compact('classe' , 'totalAbsences' , 'stagiaireAbsence' , 'stagiaires' , 'absenceAvecPreuv' , 'absenceSonPreuv' ));
+        return view('admin.classe.showClasse', compact('classe' , 'totalAbsences' , 'stagiaireAbsence' , 'stagiaires' ));
     }
-
-
-
-
 
 
 
