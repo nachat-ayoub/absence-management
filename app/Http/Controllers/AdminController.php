@@ -70,6 +70,7 @@ class AdminController extends Controller
 
     public function inserInClassesFormateurTable($classeData)
     {
+        $classeData = explode(',', $classeData);
         $formateur_id = DB::table('formateurs')->select('id')->orderBy('id', "desc")->take(1)->get();
         $formateurId = $formateur_id[0]->id;
         foreach ($classeData as $data) {
@@ -78,6 +79,8 @@ class AdminController extends Controller
             );
         }
     }
+
+
     // todo ========================================== crud formateur =======================================
 
     // ! afficher les formateurs
@@ -103,7 +106,6 @@ class AdminController extends Controller
     // ! insert formateur dans db
     public function storeFormateur(Request $request)
     {
-
         $formateur = $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -116,7 +118,7 @@ class AdminController extends Controller
         $formateur['admin_id'] = 1;
         Formateur::create($formateur);
 
-        $classes_ids = $request->input('classe');
+        $classes_ids = $request->input('classes');
 
 
         $this->inserInClassesFormateurTable($classes_ids);
