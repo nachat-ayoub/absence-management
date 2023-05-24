@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Formateur\AuthController;
+use App\Models\Classe;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:formateur')->prefix('formateur')->name('formateur.')->group(function () {
@@ -27,6 +29,26 @@ Route::prefix('formateur')->middleware('formateur')->name('formateur.')->group(f
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::prefix('/absence')->name('absence.')->group(function () {
+        // Route::get('/', function () {
+        //     return view('formateur.absence.index');
+        // })->name('absence');
+
+        Route::get('/classe/{classe_id}', function (Classe $classe) {
+
+            $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
+            $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
+
+            $classe->load(['formateurs', 'presences' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
+            }]);
+
+            return $classe;
+            // return view('formateur.absence.classeAbsence', compact('classe'));
+
+        })->name('classeAbsence');
+    });
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
