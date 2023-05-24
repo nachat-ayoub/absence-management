@@ -18,8 +18,8 @@ class PresenceFactory extends Factory
     {
         return [
             'stagiaire_id' => random_int(1, 50),
-            'classe_id' => random_int(1, 7),
-            'date' => fake()->date("Y-m-d"),
+            'classe_id' => 1,
+            'date' => fake()->dateTimeBetween("this week Monday", "now"),
             'isPresence' => fake()->boolean(),
             'preuve' => fake()->randomElement(["rien", "medicale"]),
         ];
