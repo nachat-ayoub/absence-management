@@ -32,8 +32,16 @@
                         <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
                     </div>
                 </div>
+                <div >
+                    <x-input-label for="classes" :value="__('Classes')" />
+                    <x-multi-select   >
+                        @foreach ($classes as $option)
+                        <option value="{{$option->id}}" >{{$option->branche}} {{$option->num_group}}</option>
+                        @endforeach
+                    </x-multi-select>
+                </div>
                 <!-- email -->
-                <div class="col-span-2 inline">
+                <div class="col-span-2 block">
                     <x-input-label for="email" :value="__('email')" />
                     <x-text-input id="email" class="mt-1 block w-full" type="text" name="email"
                         value="{{ $formateur->email }}" required autofocus autocomplete="email" />

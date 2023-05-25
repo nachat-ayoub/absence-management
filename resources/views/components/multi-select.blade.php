@@ -15,7 +15,7 @@
 
  <div x-data="dropdown()" x-init="loadOptions()" class="w-full -mt-1 rounded-lg flex ">
     <form>
-        <input name="classes" type="hidden" x-bind:value="selectedValues()">
+        <input name="classes" type="hidden" x-bind:value="selectedValues()" id="classes">
         <div class="inline-block relative w-full">
             <div class="flex flex-col items-center relative">
                 <div x-on:click="open" class="w-full  svelte-1l8159u">
@@ -23,7 +23,7 @@
                         {{-- border-indigo-500 dark:border-indigo-600 ring-indigo-500 dark:ring-indigo-600 --}}
                         
                         <div class="flex flex-auto flex-wrap">
-                            <template x-for="(option,index) in selected" :key="options[option].value">
+                            <template x-for="(option,index) in selected" :key="options[option].value" >
                                 <div
                                     class="flex justify-center items-center m-1 font-medium  px-2 bg-white dark:bg-gray-800 rounded dark:text-primary border text-gray-700 border-gray-700 dark:border-primary ">
                                     <div class="text-xs font-normal leading-none max-w-full flex-initial x-model="
@@ -84,7 +84,7 @@
                                         <div x-bind:class="option.selected ? 'border-teal-600' : ''"
                                             class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative">
                                             <div class="w-full items-center flex">
-                                                <div class="mx-2 leading-6" x-model="option" x-text="option.text"></div>
+                                                <div class="opt mx-2 leading-6" x-model="option" x-text="option.text"></div>
                                             </div>
                                         </div>
                                     </div>
