@@ -8,14 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller {
     public function loginView() {
-        // if (Auth::guard('formateur')) {
-        // return redirect()->route('formateur.dashboard');
-        // }
+        if (Auth::guard('formateur')->check()) {
+            return redirect()->route('formateur.dashboard');
+        }
         return view('auth.formateur.login');
     }
 
     public function login(LoginFormateurRequest $request) {
-        // * code:
         $request->validate($request->rules());
 
         if (Auth::guard('formateur')->attempt(['email' => $request->email, 'password' => $request->password])) {
