@@ -35,6 +35,8 @@
                 </div>
                 <div>
                     <x-input-label for="classes" :value="__('Classes')" />
+                    
+
                     <x-multi-select>
                         @foreach ($classes as $option)
                             <option value="{{ $option->id }}"
@@ -42,6 +44,8 @@
                                 {{ $option->branche }} {{ $option->num_group }}</option>
                         @endforeach
                     </x-multi-select>
+
+
                 </div>
                 <!-- email -->
                 <div class="col-span-2 block">
