@@ -81,15 +81,52 @@ class AdminController extends Controller
     }
 
 
-    // todo ========================================== crud formateur =======================================
+    // public function updateClassesOfFormateur($classeDt, $classesCheck, $formateur_id)
+    // {
+    //     $hasData = DB::table('classe_formateur')
+    //         ->where('formateur_id', $formateur_id)
+    //         ->exists();
+    //     if ($classesCheck == "on") {
+    //         $hasData ? (DB::table('classe_formateur')->where('formateur_id', $formateur_id)->delete()) : "" ;
+    //         if (strlen($classeDt) == 1) {
+    //             DB::table('classe_formateur')->insert(
+    //                 ['classe_id' => $classeDt, 'formateur_id' => $formateur_id]
+    //             );
+    //         } elseif (strlen($classeDt) > 1) {
+    //             $classeData = $classeDt;
+    //             $this->inserInClassesFormateurTable($classeData);
+    //         }
+    //     } else {
+    //         $classesOfThisFormateur = DB::table('classe_formateur')
+    //             ->select('classe_id')
+    //             ->where('formateur_id', $formateur_id)
+    //             ->pluck('classe_id')
+    //             ->toArray();
 
-    // ! afficher les formateurs
-    public function indexFormateur()
-    {
-        $formateurs = Formateur::paginate(7);
-        $data = Formateur::all();
-        return view('admin.formateurs.indexformateur', compact('formateurs'))->with('data', json_encode($data));
-    }
+    //         if (strlen($classeDt) == 1) {
+    //             if (!(in_array($classeDt, $classesOfThisFormateur))) {
+    //                 DB::table('classe_formateur')->insert(['classe_id' => $classeDt, 'formateur_id' => $formateur_id]);
+    //             } else {
+    //                 $classeData = explode(',', $classeDt);
+    //                 foreach ($classeData as $clsDt) {
+    //                     if (!(in_array($clsDt, $classesOfThisFormateur))) {
+    //                         DB::table('classe_formateur')->insert(['classe_id' => $clsDt, 'formateur_id' => $formateur_id]);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    // // todo ========================================== crud formateur =======================================
+
+    // // ! afficher les formateurs
+    // public function indexFormateur()
+    // {
+    //     $formateurs = Formateur::paginate(7);
+    //     $data = Formateur::all();
+    //     return view('admin.formateurs.indexformateur', compact('formateurs'))->with('data', json_encode($data));
+    // }
 
 
 
@@ -98,6 +135,7 @@ class AdminController extends Controller
     public function createFormateur()
     {
         $classes = Classe::all();
+
         return view('admin.formateurs.createFormateur', compact('classes'));
     }
 
@@ -139,6 +177,7 @@ class AdminController extends Controller
     // ! Show detail of Formateur
     public function showFormateur(Request $request, Formateur $formateur)
     {
+
         return view('admin.formateurs.showFormateur', compact('formateur'));
     }
 
@@ -153,7 +192,13 @@ class AdminController extends Controller
     // ! Show the form for editing the specified resource.
     public function editFormateur(Request $request, Formateur $formateur)
     {
-        return view('admin.formateurs.editFormateur', compact('formateur'));
+        $classes = Classe::all();
+        $classesOfFormateur = DB::table('classe_formateur')
+            ->select('classe_id')
+            ->where('formateur_id', $formateur->id)
+            ->pluck('classe_id')
+            ->toArray();
+        return view('admin.formateurs.editFormateur', compact('formateur', 'classes', 'classesOfFormateur'));
     }
 
 

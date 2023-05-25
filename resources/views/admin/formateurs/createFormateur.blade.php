@@ -33,29 +33,24 @@
                         <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
                     </div>
                 </div>
+                <!-- classes -->
+                <div class="mt-2">
+                    <x-input-label for="classes" :value="__('Classes')" />
+                    <x-multi-select   >
+                        @foreach ($classes as $option)
+                            <option value="{{$option->id}}" selected = >{{$option->branche}} {{$option->num_group}}</option>
+                        @endforeach
+                    </x-multi-select>
+                </div>
 
-                {{-- <div class="col-span-2 mt-3 flex flex-col gap-2 md:flex-row"> --}}
-                    <!-- branche -->
-                    <div class="mt-2">
-                        <x-input-label for="classes" :value="__('Classes')" />
-                        <x-multi-select   >
-                            @foreach ($classes as $option)
-                                <option value="{{$option->id}}">{{$option->branche}} {{$option->num_group}}</option>
-                            @endforeach
-                        </x-multi-select>
-                    </div> 
-
-
-                       
-                    </div >
-                    <!-- email -->
-                    <div class="inline w-full">
-                        <x-input-label for="email" :value="__('email')" />
-                        <x-text-input id="email" class="mt-1 block w-full" type="text" name="email" :value="old('email')"
-                        required autofocus autocomplete="email"  />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                    </div>
-                {{-- </div> --}}
+                </div >
+                <!-- email -->
+                <div class="inline w-full">
+                    <x-input-label for="email" :value="__('email')" />
+                    <x-text-input id="email" class="mt-1 block w-full" type="text" name="email" :value="old('email')"
+                    required autofocus autocomplete="email"  />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
                 <!-- password -->
                 <div class="col-span-2  mt-2">
                     <x-input-label for="password" :value="__('password')"  />
