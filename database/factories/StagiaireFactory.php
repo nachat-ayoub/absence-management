@@ -19,7 +19,7 @@ class StagiaireFactory extends Factory
         return [
             'nom' => fake()->name(),
             'prenom' => fake()->name(),
-            'classe_id' => random_int(1,10),
+            'classe_id' => 1,
         ];
     }
 }

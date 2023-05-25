@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('classe_id');
             $table->date('date');
             $table->boolean('isPresence');
+
             $table->foreign('stagiaire_id')->references('id')->on('stagiaires')->onDelete(('cascade'));
             $table->foreign('classe_id')->references('id')->on('classes')->onDelete(('cascade'));
             $table->timestamps();
