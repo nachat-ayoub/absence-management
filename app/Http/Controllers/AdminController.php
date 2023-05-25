@@ -45,6 +45,7 @@ class AdminController extends Controller
         $derniere_stagiaire_absencet = Presence::select('presences.preuve', 'presences.date', 'stagiaires.nom', 'stagiaires.prenom', 'classes.branche', 'classes.num_group')
             ->join('stagiaires', 'presences.stagiaire_id', '=', 'stagiaires.id')
             ->join('classes', 'stagiaires.classe_id', '=', 'classes.id')
+            ->where('presences.isPresence', 0)
             ->orderBy('presences.created_at', 'DESC')
             ->limit(5)
             ->get();
