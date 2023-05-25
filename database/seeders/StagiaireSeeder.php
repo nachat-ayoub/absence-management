@@ -14,6 +14,6 @@ class StagiaireSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Stagiaire::factory(10)->create();
+        \App\Models\Stagiaire::factory(5)->create();
     }
 }
