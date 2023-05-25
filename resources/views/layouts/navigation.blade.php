@@ -44,12 +44,12 @@
 
                             <x-slot name="content">
                                 {{-- <x-dropdown-link href="route('admin.searchformateur')"> --}}
-                                <x-dropdown-link :href="'/admin/formateur/search'">
+                                <x-dropdown-link :href="route('admin.allFormateur')">
                                     {{ __('Chercher') }}
                                 </x-dropdown-link>
 
                                 {{-- <x-dropdown-link href="route('admin.createformateur')"> --}}
-                                <x-dropdown-link :href="'/admin/formateur/create'">
+                                <x-dropdown-link :href="route('admin.createFormateur')">
                                     {{ __('Creé') }}
                                 </x-dropdown-link>
 

@@ -116,7 +116,7 @@ class AdminController extends Controller
 
         $this->inserInClassesFormateurTable($classes_ids);
 
-        return redirect()->route('admin.createFormateur')->with('success', 'formateur created successfully!');
+        return redirect()->route('admin.createFormateur')->with('success', 'Le Formateur a été Bien Ajouté !');
     }
 
     // ! Show detail of Formateur
@@ -153,14 +153,14 @@ class AdminController extends Controller
         $formateur['password'] = Hash::make($request->password);
         $formateur['admin_id'] = 1;
         $formateur->save();
-        return redirect()->route('admin.formateurs')->with('success', 'formateur updated successfully!');
+        return redirect()->route('admin.allFormateur')->with('success', 'Le Formateur a été Bien Modifier !');
     }
 
     // ! delete formateur
     public function destroyFormateur(Formateur $formateur)
     {
         $formateur->delete();
-        return redirect()->route('admin.formateurs')->with('success', 'formateur deleted successfully!');
+        return redirect()->route('admin.allFormateur')->with('success', 'Le Formateur a été Bien Supprimé !');
     }
 
     // todo ========================================== crud formateur =======================================
@@ -195,7 +195,7 @@ class AdminController extends Controller
         ]);
         $stagiaire['classe_id'] = $classe_id[0]->id;
         Stagiaire::create($stagiaire);
-        return redirect()->route('admin.createStagiaire')->with('success', 'le stagiaire a été ajouté!');
+        return redirect()->route('admin.createStagiaire')->with('success', 'Le Stagiaire a été Bien Ajouté !');
     }
 
     // ! Show detail of stagiaire
@@ -224,14 +224,14 @@ class AdminController extends Controller
         ]);
         $formFill['classe_id'] = $classe_id[0]->id;
         $stagiaire->fill($formFill)->save();
-        return redirect()->route('admin.allStagiaire')->with('success', 'le stagiaire a été bien modifier!');
+        return redirect()->route('admin.allStagiaire')->with('success', 'Le Stagiaire a été Bien Modifier !');
     }
 
     // ! delete stagiaire
     public function destroyStagiaire(Stagiaire $stagiaire)
     {
         $stagiaire->delete();
-        return redirect()->route('admin.allStagiaire')->with('success', 'Stagiaire deleted successfully!');
+        return redirect()->route('admin.allStagiaire')->with('success', 'Le Stagiaire a été Bien Supprimé !');
     }
 
     // todo ========================================== crud stagiaire =======================================
@@ -264,7 +264,7 @@ class AdminController extends Controller
         ]);
         $classe["branche"] = Str::upper($request->branche);
         Classe::create($classe);
-        return redirect()->route('admin.allClasses')->with('success', 'La classe a été crée avec success');
+        return redirect()->route('admin.createClasse')->with('success', 'La Classe a été Crée Avec Success');
 
     }
 
@@ -319,14 +319,14 @@ class AdminController extends Controller
         ]);
         $formFill['branche'] = Str::upper($formFill['branche']);
         $classe->fill($formFill)->save();
-        return redirect()->route('admin.allClasses')->with('success', 'classe updated successfully!');
+        return redirect()->route('admin.allClasses')->with('success', 'La Classe a été Bien Modifier !');
     }
 
     // ! delete classe
     public function destroyClasse(Classe $classe)
     {
         $classe->delete();
-        return redirect('admin.allClasses')->with('success', 'classe deleted successfully!');
+        return redirect()->route('admin.allClasses')->with('success', 'La Classe a été Bien Supprimé !');
     }
 
     // todo ========================================== crud classe ==========================================
