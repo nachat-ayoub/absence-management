@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class AdminController extends Controller {
+class AdminController extends Controller
+{
 
     // ! Dashboard Admin
-    public function dashboard() {
+    public function dashboard()
+    {
         $nbr_absence = DB::table('presences')->where("isPresence", 0)->count();
 
         $nbr_absence_sans_preuve = DB::select('select COUNT(*) as nbr from presences where UPPER(preuve) =  "RIEN";');
@@ -43,6 +45,7 @@ class AdminController extends Controller {
         $derniere_stagiaire_absencet = Presence::select('presences.preuve', 'presences.date', 'stagiaires.nom', 'stagiaires.prenom', 'classes.branche', 'classes.num_group')
             ->join('stagiaires', 'presences.stagiaire_id', '=', 'stagiaires.id')
             ->join('classes', 'stagiaires.classe_id', '=', 'classes.id')
+            ->where('presences.isPresence', 0)
             ->orderBy('presences.created_at', 'DESC')
             ->limit(5)
             ->get();
@@ -65,7 +68,8 @@ class AdminController extends Controller {
         ]);
     }
 
-    public function inserInClassesFormateurTable($classeData) {
+    public function inserInClassesFormateurTable($classeData)
+    {
         $classeData = explode(',', $classeData);
         $formateur_id = DB::table('formateurs')->select('id')->orderBy('id', "desc")->take(1)->get();
         $formateurId = $formateur_id[0]->id;
@@ -76,61 +80,27 @@ class AdminController extends Controller {
         }
     }
 
-    // public function updateClassesOfFormateur($classeDt, $classesCheck, $formateur_id)
-    // {
-    //     $hasData = DB::table('classe_formateur')
-    //         ->where('formateur_id', $formateur_id)
-    //         ->exists();
-    //     if ($classesCheck == "on") {
-    //         $hasData ? (DB::table('classe_formateur')->where('formateur_id', $formateur_id)->delete()) : "" ;
-    //         if (strlen($classeDt) == 1) {
-    //             DB::table('classe_formateur')->insert(
-    //                 ['classe_id' => $classeDt, 'formateur_id' => $formateur_id]
-    //             );
-    //         } elseif (strlen($classeDt) > 1) {
-    //             $classeData = $classeDt;
-    //             $this->inserInClassesFormateurTable($classeData);
-    //         }
-    //     } else {
-    //         $classesOfThisFormateur = DB::table('classe_formateur')
-    //             ->select('classe_id')
-    //             ->where('formateur_id', $formateur_id)
-    //             ->pluck('classe_id')
-    //             ->toArray();
-
-    //         if (strlen($classeDt) == 1) {
-    //             if (!(in_array($classeDt, $classesOfThisFormateur))) {
-    //                 DB::table('classe_formateur')->insert(['classe_id' => $classeDt, 'formateur_id' => $formateur_id]);
-    //             } else {
-    //                 $classeData = explode(',', $classeDt);
-    //                 foreach ($classeData as $clsDt) {
-    //                     if (!(in_array($clsDt, $classesOfThisFormateur))) {
-    //                         DB::table('classe_formateur')->insert(['classe_id' => $clsDt, 'formateur_id' => $formateur_id]);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    // // todo ========================================== crud formateur =======================================
+    // todo ========================================== crud formateur =======================================
 
     // ! afficher les formateurs
-    public function indexFormateur() {
+    public function indexFormateur()
+    {
         $formateurs = Formateur::paginate(7);
         $data = Formateur::all();
         return view('admin.formateurs.indexformateur', compact('formateurs'))->with('data', json_encode($data));
     }
 
     // ! create formateur
-    public function createFormateur() {
+    public function createFormateur()
+    {
         $classes = Classe::all();
 
         return view('admin.formateurs.createFormateur', compact('classes'));
     }
 
     // ! insert formateur dans db
-    public function storeFormateur(Request $request) {
+    public function storeFormateur(Request $request)
+    {
         $formateur = $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -147,17 +117,18 @@ class AdminController extends Controller {
 
         $this->inserInClassesFormateurTable($classes_ids);
 
-        return redirect()->route('admin.createFormateur')->with('success', 'formateur created successfully!');
+        return redirect()->route('admin.createFormateur')->with('success', 'Le Formateur a été Bien Ajouté !');
     }
 
     // ! Show detail of Formateur
-    public function showFormateur(Request $request, Formateur $formateur) {
-
+    public function showFormateur(Request $request, Formateur $formateur)
+    {
         return view('admin.formateurs.showFormateur', compact('formateur'));
     }
 
     // ! Show the form for editing the specified resource.
-    public function editFormateur(Request $request, Formateur $formateur) {
+    public function editFormateur(Request $request, Formateur $formateur)
+    {
         $classes = Classe::all();
         $classesOfFormateur = DB::table('classe_formateur')
             ->select('classe_id')
@@ -165,14 +136,12 @@ class AdminController extends Controller {
             ->pluck('classe_id')
             ->toArray();
 
-        // in_array()
-        // return compact('classes', 'classesOfFormateur');
-
         return view('admin.formateurs.editFormateur', compact('formateur', 'classes', 'classesOfFormateur'));
     }
 
     // ! save update
-    public function updateFormateur(Request $request, Formateur $formateur) {
+    public function updateFormateur(Request $request, Formateur $formateur)
+    {
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -185,13 +154,14 @@ class AdminController extends Controller {
         $formateur['password'] = Hash::make($request->password);
         $formateur['admin_id'] = 1;
         $formateur->save();
-        return redirect()->route('admin.formateurs')->with('success', 'formateur updated successfully!');
+        return redirect()->route('admin.allFormateur')->with('success', 'Le Formateur a été Bien Modifier !');
     }
 
     // ! delete formateur
-    public function destroyFormateur(Formateur $formateur) {
+    public function destroyFormateur(Formateur $formateur)
+    {
         $formateur->delete();
-        return redirect()->route('admin.formateurs')->with('success', 'formateur deleted successfully!');
+        return redirect()->route('admin.allFormateur')->with('success', 'Le Formateur a été Bien Supprimé !');
     }
 
     // todo ========================================== crud formateur =======================================
@@ -199,20 +169,23 @@ class AdminController extends Controller {
     // todo ========================================== crud stagiaire =======================================
 
     // ! afficher les stagiaires
-    public function indexStagiaire() {
+    public function indexStagiaire()
+    {
         $stagiaires = Stagiaire::paginate(6);
         $stagiaires_localstor = Stagiaire::all();
         return view('admin.stagiaire.index', compact('stagiaires'))->with('data', json_encode($stagiaires_localstor));
     }
 
     // ! create stagiaire
-    public function createStagiaire() {
+    public function createStagiaire()
+    {
         $branches = Classe::distinct()->pluck('branche', 'id');
         return view('admin.stagiaire.createStagiaire', compact('branches'));
     }
 
     // ! insert stagiaire dans db
-    public function storeStagiaire(Request $request) {
+    public function storeStagiaire(Request $request)
+    {
         $classe_id = DB::table('classes')->select('id')
             ->where('branche', $request->branche)
             ->where('num_group', $request->num_group)
@@ -223,22 +196,25 @@ class AdminController extends Controller {
         ]);
         $stagiaire['classe_id'] = $classe_id[0]->id;
         Stagiaire::create($stagiaire);
-        return redirect()->route('admin.createStagiaire')->with('success', 'le stagiaire a été ajouté!');
+        return redirect()->route('admin.createStagiaire')->with('success', 'Le Stagiaire a été Bien Ajouté !');
     }
 
     // ! Show detail of stagiaire
-    public function showStagiaire(Stagiaire $stagiaire) {
+    public function showStagiaire(Stagiaire $stagiaire)
+    {
         return view('admin.stagiaire.showStagiaire', compact('stagiaire'));
     }
 
     // ! Show the form for editing the specified resource.
-    public function editStagiaire(Stagiaire $stagiaire) {
+    public function editStagiaire(Stagiaire $stagiaire)
+    {
         $branches = Classe::distinct()->pluck('branche', 'id');
         return view('admin.stagiaire.editStagiaire', compact('stagiaire', 'branches'));
     }
 
     // ! save update
-    public function updateStagiaire(Request $request, Stagiaire $stagiaire) {
+    public function updateStagiaire(Request $request, Stagiaire $stagiaire)
+    {
         $classe_id = DB::table('classes')->select('id')
             ->where('branche', $request->branche)
             ->where('num_group', $request->num_group)
@@ -249,13 +225,14 @@ class AdminController extends Controller {
         ]);
         $formFill['classe_id'] = $classe_id[0]->id;
         $stagiaire->fill($formFill)->save();
-        return redirect()->route('admin.allStagiaire')->with('success', 'le stagiaire a été bien modifier!');
+        return redirect()->route('admin.allStagiaire')->with('success', 'Le Stagiaire a été Bien Modifier !');
     }
 
     // ! delete stagiaire
-    public function destroyStagiaire(Stagiaire $stagiaire) {
+    public function destroyStagiaire(Stagiaire $stagiaire)
+    {
         $stagiaire->delete();
-        return redirect()->route('admin.allStagiaire')->with('success', 'Stagiaire deleted successfully!');
+        return redirect()->route('admin.allStagiaire')->with('success', 'Le Stagiaire a été Bien Supprimé !');
     }
 
     // todo ========================================== crud stagiaire =======================================
@@ -264,19 +241,22 @@ class AdminController extends Controller {
 
     // ! afficher les classes
 
-    public function indexClasses() {
+    public function indexClasses()
+    {
         $classes = Classe::paginate(7);
         // return $classes;
         return view('admin.classe.indexClasse', compact('classes'));
     }
 
     // ! create classe
-    public function createClasse() {
+    public function createClasse()
+    {
         return view('admin.classe.createClasse');
     }
 
     // ! insert classe dans db
-    public function storeClasse(Request $request) {
+    public function storeClasse(Request $request)
+    {
         $classe = $request->validate([
             'branche' => 'required',
             'num_group' => 'required',
@@ -285,12 +265,13 @@ class AdminController extends Controller {
         ]);
         $classe["branche"] = Str::upper($request->branche);
         Classe::create($classe);
-        return redirect()->route('admin.allClasses')->with('success', 'La classe a été crée avec success');
+        return redirect()->route('admin.createClasse')->with('success', 'La Classe a été Crée Avec Success');
 
     }
 
     // ! Show detail of classe
-    public function showClasse(Classe $classe) {
+    public function showClasse(Classe $classe)
+    {
 
         $stagiaires = $classe->stagiaires()->paginate(7);
         $stagiaireAbsence = [];
@@ -323,12 +304,14 @@ class AdminController extends Controller {
     }
 
     // ! Show the form for editing the specified resource.
-    public function editClasse(Request $request, Classe $classe) {
+    public function editClasse(Request $request, Classe $classe)
+    {
         return view('admin.classe.editClasse', compact('classe'));
     }
 
     // ! save update
-    public function updateClasse(Request $request, Classe $classe) {
+    public function updateClasse(Request $request, Classe $classe)
+    {
         $formFill = $request->validate([
             'branche' => 'required',
             'num_group' => 'required',
@@ -337,13 +320,14 @@ class AdminController extends Controller {
         ]);
         $formFill['branche'] = Str::upper($formFill['branche']);
         $classe->fill($formFill)->save();
-        return redirect()->route('admin.allClasses')->with('success', 'classe updated successfully!');
+        return redirect()->route('admin.allClasses')->with('success', 'La Classe a été Bien Modifier !');
     }
 
     // ! delete classe
-    public function destroyClasse(Classe $classe) {
+    public function destroyClasse(Classe $classe)
+    {
         $classe->delete();
-        return redirect('admin.allClasses')->with('success', 'classe deleted successfully!');
+        return redirect()->route('admin.allClasses')->with('success', 'La Classe a été Bien Supprimé !');
     }
 
     // todo ========================================== crud classe ==========================================

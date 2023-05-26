@@ -17,11 +17,11 @@ class PresenceFactory extends Factory
     public function definition(): array
     {
         return [
-            'stagiaire_id' => random_int(1, 50),
+            'stagiaire_id' => random_int(1, 10),
             'classe_id' => 1,
             'date' => fake()->dateTimeBetween("this week Monday", "now"),
             'isPresence' => fake()->boolean(),
-            'preuve' => fake()->randomElement(["rien", "medicale"]),
+            'preuve' => fake()->randomElement(['rien', 'medicale']),
         ];
     }
 }

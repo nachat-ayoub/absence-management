@@ -17,8 +17,8 @@ class Classe_formateurFactory extends Factory
     public function definition(): array
     {
         return [
-            'classe_id' => random_int(1, 10),
-            'formateur_id' => random_int(1, 5),
+            'classe_id' => 1,
+            'formateur_id' => random_int(1, 2),
         ];
     }
 }
