@@ -303,8 +303,8 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('profile.edit')">
-                                    {{ __('Noté l\'abcense') }}
+                                <x-dropdown-link :href="route('formateur.absence.classeAbsence', 1)">
+                                    {{ __('Noté l\'absence') }}
                                 </x-dropdown-link>
 
                                 <!-- Authentication -->

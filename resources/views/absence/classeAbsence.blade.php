@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {{ __("classe $classe->id") }}
+            {{ __('Group') }}: {{ $classe->branche . $classe->num_group }} - Année: {{ $classe->annee_scolaire }}
         </h2>
     </x-slot>
     <div class="container mx-auto mt-10 px-4">
@@ -10,84 +10,72 @@
             <a href="{{ back() }}">Retourner</a>
         </button>
 
-        <div class="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
-            <div class="flex items-center justify-between">
+        {{-- <div class="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
+            <h2 class="text-xl font-bold">CLass: {{ $classe->id }}</h2>
+        </div> --}}
 
-                <p class="text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    {{ $classe->branche }} {{ $classe->num_group }}
-                </p>
-
-                <div class="flex flex-row gap-4">
-
-                    <!-- update -->
-                    <a class="text-lg" href="{{ route('admin.editClasse', $classe->id) }}">
-                        <div class="w-full items-center rounded-lg bg-slate-50 px-4 py-2 text-center text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto"
-                            title="modifier les information de stagiaire">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </div>
-                    </a>
-
-                    <!-- delete -->
-                    <form action="{{ route('admin.destroyClasse', $classe->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="w-full items-center rounded-lg bg-slate-50 px-4 py-2 text-center text-slate-700 hover:bg-slate-300 hover:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto"
-                            title="supprimer ce stagiaire">
-                            <button type="submit" class="text-lg">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        {{-- * Table --}}
+        <div class="mx-6 mt-6 flex flex-col justify-between gap-3 px-2 md:mx-12 md:flex-row md:px-12">
             <div>
-                <p class="text-md mb-3 font-medium text-gray-900 dark:text-gray-400">
+                <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100"
+                    title="Les dernières absences enregistrées.">
+                    <thead>
+                        <tr>
+                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                                scope="col">
+                                N°
+                            </th>
 
-                </p>
-                <p class="text-md mb-3 font-medium text-gray-900 dark:text-gray-400">
-                    Annee Scolaire : {{ $classe->annee_scolaire }}
-                </p>
-                <p class="text-md mb-3 font-medium text-gray-900 dark:text-gray-400">
-                    Totale D'absence: {{ $totalAbsences }}
-                </p>
-            </div>
+                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                                scope="col">
+                                Nom & Prénom
+                            </th>
 
-            <h5 class="my-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Les Stagiaire Dans La
-                Classe :</h5>
-            <div class="my-4 overflow-x-auto">
-                <table class="text-md my-5 w-full text-left text-gray-900 dark:text-gray-300">
-                    <thead class="bg-gray-200 uppercase text-gray-900 dark:bg-gray-700 dark:text-gray-400">
-                        <tr class="font-bold">
-                            <th scope="col" class="px-6 py-1 text-center">N°</th>
-                            <th scope="col" class="px-6 py-1">Nom</th>
-                            <th scope="col" class="px-6 py-1">Prenom</th>
-                            <th scope="col" class="px-6 py-1">number D'absente</th>
-                            <th scope="col" class="hidden px-6 py-1 md:table-cell">absente son preuve</th>
-                            <th scope="col" class="hidden px-6 py-1 md:table-cell">absente avec preuve</th>
+                            @php
+                                $jours = ['Lundi', 'Mardi', 'Mercredi'];
+                            @endphp
+
+                            @foreach ($jours as $jour)
+                                <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                                    scope="col">
+                                    {{ $jour }}
+                                </th>
+                            @endforeach
+
                         </tr>
                     </thead>
-                    <tbody class="bg-gray-100">
-                        @foreach ($stagiaires as $key => $stagiaire)
+                    <tbody class="divide-y divide-gray-200 bg-white dark:text-gray-100">
+                        @foreach ($classe->stagiaires as $i => $stg)
                             <tr>
                                 <td
-                                    class="text-md whitespace-nowrap px-3 py-2 text-center font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
-                                    {{ $stagiaire->id }}</td>
+                                    class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
+                                    {{ $i + 1 }}
+                                </td>
                                 <td
-                                    class="text-md whitespace-nowrap px-3 py-2 font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
-                                    {{ $stagiaire->nom }}</td>
-                                <td
-                                    class="text-md whitespace-nowrap px-3 py-2 font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
-                                    {{ $stagiaire->prenom }}</td>
-                                <td class="pl-24">{{ $stagiaire->absencesCount }}</td>
-                                <td class="hidden pl-24 md:table-cell">{{ $stagiaire->absenceSonPreuv }}</td>
-                                <td class="hidden pl-24 md:table-cell">{{ $stagiaire->absenceAvecPreuv }}</td>
+                                    class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
+                                    {{ $stg->nom . ' ' . $stg->prenom }}
+                                </td>
+
+                                @foreach ($jours as $j => $jour)
+                                    <td
+                                        class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
+                                        <div class="flex justify-center">
+                                            <span class="w-fit border border-gray-400 px-1.5 py-0.5">
+                                                <span
+                                                    class="{{ isset($stg->presences[$j]) && !$stg->presences[$j]->isPresence ? 'inline-block' : 'invisible' }}">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </span>
+                                            </span>
+                                            </span>
+                                    </td>
+                                @endforeach
+
                             </tr>
                         @endforeach
+
                     </tbody>
                 </table>
-                {{ $stagiaires->links() }}
             </div>
-
         </div>
 
     </div>

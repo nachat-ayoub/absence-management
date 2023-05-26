@@ -26,26 +26,30 @@ Route::middleware('guest:formateur')->prefix('formateur')->name('formateur.')->g
 });
 
 Route::prefix('formateur')->middleware('formateur')->name('formateur.')->group(function () {
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
     Route::prefix('/absence')->name('absence.')->group(function () {
-        // Route::get('/', function () {
-        //     return view('formateur.absence.index');
-        // })->name('absence');
-
-        Route::get('/classe/{classe_id}', function (Classe $classe) {
-
+        Route::get('/classe/{classe_id}', function (string $classeId) {
             $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
             $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
 
-            $classe->load(['formateurs', 'presences' => function ($query) use ($startOfWeek, $endOfWeek) {
-                $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
-            }]);
 
-            return $classe;
-            // return view('formateur.absence.classeAbsence', compact('classe'));
+            $classe = Classe::with(['formateurs', 'stagiaires' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->orderBy('nom', 'asc')->with(['presences' => function ($query) use ($startOfWeek, $endOfWeek) {
+                    $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
+                }]);
+            }])->findOrFail($classeId);
+
+            $week = [
+                'start' => $startOfWeek,
+                'end' => $endOfWeek,
+            ];
+
+            // return $classe;
+            return view('absence.classeAbsence', compact('classe', 'week'));
 
         })->name('classeAbsence');
     });
