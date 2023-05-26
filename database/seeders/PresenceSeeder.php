@@ -16,6 +16,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 1,
                 'classe_id' => 1,
                 'date' => '2023-05-22',
+                'seance' => '1,2',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -23,6 +24,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 2,
                 'classe_id' => 1,
                 'date' => '2023-05-22',
+                'seance' => '1,2',
                 'isPresence' => false,
                 'preuve' => 'rien'
             ],
@@ -30,6 +32,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 3,
                 'classe_id' => 1,
                 'date' => '2023-05-22',
+                'seance' => '1,2',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -37,6 +40,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 4,
                 'classe_id' => 1,
                 'date' => '2023-05-22',
+                'seance' => '1,2',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -44,12 +48,14 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 5,
                 'classe_id' => 1,
                 'date' => '2023-05-22',
+                'seance' => '1,2',
                 'isPresence' => true,
                 'preuve' => ''
             ],
             [
                 'stagiaire_id' => 1,
                 'classe_id' => 1,
+                'seance' => '3',
                 'date' => '2023-05-23',
                 'isPresence' => true,
                 'preuve' => ''
@@ -58,6 +64,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 2,
                 'classe_id' => 1,
                 'date' => '2023-05-23',
+                'seance' => '3',
                 'isPresence' => false,
                 'preuve' => 'rien'
             ],
@@ -65,6 +72,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 3,
                 'classe_id' => 1,
                 'date' => '2023-05-23',
+                'seance' => '3',
                 'isPresence' => false,
                 'preuve' => 'medicale'
             ],
@@ -72,6 +80,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 4,
                 'classe_id' => 1,
                 'date' => '2023-05-23',
+                'seance' => '3',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -79,6 +88,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 5,
                 'classe_id' => 1,
                 'date' => '2023-05-23',
+                'seance' => '3',
                 'isPresence' => false,
                 'preuve' => 'rien'
             ],
@@ -86,6 +96,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 1,
                 'classe_id' => 1,
                 'date' => '2023-05-24',
+                'seance' => '3,4',
                 'isPresence' => false,
                 'preuve' => 'medicale'
             ],
@@ -93,6 +104,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 2,
                 'classe_id' => 1,
                 'date' => '2023-05-24',
+                'seance' => '3,4',
                 'isPresence' => false,
                 'preuve' => 'rien'
             ],
@@ -100,6 +112,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 3,
                 'classe_id' => 1,
                 'date' => '2023-05-24',
+                'seance' => '3,4',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -107,6 +120,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 4,
                 'classe_id' => 1,
                 'date' => '2023-05-24',
+                'seance' => '3,4',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -114,6 +128,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 5,
                 'classe_id' => 1,
                 'date' => '2023-05-24',
+                'seance' => '3,4',
                 'isPresence' => false,
                 'preuve' => 'rien'
             ],
@@ -121,6 +136,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 1,
                 'classe_id' => 1,
                 'date' => '2023-05-25',
+                'seance' => '2',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -128,6 +144,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 2,
                 'classe_id' => 1,
                 'date' => '2023-05-25',
+                'seance' => '2',
                 'isPresence' => false,
                 'preuve' => 'medicale'
             ],
@@ -135,6 +152,7 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 3,
                 'classe_id' => 1,
                 'date' => '2023-05-25',
+                'seance' => '2',
                 'isPresence' => true,
                 'preuve' => ''
             ],
@@ -142,12 +160,14 @@ class PresenceSeeder extends Seeder
                 'stagiaire_id' => 4,
                 'classe_id' => 1,
                 'date' => '2023-05-25',
+                'seance' => '2',
                 'isPresence' => false,
                 'preuve' => 'rien'
             ],
             [
                 'stagiaire_id' => 5,
                 'classe_id' => 1,
+                'seance' => '2',
                 'date' => '2023-05-25',
                 'isPresence' => false,
                 'preuve' => 'rien'
