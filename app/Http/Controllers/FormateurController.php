@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Absence_stagiaire;
 use App\Models\Classe;
 use App\Models\Formateur;
 use App\Models\Presence;
@@ -65,7 +64,7 @@ class FormateurController extends Controller {
     }
 
     // * Creation un absence de stagiaire :
-    function storeStagiairePresence(Request $request, string $classe_id, string $stagiaire_id) {
+    function storeStagiairePresence(Request $request, /* string $classe_id, string $stagiaire_id */) {
         $presenceData = $request->validate([
             'classe_id' => 'required|exists:classes,id',
             'stagiaire_id' => 'required|exists:stagiaires,id',
@@ -99,29 +98,4 @@ class FormateurController extends Controller {
         return back()->with('success', 'Absence de stagiaire modifier avec succès!');
     }
 
-    //
-    //
-    // * Supprimer un absence de stagiaire :
-    function destroyAbsenceStagiaire(Request $request) {
-        $data = $request->validate([
-            'absence_id' => 'required',
-            'stagiaire_id' => 'required',
-        ]);
-
-        $absence_stagiaire = Absence_stagiaire::whereStagiaireId($data['stagiaire_id'])->whereAbsenceId($data['absence_id'])->first();
-
-        if (!$absence_stagiaire) {
-            return back()->with('error', 'Absence de stagiaire n\'existe pas!');
-        }
-
-        $absence_stagiaire->delete();
-        return back()->with('success', 'Absence de stagiaire supprimer avec succès!');
-    }
-
 }
-
-// * Absence Table : create an absence page for a date (day);
-// * -- date, classe_id, formateur_id
-
-// * AbsenceStagiaire Table : create an absence for stagiaire with the absence page id;
-// * -- absence_id, stagiaire_id, preuve?
