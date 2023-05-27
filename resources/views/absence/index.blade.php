@@ -8,10 +8,10 @@
         </div>
     </x-slot>
     <div class="container mx-auto mt-10 px-4">
-        <button
+        {{-- <button
             class='mb-4 inline-flex items-center justify-center rounded-lg border border-transparent bg-gray-800 px-1 py-2 tracking-widest text-white transition duration-150 ease-in-out hover:text-gray-100 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:border-gray-400 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300 md:px-3 md:py-2'>
             <a href="{{ url()->previous() }}">Retourner</a>
-        </button>
+        </button> --}}
 
         {{-- * Table --}}
         <div class="mx-4 mt-6 flex flex-col justify-between gap-3 px-2 md:flex-row">
@@ -20,23 +20,23 @@
                     title="Les dernières absences enregistrées.">
                     <thead>
                         <tr>
-                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                            <th class="dark:bg-gray-950 p-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
                                 scope="col">
                                 N°
                             </th>
-                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                            <th class="dark:bg-gray-950 p-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
                                 scope="col">
                                 branche
                             </th>
-                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                            <th class="dark:bg-gray-950 p-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
                                 scope="col">
                                 group
                             </th>
-                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                            <th class="dark:bg-gray-950 p-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
                                 scope="col">
                                 Année Scolaire
                             </th>
-                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
+                            <th class="dark:bg-gray-950 p-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
                                 scope="col">
                                 Noté L'absence
                             </th>
