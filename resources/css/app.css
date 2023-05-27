@@ -19,3 +19,25 @@
         dark:bg-gray-700 dark:hover:bg-gray-600;
     }
 }
+@media (min-width: 768px) and (max-width: 1119.98px) {
+    #diagramme{
+        width: 96%;
+        margin-bottom: 20px;
+    }
+    #diagramme canvas{
+        
+        width: 100% !important;
+    }
+   
+  }
+  
+@media (max-width : 1000.98px){
+
+    #table{
+        width: 90% !important;
+        margin-top: 20px;
+    }
+    #table table{
+        width: 100% !important;
+    }
+}
