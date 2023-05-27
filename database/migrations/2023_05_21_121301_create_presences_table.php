@@ -8,8 +8,7 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up(): void{
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('stagiaire_id');
@@ -26,8 +25,7 @@ return new class extends Migration {
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
+    public function down(): void{
         Schema::dropIfExists('presences');
     }
 };

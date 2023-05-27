@@ -2,101 +2,100 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Absence;
 use App\Models\Absence_stagiaire;
-use App\Models\Stagiaire;
+use App\Models\Classe;
+use App\Models\Formateur;
+use App\Models\Presence;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FormateurController extends Controller {
 
     // * getStagiaire
-    function getStagiaire(Request $request, string $absence_id) {
-        $error = null;
-        $absence = null;
+    function getClassPresences(Request $request, string $classeId) {
+        $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
+        $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
 
-        $absence = Absence::with('absencesStagiaires.stagiaire')->find($absence_id);
+        $classe = Classe::with(['formateurs', 'stagiaires' => function ($query) use ($startOfWeek, $endOfWeek) {
+            $query->orderBy('nom', 'asc')->with(['presences' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
+            }]);
+        }])->findOrFail($classeId);
 
-        if (!$absence || !$absence->exists()) {
-            $error = 'No Absence exist!';
+        $week = [
+            'start' => $startOfWeek->format('d/m/Y'),
+            'end' => $endOfWeek->format('d/m/Y'),
+        ];
+
+        // Get the current date
+        $today = Carbon::now();
+
+        // Set the start of the week to Monday
+        $today->startOfWeek(Carbon::MONDAY);
+
+        // Initialize the array to store week information
+
+        // Iterate over the days of the week
+        for ($i = 0; $i < 6; $i++) {
+            // Get the day name in French
+            $dayName = ucfirst($today->locale('fr_FR')->isoFormat('dddd'));
+
+            // Get the date in the desired format
+            $date = $today->format('Y-m-d');
+
+            // Add the day and date to the weekInfo array
+            $week['jours'][$dayName] = $date;
+
+            // Move to the next day
+            $today->addDay();
         }
 
-        // return $absence;
+        if ($request->has('json')) {
+            return compact('classe', 'week');
+        }
 
-        return view('absence.index', compact('absence', 'error'));
+        return view('absence.classeAbsence', compact('classe', 'week'));
+
     }
 
-    // * FORM de Creation d'absence de stagiaire :
-    function createAbsenceStagiaire(Request $request, string $absence_id, string $stagiaire_id) {
-        $error = '';
-        $absence = null;
-        $stagiaire = null;
-
-        $absence = Absence::find($absence_id);
-        if (!$absence) {
-            $error = 'Ther is no absence with this id: ' . $absence_id;
-        }
-
-        $stagiaire = Stagiaire::find($stagiaire_id);
-        if (!$stagiaire) {
-            $error = 'Ther is no stagiaire with this id: ' . $stagiaire_id;
-        }
-
-        return view('absence.stagiare.create', compact('absence', 'stagiaire', 'error'));
+    function getCLasses(Request $request) {
+        $classes = Formateur::find(Auth::guard('formateur')->user()->getAuthIdentifier())->classes;
+        return view('absence.index', compact('classes'));
     }
 
-    //
-    //
-    //
-    //
-    //
     // * Creation un absence de stagiaire :
-    function storeAbsenceStagiaire(Request $request) {
-        $data = $request->validate([
-            'absence_id' => 'required|exists:absences,id',
+    function storeStagiairePresence(Request $request, string $classe_id, string $stagiaire_id) {
+        $presenceData = $request->validate([
+            'classe_id' => 'required|exists:classes,id',
             'stagiaire_id' => 'required|exists:stagiaires,id',
+            'seance' => 'required|string',
+            'isPresence' => 'required|boolean',
+            'preuve' => 'sometimes|nullable|string|max:100',
         ]);
 
-        Absence_stagiaire::create($data);
-        return back()->with('success', 'Absence de stagiaire creé avec succès!');
-    }
-
-    // * FORM de modification d'absence de stagiaire :
-    function editAbsenceStagiaire(Request $request, string $absence_id, string $stagiaire_id) {
-        $error = '';
-        $absence = null;
-        $stagiaire = null;
-
-        $absence = Absence::find($absence_id);
-        if (!$absence) {
-            $error = 'Ther is no absence with this id: ' . $absence_id;
-        }
-
-        $stagiaire = Stagiaire::find($stagiaire_id);
-        if (!$stagiaire) {
-            $error = 'Ther is no stagiaire with this id: ' . $stagiaire_id;
-        }
-
-        return view('absence.stagiare.edit', compact('absence', 'stagiaire', 'error'));
+        Presence::create($presenceData);
+        return redirect()->back()->with('success', 'L\'absence a été crée avec succès !');
     }
 
     //
     //
     //
     // * Modification d'un absence de stagiaire :
-    function updateAbsenceStagiaire(Request $request) {
-        $data = $request->validate([
-            'absence_id' => 'required|exists:absences,id',
-            'stagiaire_id' => 'required|exists:stagiaires,id',
-            'preuve' => 'required',
+    function updateStagiairePresence(Request $request) {
+        $presenceData = $request->validate([
+            'id' => 'required|exists:presences,id',
+            'isPresence' => 'required|boolean',
+            'preuve' => 'sometimes|nullable|string|max:100',
         ]);
 
-        $absence_stagiaire = Absence_stagiaire::whereStagiaireId($data['stagiaire_id'])->whereAbsenceId($data['absence_id'])->first();
+        $presence = Presence::find($presenceData['id']);
 
-        if (!$absence_stagiaire) {
-            return back()->with('error', 'Absence de stagiaire n\'existe pas!');
+        if (!$presence) {
+            return back()->with('error', 'Presence de stagiaire n\'existe pas!');
         }
 
-        $absence_stagiaire->update($data);
+        $presence->update($presenceData);
         return back()->with('success', 'Absence de stagiaire modifier avec succès!');
     }
 

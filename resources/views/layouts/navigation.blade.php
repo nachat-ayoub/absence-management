@@ -19,9 +19,9 @@
                     </div>
                 </div>
 
-                <!-- Settings Dropdown -->
                 <div class="hidden sm:ml-6 sm:flex sm:items-center">
 
+                    <!-- Settings Dropdown -->
                     <div class="">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
@@ -168,6 +168,9 @@
                         </x-slot>
                     </x-dropdown>
 
+                    <div class="ml-2">
+                        <x-darkmode-switcher></x-darkmode-switcher>
+                    </div>
                 </div>
 
                 <!-- Hamburger -->
@@ -243,8 +246,9 @@
                         </div>
                     </div>
 
-                    <!-- Settings Dropdown -->
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">
+
+                        <!-- Settings Dropdown -->
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
@@ -303,7 +307,7 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('formateur.absence.classeAbsence', 1)">
+                                <x-dropdown-link :href="route('formateur.absence.index')">
                                     {{ __('Noté l\'absence') }}
                                 </x-dropdown-link>
 
@@ -320,6 +324,9 @@
                             </x-slot>
                         </x-dropdown>
 
+                        <div class="ml-2">
+                            <x-darkmode-switcher></x-darkmode-switcher>
+                        </div>
                     </div>
 
                     <!-- Hamburger -->
