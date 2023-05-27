@@ -11,15 +11,16 @@
             </h2>
         </div>
     </x-slot>
+
     <div class="container mx-auto mt-10 px-4" x-data="{
-        action: null
+        action: null,
         isModalOpen: false,
-        toggleModal() {
-            this.action = 'actionName';
+        toggleModal(action) {
+            this.action = action;
             this.isModalOpen = !this.isModalOpen;
         }
     }">
-        <button @click="isModalOpen = !isModalOpen"
+        <button @click="toggleModal('update|create')"
             class="my-4 flex transform items-center justify-center space-x-2 rounded-md bg-indigo-500 px-3 py-2 text-sm capitalize tracking-wide text-white transition-colors duration-200 hover:bg-indigo-600 focus:bg-indigo-500 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-50 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -34,42 +35,44 @@
             <!-- Modal content here -->
             <x-slot name="title">Noté L'absence:</x-slot>
 
-            <form class="my-6 flex flex-col gap-y-2" action="POST" method="post">
-                <div class="col-span-2 inline">
-                    <x-input-label for="stagiaire_id" :value="__('Stagiaire id')" />
-                    <x-text-input id="stagiaire_id" class="mt-1 block w-full" type="text" name="stagiaire_id"
-                        :value="old('stagiaire_id')" value='test stagiaire' required autofocus autocomplete="stagiaire_id"
-                        disabled="true" />
-                    <x-input-error :messages="$errors->get('stagiaire_id')" class="mt-2" />
-                </div>
+            <template x-if="action === 'create'">
+                <form class="my-6 flex flex-col gap-y-2" action="POST" method="post">
+                    <div class="col-span-2 inline">
+                        <x-input-label for="stagiaire_id" :value="__('Stagiaire id')" />
+                        <x-text-input id="stagiaire_id" class="mt-1 block w-full" type="text" name="stagiaire_id"
+                            :value="old('stagiaire_id')" value='test stagiaire' required autofocus autocomplete="stagiaire_id"
+                            disabled="true" />
+                        <x-input-error :messages="$errors->get('stagiaire_id')" class="mt-2" />
+                    </div>
 
-                <div class="col-span-2 inline">
-                    <x-input-label for="seance" :value="__('Seance')" />
-                    <x-text-input id="seance" class="mt-1 block w-full" type="text" name="seance"
-                        :value="old('seance')" required autofocus autocomplete="seance" />
-                    <x-input-error :messages="$errors->get('seance')" class="mt-2" />
-                </div>
+                    <div class="col-span-2 inline">
+                        <x-input-label for="seance" :value="__('Seance')" />
+                        <x-text-input id="seance" class="mt-1 block w-full" type="text" name="seance"
+                            :value="old('seance')" required autofocus autocomplete="seance" />
+                        <x-input-error :messages="$errors->get('seance')" class="mt-2" />
+                    </div>
 
-                <div class="col-span-2 inline">
-                    <x-input-label for="preuve" :value="__('Preuve')" />
-                    <x-text-input id="preuve" class="mt-1 block w-full" type="text" name="preuve"
-                        :value="old('preuve')" required autofocus autocomplete="preuve" />
-                    <x-input-error :messages="$errors->get('preuve')" class="mt-2" />
-                </div>
+                    <div class="col-span-2 inline">
+                        <x-input-label for="preuve" :value="__('Preuve')" />
+                        <x-text-input id="preuve" class="mt-1 block w-full" type="text" name="preuve"
+                            :value="old('preuve')" required autofocus autocomplete="preuve" />
+                        <x-input-error :messages="$errors->get('preuve')" class="mt-2" />
+                    </div>
 
-                <!-- Remember Me -->
-                <div class="mt-4 block">
-                    <label for="isPresence" class="inline-flex cursor-pointer items-center">
-                        <input id="isPresence" type="checkbox"
-                            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-                            name="isPresence">
-                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Présent(e)') }}</span>
-                    </label>
-                </div>
+                    <!-- Remember Me -->
+                    <div class="mt-4 block">
+                        <label for="isPresence" class="inline-flex cursor-pointer items-center">
+                            <input id="isPresence" type="checkbox"
+                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                                name="isPresence">
+                            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Présent(e)') }}</span>
+                        </label>
+                    </div>
 
-            </form>
+                </form>
+            </template>
 
-            <x-primary-button @click="isModalOpen = !isModalOpen">Close</x-primary-button>
+            <x-primary-button @click="toggleModal('update|create')">Close</x-primary-button>
         </x-custom-modal>
         <button
             class='mb-4 inline-flex items-center justify-center rounded-lg border border-transparent bg-gray-800 px-1 py-2 tracking-widest text-white transition duration-150 ease-in-out hover:text-gray-100 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:border-gray-400 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300 md:px-3 md:py-2'>
@@ -106,26 +109,26 @@
                             @php
                                 $weekDays = $week['jours'];
                                 $presenceData = [];
-                                
+
                                 foreach ($weekDays as $dayName => $date) {
                                     $presences = collect($stg->presences)->where('date', $date);
                                     $sessions = array_fill(1, 4, null);
-                                
+
                                     foreach ($presences as $presence) {
                                         $sessionNumbers = explode(',', $presence['seance']);
                                         $isPresence = $presence['isPresence'] == 1;
                                         $presence_id = $presence->id;
                                         $preuve = $presence->preuve;
                                         $date = $presence->date;
-                                
+
                                         foreach ($sessionNumbers as $sessionNumber) {
                                             $sessions[(int) $sessionNumber] = compact('isPresence', 'presence_id', 'preuve', 'date');
                                         }
                                     }
-                                
+
                                     $presenceData[$dayName] = $sessions;
                                 }
-                                
+
                             @endphp
 
                             <tr class="divide-x divide-gray-500 text-gray-800 dark:divide-gray-600">
@@ -170,13 +173,10 @@
 
     </div>
 
-    @push('scripts')
-        <script>
-            function isDisabled(date) {
-                const currentDate = new Date().toISOString().split('T')[0];
-                return date === currentDate;
-            }
-        </script>
-    @endpush
-
+    <script>
+        function isDisabled(date) {
+            const currentDate = new Date().toISOString().split('T')[0];
+            return date === currentDate;
+        }
+    </script>
 </x-app-layout>
