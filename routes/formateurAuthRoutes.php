@@ -33,6 +33,8 @@ Route::prefix('formateur')->middleware('formateur')->name('formateur.')->group(f
     Route::prefix('/absence')->name('absence.')->group(function () {
         Route::get('/', [FormateurController::class, 'getCLasses'])->name('index');
         Route::get('/classe/{classe_id}', [FormateurController::class, 'getClassPresences'])->name('classeAbsence');
+        Route::post('/classe/{classe_id}', [FormateurController::class, 'storeStagiairePresence'])->name('storeClasseAbsence');
+        Route::put('/classe/{classe_id}', [FormateurController::class, 'updateStagiairePresence'])->name('updateClasseAbsence');
     });
 
     Route::get('verify-email', EmailVerificationPromptController::class)
