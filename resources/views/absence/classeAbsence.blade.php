@@ -22,29 +22,26 @@
             <div>
                 <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100"
                     title="Les absences de cette semain.">
-                    <thead>
+                    <thead
+                        class="dark:bg-gray-950 bg-gray-800 text-left text-xs font-bold uppercase tracking-wider text-gray-50">
                         <tr>
-                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
-                                scope="col">
+                            <th class="px-2 py-2 md:px-6 md:py-3" scope="col">
                                 N°
                             </th>
 
-                            <th class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
-                                scope="col">
+                            <th class="px-2 py-2 md:px-6 md:py-3" scope="col">
                                 Nom & Prénom
                             </th>
 
                             @foreach ($week['jours'] as $jour => $dateJour)
-                                <th colspan="4"
-                                    class="dark:bg-gray-950 px-0 py-2 text-center text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:px-6 md:py-3"
-                                    scope="col">
+                                <th colspan="4" class="px-0 py-2 text-center md:px-6 md:py-3" scope="col">
                                     {{ $jour . ' ' . explode('-', $dateJour)[2] }}
                                 </th>
                             @endforeach
 
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white dark:text-gray-100">
+                    <tbody class="divide-y divide-gray-300 bg-white dark:divide-gray-200 dark:text-gray-100">
 
                         @foreach ($classe->stagiaires as $i => $stg)
                             @php

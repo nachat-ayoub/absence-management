@@ -175,6 +175,11 @@
 
                 <!-- Hamburger -->
                 <div class="-mr-2 flex items-center sm:hidden">
+                    <!-- Darkmode for small phones -->
+                    <div class="mr-2">
+                        <x-darkmode-switcher></x-darkmode-switcher>
+                    </div>
+
                     <button @click="open = ! open"
                         class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -331,6 +336,11 @@
 
                     <!-- Hamburger -->
                     <div class="-mr-2 flex items-center sm:hidden">
+                        <!-- Darkmode for small phones -->
+                        <div class="mr-2">
+                            <x-darkmode-switcher></x-darkmode-switcher>
+                        </div>
+
                         <button @click="open = ! open"
                             class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400">
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
