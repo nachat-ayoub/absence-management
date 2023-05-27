@@ -80,9 +80,6 @@
                                 </td>
 
                                 @foreach ($presenceData as $jour => $presence)
-                                    {{-- @php
-                                        dd($jour);
-                                    @endphp --}}
                                     @foreach ($presence as $index => $session)
                                         {{-- * No presence found --}}
 
