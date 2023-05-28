@@ -23,8 +23,11 @@ class AdminController extends Controller
         $nbr_absence_sans_preuve = DB::select('select COUNT(*) as nbr from presences where UPPER(preuve) =  "RIEN";');
 
         $nbr_stagiaires = Stagiaire::all()->count();
-
-        $nbr_absences_par_stagiaire = ((float) $nbr_absence / (float) $nbr_stagiaires) * 100;
+        if ($nbr_stagiaires != 0) {
+            $nbr_absences_par_stagiaire = ((float) $nbr_absence / (float) $nbr_stagiaires) * 100;
+        } else {
+            $nbr_absences_par_stagiaire = 0;
+        }
         $nbr_classes = Classe::all()->count();
 
         $nbr_absences_par_classe = DB::table('presences')->select('classe_id', DB::raw('count(*) as total'))->where('isPresence', 0)->groupBy('classe_id')->get();
@@ -36,11 +39,19 @@ class AdminController extends Controller
         foreach ($nbr_absences_par_classe as $absence) {
             foreach ($stgClasse as $nbrStgClasse) {
                 if ($nbrStgClasse->classe_id == $absence->classe_id) {
-                    $avg_absence_par_classe += (float) ($absence->total / $nbrStgClasse->stgDeClasse);
+                    if ($nbrStgClasse->stgDeClasse != 0) {
+                        $avg_absence_par_classe += (float) ($absence->total / $nbrStgClasse->stgDeClasse);
+                    } else {
+                        $avg_absence_par_classe += 0.0;
+                    }
                 }
             }
         }
-        $avg_absence_par_classe = ($avg_absence_par_classe / $nbr_classes) * 100;
+        if ($nbr_classes != 0) {
+            $avg_absence_par_classe = ($avg_absence_par_classe / $nbr_classes) * 100;
+        } else {
+            $avg_absence_par_classe = 0.0;
+        }
 
         $derniere_stagiaire_absencet = Presence::select('presences.preuve', 'presences.date', 'stagiaires.nom', 'stagiaires.prenom', 'classes.branche', 'classes.num_group')
             ->join('stagiaires', 'presences.stagiaire_id', '=', 'stagiaires.id')
@@ -146,7 +157,6 @@ class AdminController extends Controller
             'nom' => 'required',
             'prenom' => 'required',
             'email' => 'required',
-            'password' => 'required',
         ]);
         $formateur->nom = $request->nom;
         $formateur->prenom = $request->prenom;

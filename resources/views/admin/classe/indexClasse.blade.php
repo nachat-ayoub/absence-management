@@ -118,11 +118,10 @@
     var input = document.getElementById("searchInput");
     input.onkeydown = function() {
         var classes = ``;
+        console.log( (data[0].num_group.toString().includes(107)));
         var inputValue = input.value.toLowerCase();
         for (var i = 0; i < data.length; i++) {
-            console.log(data[i].num_group);
-            if (data[i].branche.toLowerCase().includes(inputValue) || (data[i].num_group == 
-                inputValue) || data[i].annee_scolaire.includes(inputValue)) {
+            if (data[i].branche.toLowerCase().includes(inputValue) || data[i].num_group.toString().includes(inputValue) || data[i].annee_scolaire.includes(inputValue)) {
                     console.log(inputValue);
                 idClasse = data[i].id;
                 classes +=

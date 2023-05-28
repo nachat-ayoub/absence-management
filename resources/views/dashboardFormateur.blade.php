@@ -26,15 +26,15 @@
                 <p>Total d'absences cette année</p>
             </div>
             <div class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start md:w-1/4">
-                <p class="mb-2 text-2xl font-bold"  ><span name="numbers" data-val={{number_format($absenceParFormateur, 2, ',')}}>00</span>%</p>
-                <p>De Absence enregister cette année par vous</p>
+                <p class="mb-2 text-2xl font-bold"  ><span name="numbers" data-val="{{number_format($absenceParFormateur, 2, '.')}}">00.00</span>%</p>
+                <p>D'Absence enregister cette année par vous</p>
             </div>
             <div class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start md:w-1/4">
                 <p class="mb-2 text-2xl font-bold"  ><span name="numbers" data-val="{{$classeDeFormateur}}">0</span></p>
                 <p>Total de votre classes</p>
             </div>
         </div>
-        <div class="bg-gray-100 dark:bg-gray-800 justify-between items-center mt-4 flex flex-col xl:mx-12 lg:flex-row ">
+        <div class="bg-gray-100 dark:bg-gray-800 justify-between items-center mt-4 flex flex-col xl:mx-12 xl:flex-row ">
         <div id="diagramme" class="md:h-96 px-12 w-full mt-5 md:w-7/12 md:ml-12 md:mr-8 lg:px-0  block" >
             <canvas id="myChart" aria-label="chart" role="img"  class=" bg-gray-100 shadow dark:ring-2 dark:rounded dark:ring-gray-700 dark:bg-gray-800 overflow-hidden " title="les absences de chaque mois"  ></canvas>
         </div>
@@ -80,14 +80,19 @@
         animationNumbers.forEach((animationNumber) => {
             let startValue = 0;
             let endValue =  parseInt(animationNumber.getAttribute('data-val'));
-            let duration = Math.floor(interval / endValue);
-            let counter =  setInterval(() => {
-                startValue += 1;
+            let duration = 1000;
+            if(endValue != 0){
+                duration = Math.floor(interval / endValue);
+                let counter =  setInterval(() => {
+                    startValue += 1;
+                    animationNumber.textContent = startValue;
+                    if(startValue ==  endValue){
+                        clearInterval(counter);
+                    }
+                }, duration);
+            }else{
                 animationNumber.textContent = startValue;
-                if(startValue == endValue){
-                clearInterval(counter);
-                }
-            }, duration);
+            }
         });
     }
 

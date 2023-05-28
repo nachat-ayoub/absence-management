@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class FormateurSeeder extends Seeder
 {
@@ -14,6 +15,21 @@ class FormateurSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Formateur::factory(2)->create();
+        \App\Models\Formateur::factory()->createMany([
+            [
+                'nom' => 'test1',
+                'prenom' => 'test1',
+                'email' => 'test1@gmail.com',
+                'password' => Hash::make('test1@gmail.com'),
+                'admin_id' => 1
+            ],
+            [
+                'nom' => 'test2',
+                'prenom' => 'test2',
+                'email' => 'test2@gmail.com',
+                'password' => Hash::make('test2@gmail.com'),
+                'admin_id' => 1
+            ]
+        ]);
     }
 }
