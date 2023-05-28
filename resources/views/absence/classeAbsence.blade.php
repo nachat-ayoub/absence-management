@@ -1,3 +1,11 @@
+@php
+    $guard = auth()
+        ->guard('formateur')
+        ->check()
+        ? 'formateur'
+        : 'admin';
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
@@ -47,60 +55,70 @@
             </x-slot>
 
             {{-- ! create popup --}}
-            <template x-if="action === 'create'">
-                <form class="my-6 flex flex-col gap-y-2" action="{{ url()->current() }}" method="POST">
-                    @csrf
-                    <input type="hidden" id="stagiaire_id" name="stagiaire_id" x-bind:value="data.stagiaire_id"
-                        value="{{ old('stagiaire_id') }}" readonly>
-                    <input type="hidden" id="classe_id" name="classe_id" x-bind:value="data.classe_id"
-                        value="{{ old('classe_id') }}" readonly>
+            @if ($guard === 'formateur')
+                <template x-if="action === 'create'">
+                    <form class="my-6 flex flex-col gap-y-2" action="{{ url()->current() }}" method="POST">
+                        @csrf
+                        <input type="hidden" id="stagiaire_id" name="stagiaire_id" x-bind:value="data.stagiaire_id"
+                            value="{{ old('stagiaire_id') }}" readonly>
+                        <input type="hidden" id="classe_id" name="classe_id" x-bind:value="data.classe_id"
+                            value="{{ old('classe_id') }}" readonly>
 
-                    <div class="col-span-2 inline">
-                        <x-input-label for="date" :value="__('Date')" />
-                        <x-text-input id="date" name="date" class="mt-1 block w-full" type="text"
-                            x-bind:value="data.date" readonly />
-                        <x-input-error :messages="$errors->get('date')" class="mt-2" />
-                    </div>
-                    <div class="col-span-2 inline">
-                        <x-input-label for="stagiaire_index" :value="__('Stagiaire')" />
-                        <x-text-input id="stagiaire_index" class="mt-1 block w-full" type="text"
-                            name="stagiaire_index" x-bind:value="data.stagiaire_index" readonly />
-                        <x-input-error :messages="$errors->get('stagiaire_index')" class="mt-2" />
-                    </div>
+                        <div class="col-span-2 inline">
+                            <x-input-label for="date" :value="__('Date')" />
+                            <x-text-input id="date" name="date" class="mt-1 block w-full" type="text"
+                                x-bind:value="data.date" readonly />
+                            <x-input-error :messages="$errors->get('date')" class="mt-2" />
+                        </div>
+                        <div class="col-span-2 inline">
+                            <x-input-label for="stagiaire_index" :value="__('Stagiaire')" />
+                            <x-text-input id="stagiaire_index" class="mt-1 block w-full" type="text"
+                                name="stagiaire_index" x-bind:value="data.stagiaire_index" readonly />
+                            <x-input-error :messages="$errors->get('stagiaire_index')" class="mt-2" />
+                        </div>
 
-                    <div class="col-span-2 inline">
-                        <x-input-label for="seance" :value="__('Seance')" />
-                        <x-text-input id="seance" class="mt-1 block w-full" type="text" name="seance"
-                            x-bind:value="data.seance" value="{{ old('seance') }}" required autofocus
-                            autocomplete="seance" />
-                        <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">
-                            pour plusieurs sessions, définissez "," entre eux, par exemple: "1,2".
-                        </p>
-                        <x-input-error :messages="$errors->get('seance')" class="mt-2" />
-                    </div>
+                        <div class="col-span-2 inline">
+                            <x-input-label for="seance" :value="__('Seance')" />
+                            <x-text-input id="seance" class="mt-1 block w-full" type="text" name="seance"
+                                x-bind:value="data.seance" value="{{ old('seance') }}" required autofocus
+                                autocomplete="seance" />
+                            <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">
+                                pour plusieurs sessions, définissez "," entre eux, par exemple: "1,2".
+                            </p>
+                            <x-input-error :messages="$errors->get('seance')" class="mt-2" />
+                        </div>
 
-                    {{-- <div class="col-span-2 inline">
-                        <x-input-label for="preuve" _value="__('Preuve')" />
-                        <x-text-input id="preuve" class="mt-1 block w-full" type="text" name="preuve"
-                             _value="old('preuve')" required autofocus autocomplete="preuve" />
-                        <x-input-error  _messages="$errors->get('preuve')" class="mt-2" />
-                    </div> --}}
+                        <!-- Is Presente -->
+                        <div class="mt-4 block">
+                            <label for="isPresence" class="inline-flex cursor-pointer items-center">
+                                <input id="isPresence" type="checkbox" checked="true"
+                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                                    name="isPresence">
+                                <span
+                                    class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Présent(e)') }}</span>
+                            </label>
+                        </div>
+                        <div class="flex w-full justify-center gap-x-4">
+                            <x-secondary-button type="button" @click="toggleModal()">Close</x-secondary-button>
+                            <x-primary-button>Sauvegarder</x-primary-button>
+                        </div>
+                    </form>
+                </template>
+            @else
+                <template x-if="action === 'create'">
+                    <p class="py-5 text-lg">
+                        <svg aria-hidden="true" class="mr-1.5 inline h-5 w-5 flex-shrink-0" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Info</span>
 
-                    <!-- Is Presente -->
-                    <div class="mt-4 block">
-                        <label for="isPresence" class="inline-flex cursor-pointer items-center">
-                            <input id="isPresence" type="checkbox" checked="true"
-                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-                                name="isPresence">
-                            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Présent(e)') }}</span>
-                        </label>
-                    </div>
-                    <div class="flex w-full justify-center gap-x-4">
-                        <x-secondary-button type="button" @click="toggleModal()">Close</x-secondary-button>
-                        <x-primary-button>Sauvegarder</x-primary-button>
-                    </div>
-                </form>
-            </template>
+                        Les administrateurs ne sont pas autorisés à noter une absence
+                    </p>
+                </template>
+            @endif
 
             {{-- ! update popup --}}
             <template x-if="action === 'update'">
@@ -128,22 +146,33 @@
                         <x-input-label for="seance" :value="__('Seance')" />
                         <x-text-input id="seance" class="mt-1 block w-full" type="text" name="seance"
                             x-bind:value="data.seance" value="{{ old('seance') }}" required autofocus
-                            autocomplete="seance" />
+                            autocomplete="seance" readonly="{{ $guard === 'admin' }}" />
                         <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">
                             pour plusieurs sessions, définissez "," entre eux, par exemple: "1,2".
                         </p>
                         <x-input-error :messages="$errors->get('seance')" class="mt-2" />
                     </div>
 
+                    @if ($guard === 'admin')
+                        <div class="col-span-2 inline">
+                            <x-input-label for="preuve" value="{{ __('Preuve') }}" />
+                            <x-text-input id="preuve" class="mt-1 block w-full" type="text" name="preuve"
+                                x-bind:value="data.preuve" value="{{ old('preuve') }}" required autofocus
+                                autocomplete="preuve" />
+                            <x-input-error :messages="$errors->get('preuve')" class="mt-2" />
+                        </div>
+                    @endif
+
                     <!-- Is Presente -->
                     <div class="mt-4 block">
                         <label for="isPresence" class="inline-flex cursor-pointer items-center">
                             <input id="isPresence" type="checkbox" x-bind:checked="data.isPresence"
                                 class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-                                name="isPresence">
+                                name="isPresence" {{ $guard === 'admin' ? 'disabled' : '' }}>
                             <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Présent(e)') }}</span>
                         </label>
                     </div>
+
                     <div class="flex w-full justify-center gap-x-4">
                         <x-secondary-button type="button" @click="toggleModal()">Close</x-secondary-button>
                         <x-primary-button>Sauvegarder</x-primary-button>
@@ -154,8 +183,7 @@
 
         <button
             class='mb-4 inline-flex items-center justify-center rounded-lg border border-transparent bg-gray-800 px-1 py-2 tracking-widest text-white transition duration-150 ease-in-out hover:text-gray-100 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:border-gray-400 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300 md:px-3 md:py-2'>
-            <a
-                href="{{ route(auth()->guard('formateur')->check()? 'formateur': 'admin' . '.absence.index') }}">Retourner</a>
+            <a href="{{ route($guard . '.absence.index') }}">Retourner</a>
 
         </button>
 

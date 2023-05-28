@@ -320,7 +320,6 @@ class AdminController extends Controller {
     // todo ========================================== crud classe ==========================================
 
     // todo ========================================== Absence =======================================
-
     function getClassPresences(Request $request, string $classeId) {
         $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
         $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
@@ -381,10 +380,14 @@ class AdminController extends Controller {
     //
     // * Modification d'un absence de stagiaire :
     function updateStagiairePresence(Request $request) {
+        // dd($request->all());
+
         $presenceData = $request->validate([
             'presence_id' => 'required|exists:presences,id',
             'preuve' => 'required|string',
         ]);
+
+        // dd($presenceData);
 
         $presence = Presence::find($presenceData['presence_id']);
         if (!$presence) {
