@@ -18,19 +18,19 @@
     <div class=" flex flex-col-reverse py-8 md:flex-col bg-gray-100 dark:bg-gray-800 dark:text-gray-200">
         <div class="mx-6 flex flex-col justify-between gap-y-2 gap-x-3 px-1 md:mx-12 md:flex-row md:px-12">
             <div class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start md:w-1/4">
-                <p class="mb-2 text-2xl font-bold"  ><span name="numbers" data-val="{{$nbr_absences_regestrer_formateur[0]}}">00</span></p>
+                <p class="mb-2 text-2xl font-bold"><span name="numbers" data-val="{{$nbr_absences_regestrer_formateur[0]}}">00</span></p>
                 <p>Absence enregister cette année par vous</p>
             </div>
             <div class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start md:w-1/4">
-                <p class="mb-2 text-2xl font-bold"  ><span name="numbers" data-val="{{$nbrAbsences[0]}}">00</span></p>
+                <p class="mb-2 text-2xl font-bold"><span name="numbers" data-val="{{$nbrAbsences[0]}}">00</span></p>
                 <p>Total d'absences cette année</p>
             </div>
             <div class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start md:w-1/4">
-                <p class="mb-2 text-2xl font-bold"  ><span name="numbers" data-val="{{number_format($absenceParFormateur, 2, '.')}}">00.00</span>%</p>
+                <p class="mb-2 text-2xl font-bold"><span name="numbers" data-val="{{number_format($absenceParFormateur, 2, '.')}}">00.00</span>%</p>
                 <p>D'Absence enregister cette année par vous</p>
             </div>
             <div class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start md:w-1/4">
-                <p class="mb-2 text-2xl font-bold"  ><span name="numbers" data-val="{{$classeDeFormateur}}">0</span></p>
+                <p class="mb-2 text-2xl font-bold"><span name="numbers" data-val="{{$classeDeFormateur}}">0</span></p>
                 <p>Total de votre classes</p>
             </div>
         </div>
@@ -104,6 +104,7 @@
             var dataOfDiagramme = [];
             for(let i = 0 ;  i < 11 ; i++){
                 if(!Object.keys(dataFromDB).includes(String(i))){
+                    //dataOfDiagramme[i] = 0;
                     dataOfDiagramme[i] = Math.floor(Math.random() * (max - min + 1)) + min;
                 }else{
                     dataOfDiagramme[i] = dataFromDB[i];
