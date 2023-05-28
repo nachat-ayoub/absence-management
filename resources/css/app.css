@@ -43,18 +43,19 @@
     }
     #diagramme canvas{
         
-        width: 100% !important;
+        width: 96% !important;
     }
    
   }
   
-@media (max-width : 1000.98px){
+@media (max-width : 1119.98px){
 
     #table{
         width: 90% !important;
         margin-top: 20px;
     }
     #table table{
-        width: 100% !important;
+        width: fit-content !important;
     }
 }
+

@@ -17,7 +17,7 @@
     </div>
     @auth('admin')
         <div class="dark:bg-gray-800 flex  flex-col-reverse py-12 md:flex-col">
-            <div class="mx-6 flex flex-col justify-between gap-y-2 gap-x-3 px-1 md:mx-12 md:flex-row md:px-12">
+            <div class="mx-auto flex flex-col justify-between gap-y-2 gap-x-3 px-1 lg:mx-12 md:flex-row md:px-12">
                 <div class="flex flex-col w-1/2 gap-x-3 md:flex-row md:w-full">
                     <div
                     class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start lg:w-1/2 ">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-100 dark:bg-gray-800 mx-6 mt-4 flex flex-col justify-between gap-3 px-2 md:mx-12 lg:flex-row md:px-12">
+            <div class="bg-gray-100 dark:bg-gray-800 mx-8  mt-4 flex flex-col justify-between gap-3 px-2 lg:mx-12 xl:flex-row lg:px-12">
                 <div>
                     <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100 dark:ring-2 dark:ring-gray-700 dark:rounded"
                         title="Les dernières absences enregistrées.">
@@ -59,10 +59,10 @@
                                     class="dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Filière</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class=" dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 ">
                                     Groupe</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="hidden dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:table-cell">
                                     Date d'absence</th>
                                 <th scope="col"
                                     class="dark:bg-gray-800 hidden px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 lg:table-cell md:px-6 md:py-3">
@@ -89,7 +89,7 @@
                                         {{ $stg->num_group }}
                                     </td>
                                     <td
-                                        class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100">
+                                        class="hidden whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:table-cell">
                                         {{ $stg->date }}
                                     </td>
                                     <td
@@ -146,14 +146,19 @@
             animationNumbers.forEach((animationNumber) => {
                 let startValue = 0;
                 let endValue =  parseInt(animationNumber.getAttribute('data-val'));
-                let duration = Math.floor(interval / endValue);
-                let counter =  setInterval(() => {
-                    startValue += 1;
-                   animationNumber.textContent = startValue;
-                   if(startValue == endValue){
-                    clearInterval(counter);
-                   }
-                }, duration);
+                let duration = 1000;
+                if(endValue != 0){
+                  duration = Math.floor(interval / endValue);
+                    let counter =  setInterval(() => {
+                        startValue += 1;
+                        animationNumber.textContent = startValue;
+                        if(startValue == endValue){
+                            clearInterval(counter);
+                        }
+                    }, duration);
+                }else{
+                    animationNumber.textContent = 0;
+                }
             });
         }
         
