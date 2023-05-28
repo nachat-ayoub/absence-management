@@ -8,16 +8,18 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void{
+    public function up(): void
+    {
         Schema::table('presences', function (Blueprint $table) {
-            $table->string('seance')->after('date');
+            $table->string('seance')->after('date')->nullable(true);
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void{
+    public function down(): void
+    {
         Schema::table('presences', function (Blueprint $table) {
             //
         });
