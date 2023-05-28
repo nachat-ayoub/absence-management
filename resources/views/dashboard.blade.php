@@ -193,3 +193,15 @@
 
     </script>
 </x-app-layout>
+<script>
+    var login =  document.getElementById('loginBox');
+    var previousPage = document.referrer;
+    if(previousPage.includes("/login")){
+        login.style.display = "block";
+        setInterval(() => {
+            login.style.display = "none";
+        }, 3000);
+    }else{
+        login.style.display = "none";
+    }
+</script>

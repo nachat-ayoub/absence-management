@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void{
         Schema::table('presences', function (Blueprint $table) {
-            $table->string('preuve')->after('isPresence');
+            $table->string('preuve')->nullable()->default(null)->after('isPresence');
         });
     }
 

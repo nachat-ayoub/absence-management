@@ -7,13 +7,12 @@ use Carbon\Carbon;
 use App\Models\Classe;
 use App\Models\Presence;
 use App\Models\Formateur;
+use App\Models\Stagiaire;
 use Illuminate\Http\Request;
-use App\Models\Absence_stagiaire;
 use Illuminate\Support\Facades\DB;
 
 class FormateurController extends Controller
 {
-
     // * dashboard
     public function formateurDashboard()
     {
@@ -51,7 +50,6 @@ class FormateurController extends Controller
 
         return view('dashboardFormateur', compact('nbr_absences_regestrer_formateur', 'nbrAbsences', 'absenceParFormateur', 'classeDeFormateur', 'classes_en_fonction_absences'))->with('data', json_encode($data));
     }
-
     // * getStagiaire
     function getClassPresences(Request $request, string $classeId)
     {
@@ -112,15 +110,42 @@ class FormateurController extends Controller
     }
 
     // * Creation un absence de stagiaire :
-    function storeStagiairePresence(Request $request, string $classe_id, string $stagiaire_id)
+    function storeStagiairePresence(Request $request)
     {
         $presenceData = $request->validate([
             'classe_id' => 'required|exists:classes,id',
             'stagiaire_id' => 'required|exists:stagiaires,id',
             'seance' => 'required|string',
-            'isPresence' => 'required|boolean',
-            'preuve' => 'sometimes|nullable|string|max:100',
+            'date' => 'required|string',
+            'isPresence' => 'required|string',
+            'stagiaire_index' => 'required|string',
         ]);
+
+        $presenceData['isPresence'] = $presenceData['isPresence'] === 'on';
+
+        // dd($presenceData);
+
+        $seances = explode(',', $presenceData['seance']);
+
+        $seancePresenceExists = Presence::with('stagiaire')->where('date', $presenceData["date"])
+            ->where('stagiaire_id', $presenceData["stagiaire_id"])
+            ->where('classe_id', $presenceData["classe_id"])
+            ->where(function ($query) use ($seances) {
+                foreach ($seances as $seance) {
+                    $query->orWhereRaw("seance REGEXP '[[:<:]]" . preg_quote($seance, '/') . "[[:>:]]'");
+                }
+            })->first();
+
+        if ($seancePresenceExists->exists()) {
+            $stagiaire = Stagiaire::find($presenceData['stagiaire_id']);
+
+            return redirect()->back()->withErrors([
+                'error' =>
+                'Cette séance ' . $presenceData['seance'] . ' dans le ' . $presenceData['date'] . ' est déjà notée pour la stagiaire N°' .
+                $presenceData['stagiaire_index'] . ' ' . $stagiaire->nom . ' ' . $stagiaire->prenom . '.'
+            ]);
+
+        }
 
         Presence::create($presenceData);
         return redirect()->back()->with('success', 'L\'absence a été crée avec succès !');
@@ -148,30 +173,4 @@ class FormateurController extends Controller
         return back()->with('success', 'Absence de stagiaire modifier avec succès!');
     }
 
-    //
-    //
-    // * Supprimer un absence de stagiaire :
-    // function destroyAbsenceStagiaire(Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'absence_id' => 'required',
-    //         'stagiaire_id' => 'required',
-    //     ]);
-
-    //     $absence_stagiaire = Absence_stagiaire::whereStagiaireId($data['stagiaire_id'])->whereAbsenceId($data['absence_id'])->first();
-
-    //     if (!$absence_stagiaire) {
-    //         return back()->with('error', 'Absence de stagiaire n\'existe pas!');
-    //     }
-
-    //     $absence_stagiaire->delete();
-    //     return back()->with('success', 'Absence de stagiaire supprimer avec succès!');
-    // }
-
 }
-
-// * Absence Table : create an absence page for a date (day);
-// * -- date, classe_id, formateur_id
-
-// * AbsenceStagiaire Table : create an absence for stagiaire with the absence page id;
-// * -- absence_id, stagiaire_id, preuve?
