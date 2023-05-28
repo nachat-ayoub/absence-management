@@ -27,7 +27,7 @@
                     <!-- Nom -->
                     <div >
                         <x-input-label for="nom" :value="__('Nom')" />
-                        <x-text-input id="nom" class="mt-1 block w-full" type="text" name="nom" :value="old('nom')"
+                        <x-text-input id="nom" class="mt-1 block w-full" type="text" name="nom" value="{{ old('nom') }}"
                             required autofocus autocomplete="nom" />
                         <x-input-error :messages="$errors->get('nom')" class="mt-2" />
                     </div>
@@ -35,7 +35,7 @@
                     <!-- Prenom -->
                     <div >
                         <x-input-label for="prenom" :value="__('Prenom')" />
-                        <x-text-input id="prenom" class="mt-1 block w-full" type="text" name="prenom" :value="old('prenom')"
+                        <x-text-input id="prenom" class="mt-1 block w-full" type="text" name="prenom" value="{{ old('prenom') }}"
                             required autofocus autocomplete="prenom" />
                         <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="inline w-full">
                         <x-input-label for="num_group" :value="__('Group')" class="mt-1  w-full inline mr-7 md:block md:mx-auto"/>
-                        <x-text-input id="num_group" class="mt-1 block w-full" type="text" name="num_group" :value="old('num_group')"
+                        <x-text-input id="num_group" class="mt-1 block w-full" type="text" name="num_group" value="{{ old('num_group') }}"
                             required autofocus autocomplete="num_group" />
                         <x-input-error :messages="$errors->get('num_group')" class="mt-2" />
                     </div>
@@ -61,7 +61,7 @@
                 <!-- password -->
                 <div class="col-span-2 inline">
                     <x-input-label for="annee_scolaire" :value="__('Année scolaire')"  />
-                    <x-text-input id="annee_scolaire" class="mt-1 block w-full" type="text" name="annee_scolaire" :value="old('password')"
+                    <x-text-input id="annee_scolaire" class="mt-1 block w-full" type="text" name="annee_scolaire" value="{{ old('password') }}"
                         required autofocus autocomplete="annee_scolaire" />
                     <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
                 </div>

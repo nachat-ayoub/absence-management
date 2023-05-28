@@ -3,7 +3,7 @@
 
 <div class="flex w-full">
 
-    <select x-cloak id="select">
+    <select class="hidden" id="select">
 
         {{ $slot }}
 

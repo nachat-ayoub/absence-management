@@ -13,66 +13,91 @@
     </x-slot>
 
     <div class="container mx-auto mt-10 px-4" x-data="{
+        data: null,
         action: null,
         isModalOpen: false,
-        toggleModal(action) {
+        toggleModal(action = null, data = null) {
+            console.log({ action, data, })
+    
             this.action = action;
+            this.data = data;
             this.isModalOpen = !this.isModalOpen;
         }
     }">
-        <button @click="toggleModal('update|create')"
-            class="my-4 flex transform items-center justify-center space-x-2 rounded-md bg-indigo-500 px-3 py-2 text-sm capitalize tracking-wide text-white transition-colors duration-200 hover:bg-indigo-600 focus:bg-indigo-500 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-50 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                    clip-rule="evenodd" />
-            </svg>
-
-            <span>Open Modal</span>
-        </button>
+        @if ($errors->has('error'))
+            <div class="my-2 flex rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
+                role="alert">
+                <svg aria-hidden="true" class="mr-3 inline h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">{{ $errors->first('error') }}</span>
+                </div>
+            </div>
+        @endif
 
         <x-custom-modal name="isModalOpen" maxWidth="2xl">
             <!-- Modal content here -->
             <x-slot name="title">Noté L'absence:</x-slot>
 
             <template x-if="action === 'create'">
-                <form class="my-6 flex flex-col gap-y-2" action="POST" method="post">
+                <form class="my-6 flex flex-col gap-y-2" action="{{ url()->current() }}" method="POST">
+                    @csrf
+                    <input type="hidden" id="stagiaire_id" name="stagiaire_id" x-bind:value="data.stagiaire_id"
+                        value="{{ old('stagiaire_id') }}">
+                    <input type="hidden" id="classe_id" name="classe_id" x-bind:value="data.classe_id"
+                        value="{{ old('classe_id') }}">
+
                     <div class="col-span-2 inline">
-                        <x-input-label for="stagiaire_id" :value="__('Stagiaire id')" />
-                        <x-text-input id="stagiaire_id" class="mt-1 block w-full" type="text" name="stagiaire_id"
-                            :value="old('stagiaire_id')" value='test stagiaire' required autofocus autocomplete="stagiaire_id"
-                            disabled="true" />
-                        <x-input-error :messages="$errors->get('stagiaire_id')" class="mt-2" />
+                        <x-input-label for="date" :value="__('Date')" />
+                        <x-text-input id="date" name="date" class="mt-1 block w-full" type="text"
+                            x-bind:value="data.date" readonly />
+                        <x-input-error :messages="$errors->get('date')" class="mt-2" />
+                    </div>
+                    <div class="col-span-2 inline">
+                        <x-input-label for="stagiaire_index" :value="__('Stagiaire')" />
+                        <x-text-input id="stagiaire_index" class="mt-1 block w-full" type="text"
+                            name="stagiaire_index" x-bind:value="data.stagiaire_index" readonly />
+                        <x-input-error :messages="$errors->get('stagiaire_index')" class="mt-2" />
                     </div>
 
                     <div class="col-span-2 inline">
                         <x-input-label for="seance" :value="__('Seance')" />
                         <x-text-input id="seance" class="mt-1 block w-full" type="text" name="seance"
-                            :value="old('seance')" required autofocus autocomplete="seance" />
+                            x-bind:value="data.seance" value="{{ old('seance') }}" required autofocus
+                            autocomplete="seance" />
+                        <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">
+                            pour plusieurs sessions, définissez "," entre eux, par exemple: "1,2".
+                        </p>
                         <x-input-error :messages="$errors->get('seance')" class="mt-2" />
                     </div>
 
-                    <div class="col-span-2 inline">
-                        <x-input-label for="preuve" :value="__('Preuve')" />
+                    {{-- <div class="col-span-2 inline">
+                        <x-input-label for="preuve" _value="__('Preuve')" />
                         <x-text-input id="preuve" class="mt-1 block w-full" type="text" name="preuve"
-                            :value="old('preuve')" required autofocus autocomplete="preuve" />
-                        <x-input-error :messages="$errors->get('preuve')" class="mt-2" />
-                    </div>
+                             _value="old('preuve')" required autofocus autocomplete="preuve" />
+                        <x-input-error  _messages="$errors->get('preuve')" class="mt-2" />
+                    </div> --}}
 
-                    <!-- Remember Me -->
+                    <!-- Is Presente -->
                     <div class="mt-4 block">
                         <label for="isPresence" class="inline-flex cursor-pointer items-center">
-                            <input id="isPresence" type="checkbox"
+                            <input id="isPresence" type="checkbox" checked="true"
                                 class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
                                 name="isPresence">
                             <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Présent(e)') }}</span>
                         </label>
                     </div>
-
+                    <div class="flex w-full justify-center gap-x-4">
+                        <x-secondary-button type="button" @click="toggleModal()">Close</x-secondary-button>
+                        <x-primary-button>Sauvegarder</x-primary-button>
+                    </div>
                 </form>
             </template>
-
-            <x-primary-button @click="toggleModal('update|create')">Close</x-primary-button>
         </x-custom-modal>
         <button
             class='mb-4 inline-flex items-center justify-center rounded-lg border border-transparent bg-gray-800 px-1 py-2 tracking-widest text-white transition duration-150 ease-in-out hover:text-gray-100 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:border-gray-400 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300 md:px-3 md:py-2'>
@@ -109,26 +134,29 @@
                             @php
                                 $weekDays = $week['jours'];
                                 $presenceData = [];
-
+                                
                                 foreach ($weekDays as $dayName => $date) {
                                     $presences = collect($stg->presences)->where('date', $date);
                                     $sessions = array_fill(1, 4, null);
-
+                                
                                     foreach ($presences as $presence) {
                                         $sessionNumbers = explode(',', $presence['seance']);
                                         $isPresence = $presence['isPresence'] == 1;
                                         $presence_id = $presence->id;
                                         $preuve = $presence->preuve;
                                         $date = $presence->date;
-
+                                        $classe_id = $presence->classe_id;
+                                        $stagiaire_id = $presence->stagiaire_id;
+                                        $seance = $presence->seance;
+                                
                                         foreach ($sessionNumbers as $sessionNumber) {
-                                            $sessions[(int) $sessionNumber] = compact('isPresence', 'presence_id', 'preuve', 'date');
+                                            $sessions[(int) $sessionNumber] = compact('classe_id', 'stagiaire_id', 'seance', 'isPresence', 'preuve', 'presence_id', 'date');
                                         }
                                     }
-
+                                
                                     $presenceData[$dayName] = $sessions;
                                 }
-
+                                
                             @endphp
 
                             <tr class="divide-x divide-gray-500 text-gray-800 dark:divide-gray-600">
@@ -144,12 +172,29 @@
                                 @foreach ($presenceData as $jour => $presence)
                                     @foreach ($presence as $index => $session)
                                         {{-- * No presence found --}}
-
                                         <td data-index="{{ $index }}"
                                             class="{{ (int) explode('-', $weekDays[$jour])[2] % 2 === 0 ? 'bg-gray-200 dark:!bg-gray-800/95' : '' }} {{ $index === 1 ? '!border-gray-600 dark:!border-gray-300' : '' }} whitespace-nowrap px-[0.55rem] py-2 text-base font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:py-4">
                                             <div class="flex justify-center">
                                                 <button x-bind:disabled="isDisabled('{{ $weekDays[$jour] }}')"
-                                                    x-on:click="openPresenceModal = true"
+                                                    data-date="{{ $weekDays[$jour] }}"
+                                                    @click="toggleModal('{{ $session === null ? 'create' : 'update' }}', {{ json_encode(
+                                                        $session !== null
+                                                            ? $session
+                                                            : [
+                                                                'classe_id' => $classe->id,
+                                                                'stagiaire_id' => $stg->id,
+                                                                'stagiaire_index' => $i + 1,
+                                                                'seance' => $index,
+                                                                'date' => $weekDays[$jour],
+                                                            ],
+                                                    ) }})"
+                                                    {{--
+                                                      X classe_id
+                                                      X stagiaire_id
+                                                      X seance
+                                                        isPresence
+                                                        preuve
+                                                    --}}
                                                     class="flex h-5 w-5 items-center justify-center border border-gray-400">
                                                     @if ($session !== null)
                                                         <span
@@ -176,7 +221,7 @@
     <script>
         function isDisabled(date) {
             const currentDate = new Date().toISOString().split('T')[0];
-            return date === currentDate;
+            return false // (date !== currentDate);
         }
     </script>
 </x-app-layout>

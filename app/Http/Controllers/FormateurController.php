@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classe;
 use App\Models\Formateur;
 use App\Models\Presence;
+use App\Models\Stagiaire;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -64,14 +65,39 @@ class FormateurController extends Controller {
     }
 
     // * Creation un absence de stagiaire :
-    function storeStagiairePresence(Request $request, /* string $classe_id, string $stagiaire_id */) {
+    function storeStagiairePresence(Request $request) {
         $presenceData = $request->validate([
             'classe_id' => 'required|exists:classes,id',
             'stagiaire_id' => 'required|exists:stagiaires,id',
             'seance' => 'required|string',
-            'isPresence' => 'required|boolean',
-            'preuve' => 'sometimes|nullable|string|max:100',
+            'date' => 'required|string',
+            'isPresence' => 'required|string',
+            'stagiaire_index' => 'required|string',
         ]);
+
+        $presenceData['isPresence'] = $presenceData['isPresence'] === 'on';
+
+        // dd($presenceData);
+
+        $seances = explode(',', $presenceData['seance']);
+
+        $seancePresenceExists = Presence::with('stagiaire')->where('date', $presenceData["date"])
+            ->where('stagiaire_id', $presenceData["stagiaire_id"])
+            ->where('classe_id', $presenceData["classe_id"])
+            ->where(function ($query) use ($seances) {
+                foreach ($seances as $seance) {
+                    $query->orWhereRaw("seance REGEXP '[[:<:]]" . preg_quote($seance, '/') . "[[:>:]]'");
+                }
+            })->first();
+
+        if ($seancePresenceExists->exists()) {
+            $stagiaire = Stagiaire::find($presenceData['stagiaire_id']);
+
+            return redirect()->back()->withErrors(['error' =>
+                'Cette séance ' . $presenceData['seance'] . ' dans le ' . $presenceData['date'] . ' est déjà notée pour la stagiaire N°' .
+                $presenceData['stagiaire_index'] . ' ' . $stagiaire->nom . ' ' . $stagiaire->prenom . '.']);
+
+        }
 
         Presence::create($presenceData);
         return redirect()->back()->with('success', 'L\'absence a été crée avec succès !');
