@@ -15,3 +15,5 @@ Alpine.store("darkMode", {
 });
 
 Alpine.start();
+
+// alert("hi Alpine.js DARK_MODE:", localStorage.getItem("darkMode") === "true");
