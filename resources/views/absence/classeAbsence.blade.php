@@ -269,8 +269,6 @@
 
     </div>
 
-    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-
     <script>
         function isDisabled(date) {
             const currentDate = new Date().toISOString().split('T')[0];

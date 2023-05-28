@@ -3,12 +3,14 @@ import "./bootstrap";
 import Alpine from "alpinejs";
 import collapse from "@alpinejs/collapse";
 import { Chart } from "chart.js/auto";
+import XLSX from "xlsx";
 
 import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 window.Alpine = Alpine;
 window.Chart = Chart;
+window.XLSX = XLSX;
 
 Alpine.plugin(collapse);
 
