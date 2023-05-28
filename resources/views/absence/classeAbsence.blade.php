@@ -241,17 +241,9 @@
                                                                 'date' => $weekDays[$jour],
                                                             ],
                                                     ) }})"
-                                                    {{--
-                                                      X classe_id
-                                                      X stagiaire_id
-                                                      X seance
-                                                        isPresence
-                                                        preuve
-                                                    --}}
                                                     class="flex h-5 w-5 items-center justify-center border border-gray-400">
-                                                    @if ($session !== null)
-                                                        <span
-                                                            class="{{ $session['isPresence'] ? 'invisible' : 'inline-block' }}">
+                                                    @if ($session !== null && !$session['isPresence'])
+                                                        <span class="">
                                                             <i class="fa-solid fa-xmark"></i>
                                                         </span>
                                                     @else
@@ -287,37 +279,26 @@
         function ExportToExcel(type, selector, fn, dl) {
             const elt = document.querySelector(selector);
             const tempTable = document.createElement('table');
-
-
-
             // Input string containing the HTML table
             const htmlString = elt.innerHTML
-
             // Regular expression pattern to match the SVG elements with the specified class
             const regex = /<svg\s+class="svg-inline--fa fa-xmark"[^>]*>.*?<\/svg>/g;
-
             // Replace the matched SVG elements with an X mark
             let replacedString = htmlString.replace(regex, '<span>X</span>');
-
-
             // Remove HTML comments
             const commentRegex = /<!--[\s\S]*?-->/g;
             replacedString = replacedString.replace(commentRegex, '');
-
             tempTable.innerHTML = replacedString;
-
-
-
-
 
             const wb = XLSX.utils.table_to_book(tempTable, {
                 sheet: "sheet1"
             });
+
             return dl ?
                 XLSX.write(wb, {
                     bookType: type,
                     bookSST: true,
-                    type: 'base64'
+                    type: 'base64',
                 }) :
                 XLSX.writeFile(wb, fn || (
                     "Presence_de_classe_{{ $classe->id }}__Semain_du_{{ $week['start'] }}_au_{{ $week['end'] }}__." +
