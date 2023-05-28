@@ -260,9 +260,12 @@
                 </table>
             </div>
         </div>
-        <x-primary-button class="my-4" onclick="ExportToExcel('xlsx', '#presence_table')">Export presence to
-            excel
-        </x-primary-button>
+
+        @auth('admin')
+            <x-primary-button class="my-4" onclick="ExportToExcel('xlsx', '#presence_table')">
+                Export presence to excel
+            </x-primary-button>
+        @endauth
 
     </div>
 

@@ -246,6 +246,20 @@
                         {{ __('L\'absence') }}
                     </x-responsive-nav-link>
 
+                    {{-- ! Accordion Example --}}
+                    <x-accordion title="Classe">
+                        <div class="flex w-full flex-col">
+                            <x-responsive-nav-link :href="route('profile.edit')">
+                                {{ __('cree') }}
+                            </x-responsive-nav-link>
+
+                            <x-responsive-nav-link :href="route('admin.absence.index')">
+                                {{ __('update') }}
+                            </x-responsive-nav-link>
+                        </div>
+                    </x-accordion>
+                    {{-- ! Accordion Example --}}
+
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('admin.logout') }}">
                         @csrf

@@ -1,6 +1,7 @@
 import "./bootstrap";
 
 import Alpine from "alpinejs";
+import collapse from "@alpinejs/collapse";
 import { Chart } from "chart.js/auto";
 
 import "@fortawesome/fontawesome-free/js/all.js";
@@ -8,6 +9,8 @@ import "@fortawesome/fontawesome-free/css/all.css";
 
 window.Alpine = Alpine;
 window.Chart = Chart;
+
+Alpine.plugin(collapse);
 
 Alpine.store("darkMode", {
     on: localStorage.getItem("darkMode") === "true",

@@ -39,6 +39,13 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
         Route::delete('/', [AdminProfileController::class, 'destroy'])->name('destroy');
     });
 
+    Route::prefix('/absence')->name('absence.')->group(function () {
+        Route::get('/', [AdminController::class, 'getCLasses'])->name('index');
+        Route::get('/classe/{classe_id}', [AdminController::class, 'getClassPresences'])->name('classeAbsence');
+        Route::post('/classe/{classe_id}', [AdminController::class, 'storeStagiairePresence'])->name('storeClasseAbsence');
+        Route::put('/classe/{classe_id}', [AdminController::class, 'updateStagiairePresence'])->name('updateClasseAbsence');
+    });
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -60,8 +67,6 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 
-
-
     // *  routes of admin/Formateur
     Route::get('formateur/search', [AdminController::class, 'indexFormateur'])->name('allFormateur');
     Route::get('formateur/create', [AdminController::class, 'createFormateur'])->name('createFormateur');
@@ -71,8 +76,6 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     Route::put('formateur/{formateur}', [AdminController::class, 'updateFormateur'])->name('updateFormateur');
     Route::delete('formateur/{formateur}', [AdminController::class, 'destroyFormateur'])->name('destroyFormateur');
 
-
-
     // *  routes of admin/classe
     Route::get('classe/search', [AdminController::class, 'indexClasses'])->name('allClasses');
     Route::get('classe/create', [AdminController::class, 'createClasse'])->name('createClasse');
@@ -81,7 +84,6 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     Route::get('classe/show/{classe}', [AdminController::class, 'showClasse'])->name('showClasse');
     Route::put('classe/{classe}', [AdminController::class, 'updateClasse'])->name('updateClasse');
     Route::delete('classe/{classe}', [AdminController::class, 'destroyClasse'])->name('destroyClasse');
-
 
     // *  routes of admins/stagiaire
     Route::get('stagiaire/search', [AdminController::class, 'indexStagiaire'])->name('allStagiaire');
