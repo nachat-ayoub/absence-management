@@ -243,8 +243,8 @@ class AdminController extends Controller
     public function indexClasses()
     {
         $classes = Classe::paginate(7);
-        // return $classes;
-        return view('admin.classe.indexClasse', compact('classes'));
+        $data = Classe::all();
+        return view('admin.classe.indexClasse', compact('classes'))->with('data', json_encode($data));
     }
 
     // ! create classe

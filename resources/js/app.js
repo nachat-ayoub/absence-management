@@ -18,6 +18,13 @@ Alpine.store("darkMode", {
 
 Alpine.start();
 
-setTimeout(() => {
-    document.getElementById('loginBox').style.display = 'none';
-}, 1000);
+var login = document.getElementById("loginBox");
+var previousPage = document.referrer;
+if (previousPage.includes("/login")) {
+    login.style.display = "block";
+    setInterval(() => {
+        login.style.display = "none";
+    }, 1000);
+} else {
+    login.style.display = "none";
+}

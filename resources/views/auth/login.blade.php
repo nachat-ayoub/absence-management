@@ -13,6 +13,10 @@
                     required autofocus autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5ff045a86b683b1aab9f289edc4f859da043517a
 
             <!-- Password -->
             <div class="mt-4">
