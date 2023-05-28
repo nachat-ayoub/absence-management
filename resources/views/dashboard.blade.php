@@ -124,7 +124,7 @@
                                         class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100">
                                         {{ $classe->branche }} {{ $classe->num_group }}</td>
                                     <td
-                                        class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100">
+                                        class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100 pl-10">
                                         {{ $classe->absence_count }}</td>
                                 </tr>
                             @endforeach

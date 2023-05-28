@@ -31,19 +31,19 @@
             <div class="col-span-2 inline">
                 <x-input-label for="branche" :value="__('Filière')" />
                 <x-text-input id="annee_scolaire" class="mt-1 block w-full uppercase" type="text" name="branche"
-                    value="{{ old('branche') }}" {{-- * [correct] value="{{ old('branche') }}"  --}} required autofocus autocomplete="branche" />
+                    value="{{ old('branche') }}" required autofocus autocomplete="branche" />
                 <x-input-error :messages="$errors->get('branche')" class="mt-2" />
             </div>
             <div class="col-span-2 inline">
                 <x-input-label for="num_group" :value="__('Group')" />
                 <x-text-input id="num_group" class="mt-1 block w-full" type="text" name="num_group"
-                    value="{{ old('branche') }}" required autofocus autocomplete="num_group" />
+                    value="{{ old('num_group') }}" required autofocus autocomplete="num_group" />
                 <x-input-error :messages="$errors->get('num_group')" class="mt-2" />
             </div>
             <div class="col-span-2 inline">
                 <x-input-label for="annee_scolaire" :value="__('Annee scolaire')" />
                 <x-text-input id="annee_scolaire" class="mt-1 block w-full" type="text" name="annee_scolaire"
-                    value="{{ old('branche') }}" required autofocus autocomplete="annee_scolaire" />
+                    value="{{ old('annee_scolaire') }}" required autofocus autocomplete="annee_scolaire" />
                 <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
             </div>
             <input type="hidden" name="admin_id" value="{{ Auth::guard('admin')->user()->id }}">
