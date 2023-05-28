@@ -13,7 +13,7 @@ use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\Formateur\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest:formateur')->prefix('formateur')->name('formateur.')->group(function () {
+Route::middleware('guest')->prefix('formateur')->name('formateur.')->group(function () {
     Route::get('login', [AuthController::class, 'loginView'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('check');
 
