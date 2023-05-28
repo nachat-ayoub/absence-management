@@ -2,26 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classe;
-use App\Models\Formateur;
-use App\Models\Presence;
-use App\Models\Stagiaire;
 use Auth;
 use Carbon\Carbon;
+use App\Models\Classe;
+use App\Models\Presence;
+use App\Models\Formateur;
+use App\Models\Stagiaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class FormateurController extends Controller {
+class FormateurController extends Controller
+{
+    // * dashboard
+    public function formateurDashboard()
+    {
+        $formateur_id = Auth::guard('formateur')->user()->id;
+        $data = Presence::selectRaw('MONTH(date) AS mois, COUNT(*) AS total')
+            ->where('formateur_id', $formateur_id)
+            ->where('isPresence', 0)
+            ->groupBy('mois')
+            ->pluck('total', 'mois')
+            ->toArray();
+        $nbr_absences_regestrer_formateur = Presence::selectRaw('COUNT(*) as totalAbsences')
+            ->where('formateur_id', $formateur_id)
+            ->where('isPresence', 0)
+            ->pluck('totalAbsences');
+        $nbrAbsences = Presence::selectRaw('COUNT(*) as totalAbsences')
+            ->where('isPresence', 0)
+            ->pluck('totalAbsences')
+            ->toArray();
+        $absenceParFormateur = ($nbr_absences_regestrer_formateur[0] / $nbrAbsences[0]) * 100;
 
+        $classeDeFormateur = DB::table('classe_formateur')->select('classe_id')
+            ->where('formateur_id', $formateur_id)
+            ->pluck('classe_id')
+            ->count();
+
+        $classes_en_fonction_absences = DB::table('presences')
+            ->select('classes.branche', 'classes.num_group', DB::raw('count(*) as absence_count'))
+            ->join('classes', 'presences.classe_id', '=', 'classes.id')
+            ->where('formateur_id', $formateur_id)
+            ->where('presences.isPresence', 0)
+            ->groupBy('num_group', 'branche')
+            ->orderBy('absence_count', 'desc')
+            ->take(6)
+            ->get();
+
+        return view('dashboardFormateur', compact('nbr_absences_regestrer_formateur', 'nbrAbsences', 'absenceParFormateur', 'classeDeFormateur', 'classes_en_fonction_absences'))->with('data', json_encode($data));
+    }
     // * getStagiaire
-    function getClassPresences(Request $request, string $classeId) {
+    function getClassPresences(Request $request, string $classeId)
+    {
         $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
         $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
 
-        $classe = Classe::with(['formateurs', 'stagiaires' => function ($query) use ($startOfWeek, $endOfWeek) {
-            $query->orderBy('nom', 'asc')->with(['presences' => function ($query) use ($startOfWeek, $endOfWeek) {
-                $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
-            }]);
-        }])->findOrFail($classeId);
+        $classe = Classe::with([
+            'formateurs',
+            'stagiaires' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->orderBy('nom', 'asc')->with([
+                    'presences' => function ($query) use ($startOfWeek, $endOfWeek) {
+                        $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
+                    }
+                ]);
+            }
+        ])->findOrFail($classeId);
 
         $week = [
             'start' => $startOfWeek->format('d/m/Y'),
@@ -59,13 +103,15 @@ class FormateurController extends Controller {
 
     }
 
-    function getCLasses(Request $request) {
+    function getCLasses(Request $request)
+    {
         $classes = Formateur::find(Auth::guard('formateur')->user()->getAuthIdentifier())->classes;
         return view('absence.index', compact('classes'));
     }
 
     // * Creation un absence de stagiaire :
-    function storeStagiairePresence(Request $request) {
+    function storeStagiairePresence(Request $request)
+    {
         $presenceData = $request->validate([
             'classe_id' => 'required|exists:classes,id',
             'stagiaire_id' => 'required|exists:stagiaires,id',
@@ -93,9 +139,11 @@ class FormateurController extends Controller {
         if ($seancePresenceExists->exists()) {
             $stagiaire = Stagiaire::find($presenceData['stagiaire_id']);
 
-            return redirect()->back()->withErrors(['error' =>
+            return redirect()->back()->withErrors([
+                'error' =>
                 'Cette séance ' . $presenceData['seance'] . ' dans le ' . $presenceData['date'] . ' est déjà notée pour la stagiaire N°' .
-                $presenceData['stagiaire_index'] . ' ' . $stagiaire->nom . ' ' . $stagiaire->prenom . '.']);
+                $presenceData['stagiaire_index'] . ' ' . $stagiaire->nom . ' ' . $stagiaire->prenom . '.'
+            ]);
 
         }
 
@@ -107,7 +155,8 @@ class FormateurController extends Controller {
     //
     //
     // * Modification d'un absence de stagiaire :
-    function updateStagiairePresence(Request $request) {
+    function updateStagiairePresence(Request $request)
+    {
         $presenceData = $request->validate([
             'id' => 'required|exists:presences,id',
             'isPresence' => 'required|boolean',

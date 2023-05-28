@@ -26,9 +26,7 @@ Route::middleware('guest:formateur')->prefix('formateur')->name('formateur.')->g
 
 Route::prefix('formateur')->middleware('formateur')->name('formateur.')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [FormateurController::class, 'formateurDashboard'])->name('dashboard');
 
     Route::prefix('/absence')->name('absence.')->group(function () {
         Route::get('/', [FormateurController::class, 'getCLasses'])->name('index');
