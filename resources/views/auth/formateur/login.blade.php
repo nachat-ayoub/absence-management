@@ -25,6 +25,7 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="mt-1 block w-full" type="email" name="email"
                 value="{{ old('email') }}" required autofocus autocomplete="username" />
+
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
