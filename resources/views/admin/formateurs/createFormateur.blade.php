@@ -4,10 +4,10 @@
             {{ __('Ajouter Un Formateur') }}
         </h2>
     </x-slot>
-    <div class="container mx-auto my-10 px-2 md:px-0">
+    <div class="container mx-auto pt-4  px-2 md:px-0">
 
         @if (session()->has('success'))
-            <div class="my-2 flex rounded-lg border border-green-300 bg-green-50 p-4 text-lg text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
+            <div class="mb-4 flex rounded-lg border border-green-300 bg-green-50 p-4 text-lg text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
                 role="alert">
                 <svg aria-hidden="true" class="mr-3 inline h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +17,7 @@
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
-                    {{ session('success') }}
+                    {{ session('success') }}dsvv
                 </div>
             </div>
         @endif
@@ -75,7 +75,7 @@
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
-            <div class="mt-8">
+            <div class="mt-4">
                 <input type="submit"
                     class="mr-6 rounded-lg bg-gray-800 px-5 py-2 font-medium text-slate-100 hover:bg-slate-900 dark:text-gray-200"
                     value="Ajouter">
