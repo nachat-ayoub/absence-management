@@ -40,7 +40,7 @@
                     <div class="col-span-2 inline">
                         <x-input-label for="stagiaire_id" :value="__('Stagiaire id')" />
                         <x-text-input id="stagiaire_id" class="mt-1 block w-full" type="text" name="stagiaire_id"
-                            :value="old('stagiaire_id')" value='test stagiaire' required autofocus autocomplete="stagiaire_id"
+                             value="{{old('stagiaire_id')}}" value='test stagiaire' required autofocus autocomplete="stagiaire_id"
                             disabled="true" />
                         <x-input-error :messages="$errors->get('stagiaire_id')" class="mt-2" />
                     </div>
@@ -48,14 +48,14 @@
                     <div class="col-span-2 inline">
                         <x-input-label for="seance" :value="__('Seance')" />
                         <x-text-input id="seance" class="mt-1 block w-full" type="text" name="seance"
-                            :value="old('seance')" required autofocus autocomplete="seance" />
+                             value="{{old('seance')}}" required autofocus autocomplete="seance" />
                         <x-input-error :messages="$errors->get('seance')" class="mt-2" />
                     </div>
 
                     <div class="col-span-2 inline">
                         <x-input-label for="preuve" :value="__('Preuve')" />
                         <x-text-input id="preuve" class="mt-1 block w-full" type="text" name="preuve"
-                            :value="old('preuve')" required autofocus autocomplete="preuve" />
+                             value="{{old('preuve')}}" required autofocus autocomplete="preuve" />
                         <x-input-error :messages="$errors->get('preuve')" class="mt-2" />
                     </div>
 

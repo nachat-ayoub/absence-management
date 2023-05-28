@@ -8,7 +8,7 @@
             <!-- Nom -->
             <div class="">
                 <x-input-label for="nom" :value="__('Nom')" />
-                <x-text-input id="nom" class="mt-1 block w-full" type="text" name="nom" :value="old('nom')"
+                <x-text-input id="nom" class="mt-1 block w-full" type="text" name="nom"  value="{{old('nom')}}"
                     required autofocus autocomplete="nom" />
                 <x-input-error :messages="$errors->get('nom')" class="mt-2" />
             </div>
@@ -16,7 +16,7 @@
             <!-- Prenom -->
             <div class="">
                 <x-input-label for="prenom" :value="__('Prenom')" />
-                <x-text-input id="prenom" class="mt-1 block w-full" type="text" name="prenom" :value="old('prenom')"
+                <x-text-input id="prenom" class="mt-1 block w-full" type="text" name="prenom"  value="{{old('prenom')}}"
                     required autofocus autocomplete="prenom" />
                 <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
             </div>
@@ -25,7 +25,7 @@
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="mt-1 block w-full" type="email" name="email" :value="old('email')"
+            <x-text-input id="email" class="mt-1 block w-full" type="email" name="email"  value="{{old('email')}}"
                 required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>

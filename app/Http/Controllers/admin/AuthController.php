@@ -44,13 +44,13 @@ class AuthController extends Controller {
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->back()->with('error', 'Your Credintal is invalid');
+            return redirect()->back()->with('error', 'Votre identifiant est invalide !');
         }
     }
 
     public function logout() {
         Auth::guard('admin')->logout();
 
-        return redirect('/')->with('success', 'You Have Logout Success');
+        return redirect('/')->with('success', 'Vous avez réussi à vous déconnecter !');
     }
 }

@@ -30,7 +30,7 @@
                     <div class="">
                         <x-input-label for="nom" :value="__('Nom')" />
                         <x-text-input id="nom" class="mt-1 block w-full" type="text" name="nom"
-                            :value="old('nom')" required autofocus autocomplete="nom" />
+                            value="{{old('nom')}}" required autofocus autocomplete="nom" />
                         <x-input-error :messages="$errors->get('nom')" class="mt-2" />
                     </div>
 
@@ -38,7 +38,7 @@
                     <div class="">
                         <x-input-label for="prenom" :value="__('Prenom')" />
                         <x-text-input id="prenom" class="mt-1 block w-full" type="text" name="prenom"
-                            :value="old('prenom')" required autofocus autocomplete="prenom" />
+                        value="{{old('prenom')}}" required autofocus autocomplete="prenom" />
                         <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
                     </div>
                 </div>
@@ -57,7 +57,7 @@
             <!-- email -->
             <div class="inline w-full">
                 <x-input-label for="email" :value="__('email')" />
-                <x-text-input id="email" class="mt-1 block w-full" type="text" name="email" :value="old('email')"
+                <x-text-input id="email" class="mt-1 block w-full" type="text" name="email" value="{{old('email')}}"
                     required autofocus autocomplete="email" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
@@ -65,7 +65,7 @@
             <div class="col-span-2 mt-2">
                 <x-input-label for="password" :value="__('password')" />
                 <x-text-input id="password" class="mt-1 block w-full" type="password" name="password"
-                    :value="old('password')" required autofocus autocomplete="password" />
+                    value="{{old('password')}}" required autofocus autocomplete="password" />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
