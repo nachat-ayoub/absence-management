@@ -16,11 +16,11 @@
         </div>
     </div>
     @auth('admin')
-        <div class="dark:bg-gray-800 flex  flex-col-reverse py-12 md:flex-col">
-            <div class="mx-auto flex flex-col justify-between gap-y-2 gap-x-3 px-1 lg:mx-12 md:flex-row md:px-12">
-                <div class="flex flex-col w-1/2 gap-x-3 md:flex-row md:w-full">
+        <div class="dark:bg-gray-800 flex  flex-col-reverse py-12 sm:flex-col">
+            <div class="bg-gray-100  dark:bg-gray-800 mx-8  mt-4 flex flex-col justify-between gap-3 px-2 lg:mx-12 sm:flex-row lg:px-12">
+                <div class="flex flex-col w-full gap-x-3 sm:flex-row sm:w-1/2">
                     <div
-                    class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start lg:w-1/2 ">
+                    class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start lg:w-1/2">
                     <p class="mb-2 text-2xl font-bold" ><span name="numbers" data-val="{{ $nbr_absence }}">00</span></p>
                     <p>Absence cette année</p>
                     </div>
@@ -30,7 +30,7 @@
                         <p>Absence sans preuve</p>
                     </div>
                 </div>
-                <div class="flex flex-col w-1/2 gap-x-3 md:flex-row md:w-full">
+                <div class="flex flex-col w-full gap-x-3 sm:flex-row sm:w-1/2">
                     <div
                         class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start lg:w-1/2 ">
                         <p class="mb-2 text-2xl font-bold"><span name="numbers" data-val={{number_format($nbr_absences_par_stagiaire, 2, ',') }}>00</span>%</p>
@@ -50,19 +50,19 @@
                         <thead>
                             <tr>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Nom</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Prénom</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Filière</th>
                                 <th scope="col"
-                                    class=" dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 ">
+                                    class=" dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 ">
                                     Groupe</th>
                                 <th scope="col"
-                                    class="hidden dark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:table-cell">
+                                    class="hidden dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:table-cell">
                                     Date d'absence</th>
                                 <th scope="col"
                                     class="dark:bg-gray-800 hidden px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 lg:table-cell md:px-6 md:py-3">
@@ -188,8 +188,13 @@
             let table = document.querySelectorAll('#tbody_table_1 tr');
             let rows = "";
             let tbody = "";
-            if(table.length < 5){
+            if(table.length == 0){
                 document.querySelector('#divTable').classList.add("w-full" , "md:w-2/3");
+            }else{
+                document.querySelector('#divTable').classList.remove("w-full" , "md:w-2/3")
+            }
+            if(table.length < 5){
+                
                 for(let i = 0 ; i <5 - table.length ;i++){
                    
                     for(let j = 0 ; j < 4 ; j++){
@@ -205,8 +210,6 @@
                         rows = "";
                     }
                 document.querySelector('#tbody_table_1').innerHTML +=  tbody;
-            }else{
-                document.querySelector('#divTable').classList.remove("w-full" , "md:w-2/3")
             }
         }
 
