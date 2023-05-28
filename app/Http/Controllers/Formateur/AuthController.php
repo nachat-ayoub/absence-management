@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller {
     public function loginView() {
-        // if (Auth::guard('formateur')->check()) {
-        //     return redirect()->route('formateur.dashboard');
-        // }
         return view('auth.formateur.login');
     }
 

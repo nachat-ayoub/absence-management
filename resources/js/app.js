@@ -1,9 +1,10 @@
 import "./bootstrap";
 
 import Alpine from "alpinejs";
-import "@fortawesome/fontawesome-free/css/all.css";
-import "@fortawesome/fontawesome-free/js/all.js";
 import { Chart } from "chart.js/auto";
+
+import "@fortawesome/fontawesome-free/js/all.js";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 window.Alpine = Alpine;
 window.Chart = Chart;
@@ -18,13 +19,14 @@ Alpine.store("darkMode", {
 
 Alpine.start();
 
-var login = document.getElementById("loginBox");
-var previousPage = document.referrer;
+const login = document.getElementById("loginBox");
+const previousPage = document.referrer;
+
 if (previousPage.includes("/login")) {
     login.style.display = "block";
     setInterval(() => {
         login.style.display = "none";
     }, 1000);
 } else {
-    login.style.display = "none";
+    if (login) login.style.display = "none";
 }

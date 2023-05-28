@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Carbon\Carbon;
 use App\Models\Classe;
-use App\Models\Presence;
 use App\Models\Formateur;
+use App\Models\Presence;
 use App\Models\Stagiaire;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\DB;
 
-class FormateurController extends Controller
-{
+class FormateurController extends Controller {
     // * dashboard
-    public function formateurDashboard()
-    {
+    public function formateurDashboard() {
         $formateur_id = Auth::guard('formateur')->user()->id;
         $data = Presence::selectRaw('MONTH(date) AS mois, COUNT(*) AS total')
             ->where('formateur_id', $formateur_id)
@@ -51,8 +49,7 @@ class FormateurController extends Controller
         return view('dashboardFormateur', compact('nbr_absences_regestrer_formateur', 'nbrAbsences', 'absenceParFormateur', 'classeDeFormateur', 'classes_en_fonction_absences'))->with('data', json_encode($data));
     }
     // * getStagiaire
-    function getClassPresences(Request $request, string $classeId)
-    {
+    function getClassPresences(Request $request, string $classeId) {
         $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
         $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
 
@@ -62,9 +59,9 @@ class FormateurController extends Controller
                 $query->orderBy('nom', 'asc')->with([
                     'presences' => function ($query) use ($startOfWeek, $endOfWeek) {
                         $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
-                    }
+                    },
                 ]);
-            }
+            },
         ])->findOrFail($classeId);
 
         $week = [
@@ -103,25 +100,25 @@ class FormateurController extends Controller
 
     }
 
-    function getCLasses(Request $request)
-    {
+    function getCLasses(Request $request) {
         $classes = Formateur::find(Auth::guard('formateur')->user()->getAuthIdentifier())->classes;
         return view('absence.index', compact('classes'));
     }
 
     // * Creation un absence de stagiaire :
-    function storeStagiairePresence(Request $request)
-    {
+    function storeStagiairePresence(Request $request) {
+
         $presenceData = $request->validate([
             'classe_id' => 'required|exists:classes,id',
             'stagiaire_id' => 'required|exists:stagiaires,id',
             'seance' => 'required|string',
             'date' => 'required|string',
-            'isPresence' => 'required|string',
+            'isPresence' => 'string',
             'stagiaire_index' => 'required|string',
         ]);
 
-        $presenceData['isPresence'] = $presenceData['isPresence'] === 'on';
+        $presenceData['isPresence'] = !isset($presenceData['isPresence']) ? false : $presenceData['isPresence'] === 'on';
+        $presenceData['formateur_id'] = Auth::guard('formateur')->id();
 
         // dd($presenceData);
 
@@ -134,15 +131,15 @@ class FormateurController extends Controller
                 foreach ($seances as $seance) {
                     $query->orWhereRaw("seance REGEXP '[[:<:]]" . preg_quote($seance, '/') . "[[:>:]]'");
                 }
-            })->first();
+            })->exists();
 
-        if ($seancePresenceExists->exists()) {
+        if ($seancePresenceExists) {
             $stagiaire = Stagiaire::find($presenceData['stagiaire_id']);
 
             return redirect()->back()->withErrors([
                 'error' =>
                 'Cette séance ' . $presenceData['seance'] . ' dans le ' . $presenceData['date'] . ' est déjà notée pour la stagiaire N°' .
-                $presenceData['stagiaire_index'] . ' ' . $stagiaire->nom . ' ' . $stagiaire->prenom . '.'
+                $presenceData['stagiaire_index'] . ' ' . $stagiaire->nom . ' ' . $stagiaire->prenom . '.',
             ]);
 
         }
@@ -155,18 +152,23 @@ class FormateurController extends Controller
     //
     //
     // * Modification d'un absence de stagiaire :
-    function updateStagiairePresence(Request $request)
-    {
+    function updateStagiairePresence(Request $request) {
+        // dd($request->all());
+
         $presenceData = $request->validate([
-            'id' => 'required|exists:presences,id',
-            'isPresence' => 'required|boolean',
-            'preuve' => 'sometimes|nullable|string|max:100',
+            'presence_id' => 'required|exists:presences,id',
+            'seance' => 'required|string',
+            'isPresence' => 'string',
         ]);
 
-        $presence = Presence::find($presenceData['id']);
+        $presenceData['isPresence'] = !isset($presenceData['isPresence']) ? false : $presenceData['isPresence'] === 'on';
+
+        // dd($presenceData);
+
+        $presence = Presence::find($presenceData['presence_id']);
 
         if (!$presence) {
-            return back()->with('error', 'Presence de stagiaire n\'existe pas!');
+            return redirect()->back()->withErrors(['error' => 'Presence de stagiaire n\'existe pas!']);
         }
 
         $presence->update($presenceData);

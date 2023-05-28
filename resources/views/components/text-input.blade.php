@@ -14,6 +14,6 @@
     
 @endphp
 
-<input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
+<input {{ $disabled ? 'disabled' : '' }} {{ $readonly ? 'readonly' : '' }} {!! $attributes->merge([
     'class' => $class,
 ]) !!}>

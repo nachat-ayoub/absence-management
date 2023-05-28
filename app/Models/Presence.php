@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Presence extends Model {
     use HasFactory;
-    protected $fillable = ['stagiaire_id', 'classe_id', 'date', 'isPresence', 'seance', 'preuve'];
+    protected $fillable = ['stagiaire_id', 'classe_id', 'formateur_id', 'date', 'isPresence', 'seance', 'preuve'];
 
     /**
      * relationship between classes and presences
