@@ -43,12 +43,10 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                {{-- <x-dropdown-link href="route('admin.searchformateur')"> --}}
                                 <x-dropdown-link :href="route('admin.allFormateur')">
                                     {{ __('Chercher') }}
                                 </x-dropdown-link>
 
-                                {{-- <x-dropdown-link href="route('admin.createformateur')"> --}}
                                 <x-dropdown-link :href="route('admin.createFormateur')">
                                     {{ __('Creé') }}
                                 </x-dropdown-link>
@@ -79,12 +77,10 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                {{-- <x-dropdown-link href="route('admin.searchStagiaire')"> --}}
                                 <x-dropdown-link :href="route('admin.allStagiaire')">
                                     {{ __('Chercher') }}
                                 </x-dropdown-link>
 
-                                {{-- <x-dropdown-link href="route('admin.createStagiaire')"> --}}
                                 <x-dropdown-link :href="route('admin.createStagiaire')">
                                     {{ __('Creé') }}
                                 </x-dropdown-link>
@@ -115,12 +111,10 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                {{-- <x-dropdown-link href="route('admin.searchClasse')"> --}}
                                 <x-dropdown-link :href="route('admin.allClasses')">
                                     {{ __('Chercher') }}
                                 </x-dropdown-link>
 
-                                {{-- <x-dropdown-link href="route('admin.createClasse')"> --}}
                                 <x-dropdown-link :href="route('admin.createClasse')">
                                     {{ __('Creé') }}
                                 </x-dropdown-link>
@@ -247,14 +241,40 @@
                     </x-responsive-nav-link>
 
                     {{-- ! Accordion Example --}}
-                    <x-accordion title="Classe">
+
+                    {{-- ! formateur --}}
+                    <x-accordion title="Formateur">
                         <div class="flex w-full flex-col">
-                            <x-responsive-nav-link :href="route('profile.edit')">
-                                {{ __('cree') }}
+                            <x-responsive-nav-link :href="route('admin.allFormateur')">
+                                {{ __('Chercher') }}
                             </x-responsive-nav-link>
 
-                            <x-responsive-nav-link :href="route('admin.absence.index')">
-                                {{ __('update') }}
+                            <x-responsive-nav-link :href="route('admin.createFormateur')">
+                                {{ __('Creé') }}
+                            </x-responsive-nav-link>
+                        </div>
+                    </x-accordion>
+                    {{-- ! stagiaire --}}
+                    <x-accordion title="Stagiaire">
+                        <div class="flex w-full flex-col">
+                            <x-responsive-nav-link :href="route('admin.allStagiaire')">
+                                {{ __('Chercher') }}
+                            </x-responsive-nav-link>
+
+                            <x-responsive-nav-link :href="route('admin.createStagiaire')">
+                                {{ __('Creé') }}
+                            </x-responsive-nav-link>
+                        </div>
+                    </x-accordion>
+                    {{-- ! classe --}}
+                    <x-accordion title="Classe">
+                        <div class="flex w-full flex-col">
+                            <x-responsive-nav-link :href="route('admin.allClasses')">
+                                {{ __('Chercher') }}
+                            </x-responsive-nav-link>
+
+                            <x-responsive-nav-link :href="route('admin.createClasse')">
+                                    {{ __('Creé') }}
                             </x-responsive-nav-link>
                         </div>
                     </x-accordion>
