@@ -157,7 +157,6 @@ class AdminController extends Controller
             'nom' => 'required',
             'prenom' => 'required',
             'email' => 'required',
-            'password' => 'required',
         ]);
         $formateur->nom = $request->nom;
         $formateur->prenom = $request->prenom;

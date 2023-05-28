@@ -23,9 +23,14 @@
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
+<<<<<<< HEAD
+            <x-text-input id="email" class="mt-1 block w-full" type="email" name="email" value="{{ old('email') }}"
+                required autofocus autocomplete="username" />
+=======
             <x-text-input id="email" class="mt-1 block w-full" type="email" name="email"
                 value="{{ old('email') }}" required autofocus autocomplete="username" />
 
+>>>>>>> 5ff045a86b683b1aab9f289edc4f859da043517a
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 

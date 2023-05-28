@@ -57,7 +57,7 @@
                 <!-- password -->
                 <div class="col-span-2 inline">
                     <x-input-label for="password" :value="__('password')" />
-                    <x-text-input id="password" class="mt-1 block w-full" type="password" name="password" required
+                    <x-text-input id="password" class="mt-1 block w-full" type="password" name="password"
                         autofocus autocomplete="password" />
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
