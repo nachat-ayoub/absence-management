@@ -159,7 +159,7 @@
         {{-- * Table --}}
         <div class="scrollbar mt-6 flex flex-col justify-between gap-3 overflow-x-auto md:flex-row">
             <div>
-                <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100"
+                <table id="presence_table" class="min-w-full divide-y divide-gray-200 dark:text-gray-100"
                     title="Les absences de cette semain.">
                     <thead
                         class="dark:bg-gray-950 bg-gray-800 text-left text-xs font-bold uppercase tracking-wider text-gray-50">
@@ -268,13 +268,60 @@
                 </table>
             </div>
         </div>
+        <x-primary-button class="my-4" onclick="ExportToExcel('xlsx', '#presence_table')">Export presence to
+            excel
+        </x-primary-button>
 
     </div>
+
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 
     <script>
         function isDisabled(date) {
             const currentDate = new Date().toISOString().split('T')[0];
             return false // (date !== currentDate);
+        }
+
+
+
+        function ExportToExcel(type, selector, fn, dl) {
+            const elt = document.querySelector(selector);
+            const tempTable = document.createElement('table');
+
+
+
+            // Input string containing the HTML table
+            const htmlString = elt.innerHTML
+
+            // Regular expression pattern to match the SVG elements with the specified class
+            const regex = /<svg\s+class="svg-inline--fa fa-xmark"[^>]*>.*?<\/svg>/g;
+
+            // Replace the matched SVG elements with an X mark
+            let replacedString = htmlString.replace(regex, '<span>X</span>');
+
+
+            // Remove HTML comments
+            const commentRegex = /<!--[\s\S]*?-->/g;
+            replacedString = replacedString.replace(commentRegex, '');
+
+            tempTable.innerHTML = replacedString;
+
+
+
+
+
+            const wb = XLSX.utils.table_to_book(tempTable, {
+                sheet: "sheet1"
+            });
+            return dl ?
+                XLSX.write(wb, {
+                    bookType: type,
+                    bookSST: true,
+                    type: 'base64'
+                }) :
+                XLSX.writeFile(wb, fn || (
+                    "Presence_de_classe_{{ $classe->id }}__Semain_du_{{ $week['start'] }}_au_{{ $week['end'] }}__." +
+                    (type || 'xlsx')));
         }
     </script>
 </x-app-layout>
