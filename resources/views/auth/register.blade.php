@@ -5,26 +5,16 @@
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
-<<<<<<< HEAD
             <x-text-input id="name" class="mt-1 block w-full" type="text" name="name" value="{{ old('name') }}"
                 required autofocus autocomplete="name" />
-=======
-            <x-text-input id="name" class="mt-1 block w-full" type="text" name="name"  value="{{old('name')}}" required
-                autofocus autocomplete="name" />
->>>>>>> e85bb456d9fe32784c71bbc782e7def1596f9d83
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-<<<<<<< HEAD
             <x-text-input id="email" class="mt-1 block w-full" type="email" name="email"
                 value="{{ old('email') }}" required autocomplete="username" />
-=======
-            <x-text-input id="email" class="mt-1 block w-full" type="email" name="email"  value="{{old('email')}}"
-                required autocomplete="username" />
->>>>>>> e85bb456d9fe32784c71bbc782e7def1596f9d83
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
