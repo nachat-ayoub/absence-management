@@ -70,9 +70,9 @@
                             <td class="whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 text-center dark:text-gray-100 md:px-2 md:py-1">{{ $key + 1}}</td>
                             <td class="whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">{{$stagiaire->nom}}</td>
                             <td class="whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">{{$stagiaire->prenom}}</td>
-                            <td class="pl-24">{{ $stagiaire->absencesCount }}</td>
-                            <td class="hidden md:table-cell pl-24">{{$stagiaire->absenceSonPreuv}}</td>
-                            <td class="hidden md:table-cell pl-24">{{$stagiaire->absenceAvecPreuv}}</td>
+                            <td class="text-center whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">{{ $stagiaire->absencesCount }}</td>
+                            <td class="hidden md:table-cell text-center whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">{{$stagiaire->absenceSonPreuv}}</td>
+                            <td class="hidden md:table-cell text-center whitespace-nowrap px-3 py-2 text-md font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">{{$stagiaire->absenceAvecPreuv}}</td>
                         </tr>
                         @endforeach
                     </tbody>
