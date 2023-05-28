@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="bg-gray-100 dark:bg-gray-800 mx-8  mt-4 flex flex-col justify-between gap-3 px-2 lg:mx-12 xl:flex-row lg:px-12">
-                <div>
+                <div  id="divTable">
                     <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100 dark:ring-2 dark:ring-gray-700 dark:rounded"
                         title="Les dernières absences enregistrées.">
                         <thead>
@@ -69,7 +69,7 @@
                                     Preuve</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white dark:text-gray-100">
+                        <tbody class="divide-y divide-gray-200 bg-white dark:text-gray-100" id="tbody_table_1">
                             @foreach ($derniere_stagiaire_absencet as $stg)
                                 <tr>
                                     <td
@@ -169,22 +169,52 @@
             if(table.length < 5){
                 for(let i = 0 ; i <5 - table.length ;i++){
                     rows += `
-                    <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100">${table.length + i + 1 }</td>
-                    `
+                    <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100">${5 + i - 4}</td>
+                    `;
                     for(let j = 0 ; j < 2 ; j++){
                         rows += `
-                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100">-</td>
-                        `
-                    }
-                    tbody += `<tr>${rows}<tr/>`;
-                    rows = "";
+                            <td class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">-</td>
+                            `
+                        };
+                        tbody += `<tr>${rows}<tr/>`;
+                        rows = "";
                 }
-                document.querySelector('#tableClasses').innerHTML +=  tbody;
+                    document.querySelector('#tableClasses').innerHTML +=  tbody;
             }
         }
+
+
+        function tableRowsFirstTable() {
+            let table = document.querySelectorAll('#tbody_table_1 tr');
+            let rows = "";
+            let tbody = "";
+            if(table.length < 5){
+                document.querySelector('#divTable').classList.add("w-full" , "md:w-2/3");
+                for(let i = 0 ; i <5 - table.length ;i++){
+                   
+                    for(let j = 0 ; j < 4 ; j++){
+                        rows += `
+                            <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">-</td>
+                            `
+                        };
+                        rows += `
+                            <td class="hidden whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:table-cell">-</td>
+                            <td class="hidden whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 lg:table-cell md:px-6 md:py-4">-</td>
+                            `;
+                        tbody += `<tr>${rows}<tr/>`;
+                        rows = "";
+                    }
+                document.querySelector('#tbody_table_1').innerHTML +=  tbody;
+            }else{
+                document.querySelector('#divTable').classList.remove("w-full" , "md:w-2/3")
+            }
+        }
+
+
         onload = () => {
             animationNumber();
             tableRows();
+            tableRowsFirstTable();
         }
         var modeButton = document.getElementById('modeButton');
         var sunIcon = document.getElementById('sunIcon');

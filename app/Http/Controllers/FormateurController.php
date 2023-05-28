@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\DB;
 
-class FormateurController extends Controller {
+class FormateurController extends Controller
+{
     // * dashboard
-    public function formateurDashboard() {
+    public function formateurDashboard()
+    {
         $formateur_id = Auth::guard('formateur')->user()->id;
         $data = Presence::selectRaw('MONTH(date) AS mois, COUNT(*) AS total')
             ->where('formateur_id', $formateur_id)
@@ -29,7 +31,12 @@ class FormateurController extends Controller {
             ->where('isPresence', 0)
             ->pluck('totalAbsences')
             ->toArray();
-        $absenceParFormateur = ($nbr_absences_regestrer_formateur[0] / $nbrAbsences[0]) * 100;
+
+        if ($nbrAbsences[0] != 0) {
+            $absenceParFormateur = ($nbr_absences_regestrer_formateur[0] / $nbrAbsences[0]) * 100;
+        } else {
+            $absenceParFormateur = 0.00;
+        }
 
         $classeDeFormateur = DB::table('classe_formateur')->select('classe_id')
             ->where('formateur_id', $formateur_id)
@@ -49,7 +56,8 @@ class FormateurController extends Controller {
         return view('dashboardFormateur', compact('nbr_absences_regestrer_formateur', 'nbrAbsences', 'absenceParFormateur', 'classeDeFormateur', 'classes_en_fonction_absences'))->with('data', json_encode($data));
     }
     // * getStagiaire
-    function getClassPresences(Request $request, string $classeId) {
+    function getClassPresences(Request $request, string $classeId)
+    {
         $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
         $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
 
@@ -100,13 +108,15 @@ class FormateurController extends Controller {
 
     }
 
-    function getCLasses(Request $request) {
+    function getCLasses(Request $request)
+    {
         $classes = Formateur::find(Auth::guard('formateur')->user()->getAuthIdentifier())->classes;
         return view('absence.index', compact('classes'));
     }
 
     // * Creation un absence de stagiaire :
-    function storeStagiairePresence(Request $request) {
+    function storeStagiairePresence(Request $request)
+    {
 
         $presenceData = $request->validate([
             'classe_id' => 'required|exists:classes,id',
@@ -152,7 +162,8 @@ class FormateurController extends Controller {
     //
     //
     // * Modification d'un absence de stagiaire :
-    function updateStagiairePresence(Request $request) {
+    function updateStagiairePresence(Request $request)
+    {
         // dd($request->all());
 
         $presenceData = $request->validate([
