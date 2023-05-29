@@ -1,3 +1,10 @@
+@php
+    $guard = auth()
+        ->guard('formateur')
+        ->check()
+        ? 'formateur'
+        : 'admin';
+@endphp
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
@@ -56,9 +63,8 @@
                                 <td class="px-3 py-2 text-center md:px-6 md:py-4">
 
                                     <!-- show -->
-
                                     <a class="mt-2 text-lg md:mt-0"
-                                        href="{{ route(auth()->guard('formateur')->check()? 'formateur': 'admin' . '.absence.classeAbsence',$classe->id) }}">
+                                        href="{{ route($guard . '.absence.classeAbsence', $classe->id) }}">
                                         <div class="inline-block items-center rounded-lg border border-gray-300 bg-slate-200 px-4 py-2 text-center text-slate-700 shadow-sm hover:bg-slate-300/70 hover:text-slate-600 dark:border-0 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-slate-300 md:w-auto"
                                             title="details de stagiaire">
                                             <i class="fa-solid fa-marker"></i>
