@@ -27,7 +27,7 @@
             <a href="{{ route('admin.allFormateur') }}">Retourner</a>
         </button>
 
-        <form action="/admin/formateur/store" method="post">
+        <form action="/admin/formateur/store" method="post" class="mb-6">
             {{ csrf_field() }}
             <div class="">
 
