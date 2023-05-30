@@ -4,11 +4,14 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Admin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
-use Redirect;
 
 class AdminProfileController extends Controller {
     /**
@@ -30,15 +33,40 @@ class AdminProfileController extends Controller {
             abort(404);
         }
 
-        $admin->fill($request->validated());
+        $adminData = $request->validated();
 
-        if ($admin->isDirty('email')) {
-            $admin->email_verified_at = null;
-        }
-
-        $admin->save();
+        Admin::find($admin->id)->update($adminData);
 
         return redirect()->route('admin.profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function updatePassword(Request $request): RedirectResponse{
+        $admin = $request->user('admin');
+
+        if (!$admin) {
+            abort(404);
+        }
+
+        $validated = $request->validateWithBag('updatePassword', [
+            'current_password' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::guard('admin')->user()->password)) {
+                        $fail('Le mot de passe actuel est incorrect.');
+                    }
+                },
+            ],
+
+            'password' => ['required', Password::defaults(), 'confirmed'],
+
+        ]);
+
+        $admin->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('status', 'password-updated');
+
     }
 
     /**
@@ -46,14 +74,16 @@ class AdminProfileController extends Controller {
      */
     public function destroy(Request $request): RedirectResponse{
         $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+            'password' => ['required', function ($attribute, $value, $fail) {
+                if (!Hash::check($value, Auth::guard('admin')->user()->password)) {
+                    $fail('Le mot de passe actuel est incorrect.');
+                }
+            }],
         ]);
 
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
+        $admin = $request->user('admin');
+        Auth::guard('admin')->logout();
+        $admin->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
