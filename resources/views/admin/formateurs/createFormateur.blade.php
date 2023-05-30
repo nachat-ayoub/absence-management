@@ -4,7 +4,7 @@
             {{ __('Ajouter Un Formateur') }}
         </h2>
     </x-slot>
-    <div class="container mx-auto pt-4  px-2 md:px-0">
+    <div class="container mx-auto py-10  px-2 md:px-0">
 
         @if (session()->has('success'))
             <div class="mb-4 flex rounded-lg border border-green-300 bg-green-50 p-4 text-lg text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
@@ -27,7 +27,7 @@
             <a href="{{ route('admin.allFormateur') }}">Retourner</a>
         </button>
 
-        <form action="/admin/formateur/store" method="post" class="mb-6">
+        <form action="/admin/formateur/store" method="post" >
             {{ csrf_field() }}
             <div class="">
 
