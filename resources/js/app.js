@@ -3,7 +3,6 @@ import "./bootstrap";
 import Alpine from "alpinejs";
 import collapse from "@alpinejs/collapse";
 import { Chart } from "chart.js/auto";
-// import XLSX from "xlsx";
 import * as XLSX from "xlsx";
 
 import "@fortawesome/fontawesome-free/js/all.js";

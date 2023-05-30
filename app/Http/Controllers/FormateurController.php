@@ -58,16 +58,22 @@ class FormateurController extends Controller {
         $startOfWeek = Carbon::now()->startOfWeek(); // Get the start of the current week (Monday)
         $endOfWeek = Carbon::now()->endOfWeek(); // Get the end of the current week (Friday)
 
-        $classe = Classe::with([
-            'formateurs',
-            'stagiaires' => function ($query) use ($startOfWeek, $endOfWeek) {
-                $query->orderBy('nom', 'asc')->with([
-                    'presences' => function ($query) use ($startOfWeek, $endOfWeek) {
-                        $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
-                    },
-                ]);
-            },
-        ])->findOrFail($classeId);
+        $formateurId = auth('formateur')->id();
+
+        $classe = Classe::whereHas('formateurs', function ($query) use ($formateurId) {
+            $query->where('formateur_id', $formateurId);
+        })
+            ->with([
+                'formateurs',
+                'stagiaires' => function ($query) use ($startOfWeek, $endOfWeek) {
+                    $query->orderBy('nom', 'asc')->with([
+                        'presences' => function ($query) use ($startOfWeek, $endOfWeek) {
+                            $query->whereBetween('date', [$startOfWeek, $endOfWeek]);
+                        },
+                    ]);
+                },
+            ])
+            ->findOrFail($classeId);
 
         $week = [
             'start' => $startOfWeek->format('d/m/Y'),

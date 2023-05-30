@@ -1,3 +1,5 @@
+@props(['simple'])
+
 <!DOCTYPE html>
 <html x-data :class="$store.darkMode.on && 'dark'" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -22,17 +24,22 @@
         <x-darkmode-switcher></x-darkmode-switcher>
     </div>
     <div class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 dark:bg-gray-900 sm:justify-center sm:pt-0">
-
         <div>
             <a href="/">
-                <x-application-logo class="text-primary h-40 w-40 fill-current" />
+                <x-application-logo class="dark:text-primary w-40 fill-current text-gray-800" />
             </a>
         </div>
 
-        <div
-            class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md dark:bg-gray-800 sm:max-w-md sm:rounded-lg">
-            {{ $slot }}
-        </div>
+        @if (isset($simple) && $simple)
+            <div class="w-full overflow-hidden px-6 py-4">
+                {{ $slot }}
+            </div>
+        @else
+            <div
+                class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md dark:bg-gray-800 sm:max-w-md sm:rounded-lg">
+                {{ $slot }}
+            </div>
+        @endif
     </div>
 </body>
 

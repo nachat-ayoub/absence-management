@@ -6,17 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginAdminRequest;
 use App\Http\Requests\RegisterAdminRequest;
 use App\Models\Admin;
-use Auth;
-use Hash;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
     public function registerView() {
+        $adminsCount = count(Admin::all());
+        if ($adminsCount > 0) {
+            return redirect()->route('admin.login')->with('error', 'Seul le premier administrateur est autorisé à s\'inscrire, veuillez vous connecter.');
+        }
+
         return view('auth.admin.register');
     }
 
     public function register(RegisterAdminRequest $request) {
         $request->validate($request->rules());
+
+        $adminsCount = count(Admin::all());
+        if ($adminsCount > 0) {
+            return redirect()->route('admin.login')->with('error', 'Seul le premier administrateur est autorisé à s\'inscrire, veuillez vous connecter.');
+        }
 
         $admin = Admin::create([
             'nom' => $request->nom,

@@ -4,7 +4,7 @@
             {{ __('Creation D\'Un Classe') }}
         </h2>
     </x-slot>
-    <div class="container mx-auto my-10 px-2 md:px-0">
+    <div class="container mx-auto py-10 px-2 md:px-0">
 
         @if (session()->has('success'))
             <div class="my-2 flex rounded-lg border border-green-300 bg-green-50 p-4 text-lg text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"

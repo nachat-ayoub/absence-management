@@ -5,7 +5,6 @@
         ? 'formateur'
         : 'admin';
 @endphp
-
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
@@ -20,7 +19,7 @@
         </div>
     </x-slot>
 
-    <div class="container mx-auto mt-10 px-4" x-data="{
+    <div class="container mx-auto py-10 px-4" x-data="{
         data: null,
         action: null,
         isModalOpen: false,
@@ -188,12 +187,36 @@
         </button>
 
         {{-- * Table --}}
-        <div class="scrollbar mt-6 flex flex-col justify-between gap-3 overflow-x-auto md:flex-row">
+        <div class="scrollbar mt-6 flex flex-col justify-between gap-3 overflow-x-auto overflow-y-hidden md:flex-row">
             <div>
                 <table id="presence_table" class="min-w-full divide-y divide-gray-200 dark:text-gray-100"
                     title="Les absences de cette semain.">
                     <thead
                         class="dark:bg-gray-950 bg-gray-800 text-left text-xs font-bold uppercase tracking-wider text-gray-50">
+                        <tr class="hidden">
+                            <td class="px-2 py-2 text-base font-semibold leading-tight text-gray-200 md:px-6 md:py-3">
+                                ISTA OuedZem
+                            </td>
+                        </tr>
+                        <tr class="hidden">
+                            <td class="px-2 py-2 text-base font-semibold leading-tight text-gray-200 md:px-6 md:py-3">
+                                {{ __('Group') }}: {{ $classe->branche . $classe->num_group }}
+                            </td>
+                        </tr>
+                        <tr class="hidden">
+                            <td class="px-2 py-2 text-base font-semibold leading-tight text-gray-200 md:px-6 md:py-3">
+                                Année:
+                                {{ $classe->annee_scolaire }}
+                            </td>
+                        </tr>
+                        <tr class="hidden">
+                            <td class="px-2 py-2 text-base font-semibold leading-tight text-gray-200 md:px-6 md:py-3">
+                                {{ __('Semain du') }}: <span class="underline">{{ $week['start'] }}</span> au <span
+                                    class="underline">{{ $week['end'] }}</span>
+                            </td>
+
+                        </tr>
+
                         <tr>
                             <th class="px-2 py-2 md:px-6 md:py-3" scope="col">
                                 N°
@@ -303,7 +326,7 @@
     <script>
         function isDisabled(date) {
             const currentDate = new Date().toISOString().split('T')[0];
-            return false // (date !== currentDate);
+            {{ $guard === 'admin' ? 'return false' : 'return (date !== currentDate)' }};
         }
 
 

@@ -16,7 +16,7 @@
         </div>
     </div>
     @auth('admin')
-        <div class="dark:bg-gray-800 flex  flex-col-reverse py-12 sm:flex-col">
+        <div class="dark:bg-gray-800 flex  flex-col-reverse justify-center py-12 sm:flex-col">
             <div class="bg-gray-100  dark:bg-gray-800 mx-8  mt-4 flex flex-col justify-between gap-3 px-2 lg:mx-12 sm:flex-row lg:px-12">
                 <div class="flex flex-col w-full gap-x-3 sm:flex-row sm:w-1/2">
                     <div
@@ -44,28 +44,28 @@
                 </div>
             </div>
             <div class="bg-gray-100 dark:bg-gray-800 mx-8  mt-4 flex flex-col justify-between gap-3 px-2 lg:mx-12 xl:flex-row lg:px-12">
-                <div  id="divTable">
+                <div  id="divTable" class="xl:w-3/4">
                     <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100 dark:ring-2 dark:ring-gray-700 dark:rounded"
                         title="Les dernières absences enregistrées.">
                         <thead>
                             <tr>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Nom</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Prénom</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Filière</th>
                                 <th scope="col"
-                                    class=" dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 ">
+                                    class=" dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 ">
                                     Groupe</th>
                                 <th scope="col"
-                                    class="hidden dark:bg-gray-800 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:table-cell">
+                                    class="hidden dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 md:table-cell">
                                     Date d'absence</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 hidden px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 lg:table-cell md:px-6 md:py-3">
+                                    class="dark:bg-gray-800 hidden px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50 lg:table-cell md:px-6 md:py-3">
                                     Preuve</th>
                             </tr>
                         </thead>
@@ -73,15 +73,15 @@
                             @foreach ($derniere_stagiaire_absencet as $stg)
                                 <tr>
                                     <td
-                                        class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
+                                        class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
                                         {{ $stg->nom }}
                                     </td>
                                     <td
-                                        class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
+                                        class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
                                         {{ $stg->prenom }}
                                     </td>
                                     <td
-                                        class="whitespace-nowrap px-3 py-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
+                                        class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">
                                         {{ $stg->branche }}
                                     </td>
                                     <td
@@ -103,19 +103,19 @@
                     </table>
 
                 </div>
-                <div>
+                <div class="xl:w-1/4">
                     <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100 dark:ring-2 dark:ring-gray-700 dark:rounded"
                         title="Le classement des classes en fonction de l'absence">
                         <thead>
                             <tr>
                                 <th scope="col"
-                                    class="ddark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     N°</th>
                                 <th scope="col"
-                                    class="ddark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Classe</th>
                                 <th scope="col"
-                                    class="ddark:bg-gray-800 px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Nombre d'absences</th>
                             </tr>
                         </thead>
@@ -173,7 +173,7 @@
                     `;
                     for(let j = 0 ; j < 2 ; j++){
                         rows += `
-                            <td class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">-</td>
+                            <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">-</td>
                             `
                         };
                         tbody += `<tr>${rows}<tr/>`;
@@ -199,7 +199,7 @@
                    
                     for(let j = 0 ; j < 4 ; j++){
                         rows += `
-                            <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">-</td>
+                            <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-6 md:py-4">-</td>
                             `
                         };
                         rows += `

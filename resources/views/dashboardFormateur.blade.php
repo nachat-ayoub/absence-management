@@ -98,14 +98,14 @@
 
         function createOfDiagramme() {
             const ctx = document.getElementById('myChart').getContext('2d');
-            const min = 5;
-            const max = 20;
+            // const min = 5;
+            // const max = 20;
             var dataFromDB =  {!! $data !!}
             var dataOfDiagramme = [];
             for(let i = 0 ;  i < 11 ; i++){
                 if(!Object.keys(dataFromDB).includes(String(i))){
-                    //dataOfDiagramme[i] = 0;
-                    dataOfDiagramme[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+                    dataOfDiagramme[i] = 0;
+                    // dataOfDiagramme[i] = Math.floor(Math.random() * (max - min + 1)) + min;
                 }else{
                     dataOfDiagramme[i] = dataFromDB[i];
                 }

@@ -7,7 +7,7 @@
                     <!-- Logo -->
                     <div class="flex shrink-0 items-center">
                         <a href="{{ route('welcome') }}">
-                            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                            <x-application-logo class="block h-10 w-auto fill-current text-gray-800 dark:text-gray-200" />
                         </a>
                     </div>
 
@@ -274,7 +274,7 @@
                             </x-responsive-nav-link>
 
                             <x-responsive-nav-link :href="route('admin.createClasse')">
-                                    {{ __('Creé') }}
+                                {{ __('Creé') }}
                             </x-responsive-nav-link>
                         </div>
                     </x-accordion>
@@ -311,7 +311,7 @@
                         <!-- Logo -->
                         <div class="flex shrink-0 items-center">
                             <a href="{{ route('welcome') }}">
-                                <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                <x-application-logo class="block h-10 w-auto fill-current text-gray-800 dark:text-gray-200" />
                             </a>
                         </div>
 
