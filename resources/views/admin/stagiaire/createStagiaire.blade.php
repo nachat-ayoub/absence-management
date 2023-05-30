@@ -48,33 +48,42 @@
                     </div>
                 </div>
                 <!-- email -->
-                <div class="col-span-2 flex flex-col gap-2 md:flex-row">
-                    <div class="inline">
+                <div class="w-full flex flex-col gap-2 justify-between md:flex-row">
+                    <div class="inline md:w-1/3">
                         <x-input-label for="branche" class="mt-1 mr-7 inline w-full md:mx-auto md:block"
                             :value="__('Filière')" />
                         <select name="branche"
-                            class="mt-5 rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
-                            <option>choisir un filiere</option>
+                            class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
+                            <option>Choisir un Filiere</option>
                             @foreach ($branches as $branche)
                                 <option value="{{ $branche }}">{{ $branche }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="inline w-full">
+                    <div class="inline md:w-1/3">
                         <x-input-label for="num_group" :value="__('Group')"
-                            class="mt-1 mr-7 inline w-full md:mx-auto md:block" />
-                        <x-text-input id="num_group" class="mt-1 block w-full" type="text" name="num_group"
-                            value="{{ old('num_group') }}" required autofocus autocomplete="num_group" />
-                        <x-input-error :messages="$errors->get('num_group')" class="mt-2" />
+                            class="mt-1 mr-7 inline  md:mx-auto md:block" />
+                            <select name="num_group"
+                            class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
+                            <option>Choisir un Group</option>
+                            @foreach ($groups as $group)
+                                <option value="{{ $group }}">{{ $group }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    <!-- password -->
+                    <div class="inline md:w-1/3">
+                        <x-input-label for="annee_scolaire" :value="__('Année scolaire')" 
+                        class="mt-1 mr-7 inline  md:mx-auto md:block" />
+                        <select name="annee_scolaire"
+                        class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
+                        <option>Choisir l'Année scolaire</option>
+                        @foreach ($annee_scolaires as $annee_scolaire)
+                        <option value="{{ $annee_scolaire }}">{{ $annee_scolaire }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <!-- password -->
-                <div class="col-span-2 inline">
-                    <x-input-label for="annee_scolaire" :value="__('Année scolaire')" />
-                    <x-text-input id="annee_scolaire" class="mt-1 block w-full" type="text" name="annee_scolaire"
-                        value="{{ old('annee_scolaire') }}" required autofocus autocomplete="annee_scolaire" />
-                    <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
-                </div>
+            </div>
 
                 <div class="mt-8">
                     <input type="submit"
