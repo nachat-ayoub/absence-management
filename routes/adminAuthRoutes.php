@@ -35,6 +35,7 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     Route::prefix('/profile')->name('profile.')->group(function () {
         Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
         Route::patch('/', [AdminProfileController::class, 'update'])->name('update');
+        Route::put('/password/update', [AdminProfileController::class, 'updatePassword'])->name('updatePassword');
         Route::delete('/', [AdminProfileController::class, 'destroy'])->name('destroy');
     });
 
