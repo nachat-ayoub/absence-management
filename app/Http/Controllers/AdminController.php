@@ -145,7 +145,7 @@ class AdminController extends Controller {
     // ! Show detail of Formateur
     public function showFormateur(Request $request, Formateur $formateur) {
         $classes = Classe::whereIn('id', $formateur->classes()->pluck('classes.id'))->get();
-        return view('admin.formateurs.showFormateur', compact('formateur' , 'classes'));
+        return view('admin.formateurs.showFormateur', compact('formateur', 'classes'));
     }
 
     // ! Show the form for editing the specified resource.
@@ -168,6 +168,7 @@ class AdminController extends Controller {
             'prenom' => 'required',
             'email' => 'required',
             'classes' => 'required|string',
+            'password' => 'nullable|string',
         ]);
 
         $classesID = $request->classes;
@@ -177,7 +178,10 @@ class AdminController extends Controller {
         $formateur->nom = $request->nom;
         $formateur->prenom = $request->prenom;
         $formateur->email = $request->email;
-        $formateur['password'] = Hash::make($request->password);
+        if (isset($request->password) && $request->password) {
+            $formateur['password'] = Hash::make($request->password);
+        }
+
         $formateur['admin_id'] = 1;
         $formateur->save();
         return redirect()->route('admin.allFormateur')->with('success', 'Le Formateur a été Bien Modifier !');
@@ -314,7 +318,7 @@ class AdminController extends Controller {
 
         }
 
-        return view('admin.classe.showClasse', compact('classe', 'totalAbsences', 'stagiaireAbsence', 'stagiaires',));
+        return view('admin.classe.showClasse', compact('classe', 'totalAbsences', 'stagiaireAbsence', 'stagiaires', ));
     }
 
     // ! Show the form for editing the specified resource.
