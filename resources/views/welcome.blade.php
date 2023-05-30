@@ -1,76 +1,112 @@
-<!DOCTYPE html>
-<html x-data :class="$store.darkMode.on && 'dark'" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-guest-layout :simple='true'>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div class="flex w-full flex-col items-center justify-center gap-12">
 
-    <title>Laravel</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <!-- Fonts -->
-    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <h1
+            class="dark:hover:text-primary hover:text-primary text-3xl font-bold text-gray-800 transition-colors duration-150 dark:text-white">
+            Gestion De Presence
+        </h1>
+        <div
+            class="grid-col-1 grid w-full place-items-center gap-10 text-gray-600 transition-all duration-300 ease-in-out dark:text-gray-600 md:grid-cols-2 md:px-8">
 
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-        }
-    </style>
-</head>
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+            @auth('admin')
+                <section
+                    class="dark:hover:border-primary/40 hover:border-primary/40 group flex w-full max-w-lg items-center justify-between rounded border-2 border-gray-100 bg-white p-4 shadow-sm hover:animate-pulse dark:border-gray-700 dark:bg-gray-800 dark:shadow-none md:col-span-2 md:p-6">
+                    <div
+                        class="dark:group-hover:text-primary group-hover:text-primary flex flex-col justify-center pr-4 md:pr-10">
+                        <span class="text-9xl">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </span>
 
-<body class="bg-gray-100 pt-6 dark:bg-gray-900 dark:text-white">
-    <div class="absolute top-5 right-3">
-        <x-darkmode-switcher></x-darkmode-switcher>
-    </div>
+                        <span class="mt-1 text-4xl font-bold capitalize">
+                            Admin
+                        </span>
 
-    <div class="flex min-h-screen w-full flex-col items-center justify-center gap-12">
-        <span>
-            <a href="/" class="">
-                <x-application-logo class="text-primary h-40 w-40 fill-current" />
-            </a>
-
-        </span>
-
-        <h1 class="hover:text-primary text-3xl font-bold transition-colors duration-150">Gestion D'absences</h1>
-
-        @auth('admin')
-            <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
-                <a href="/admin/dashboard" class="capitalize hover:text-gray-200 hover:underline">admin Dashboard</a>
-            </div>
-        @else
-            @auth
-                <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
-                    <a href="/dashboard" class="capitalize hover:text-gray-200 hover:underline">Dashboard</a>
-                </div>
-            @else
-                <div
-                    class="flex w-full flex-col items-center justify-center gap-4 text-lg font-bold text-gray-500 dark:text-gray-200">
-                    <a href="{{ route('formateur.login') }}"
-                        class="dark:hover:text-primary capitalize hover:text-gray-900 hover:underline">formateur Login</a>
-
-                    <div class="bg-primary/60 my-4 h-0.5 w-1/2"></div>
-
-                    <a href="/admin/login"
-                        class="dark:hover:text-primary capitalize text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-200">admin
-                        Login</a>
-                    <div class="flex items-center justify-center gap-x-2">
-                        <div class="h-0.5 w-16 bg-gray-600"></div>
-                        <span class="">Or</span>
-                        <div class="h-0.5 w-16 bg-gray-600"></div>
                     </div>
-                    <a href="/admin/register"
-                        class="dark:hover:text-primary capitalize text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-200">admin
-                        Register</a>
-                </div>
-            @endauth
-        @endauth
-        @auth('formateur')
-            <div class="flex flex-col items-center justify-center gap-4 text-lg font-bold text-gray-400">
-                <a href="/formateur/dashboard" class="capitalize hover:text-gray-200 hover:underline">Formateur
-                    Dashboard</a>
-            </div>
-        @endauth
-    </div>
-</body>
 
-</html>
+                    <div class="flex flex-col gap-y-5 pr-4 font-bold capitalize text-gray-500 dark:text-gray-200 md:pr-10">
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="dark:hover:text-primary hover:text-gray-900 hover:underline">
+                            Dashboard
+                        </a>
+                    </div>
+                </section>
+            @else
+                @auth('formateur')
+                    <section
+                        class="dark:hover:border-primary/40 hover:border-primary/40 group flex w-full max-w-lg items-center justify-between rounded border-2 border-gray-100 bg-white p-4 shadow-sm hover:animate-pulse dark:border-gray-700 dark:bg-gray-800 dark:shadow-none md:col-span-2 md:p-6">
+                        <div class="dark:group-hover:text-primary group-hover:text-primary flex flex-col justify-center">
+                            <span class="text-9xl">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </span>
+
+                            <span class="font-boldRegister mt-1 text-4xl capitalize">
+                                Formateur
+                            </span>
+
+                        </div>
+
+                        <div class="flex flex-col gap-y-5 px-4 font-bold capitalize text-gray-500 dark:text-gray-200">
+                            <a href="{{ route('formateur.dashboard') }}"
+                                class="dark:hover:text-primary hover:text-gray-900 hover:underline">
+                                Dashboard
+                            </a>
+                        </div>
+                    </section>
+                @else
+                    @guest
+                        <section
+                            class="dark:hover:border-primary/40 hover:border-primary/40 group flex w-full max-w-lg items-center justify-between rounded border-2 border-gray-100 bg-white p-4 shadow-sm hover:animate-pulse dark:border-gray-700 dark:bg-gray-800 dark:shadow-none md:p-6">
+                            <div
+                                class="dark:group-hover:text-primary group-hover:text-primary flex flex-col justify-center pr-4 md:pr-10">
+                                <span class="text-9xl">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </span>
+
+                                <span class="mt-1 text-4xl font-bold capitalize">
+                                    Admin
+                                </span>
+
+                            </div>
+
+                            <div class="flex flex-col gap-y-5 pr-4 font-bold capitalize text-gray-500 dark:text-gray-200 md:pr-10">
+                                <a href="{{ route('admin.login') }}"
+                                    class="dark:hover:text-primary hover:text-gray-900 hover:underline">
+                                    Login
+                                </a>
+                                <a href="{{ route('admin.register') }}"
+                                    class="dark:hover:text-primary hover:text-gray-900 hover:underline">
+                                    Register
+                                </a>
+                            </div>
+                        </section>
+
+                        <section
+                            class="dark:hover:border-primary/40 hover:border-primary/40 group flex w-full max-w-lg items-center justify-between rounded border-2 border-gray-100 bg-white p-4 shadow-sm hover:animate-pulse dark:border-gray-700 dark:bg-gray-800 dark:shadow-none md:p-6">
+                            <div class="dark:group-hover:text-primary group-hover:text-primary flex flex-col justify-center">
+                                <span class="text-9xl">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                </span>
+
+                                <span class="font-boldRegister mt-1 text-4xl capitalize">
+                                    Formateur
+                                </span>
+
+                            </div>
+
+                            <div class="flex flex-col gap-y-5 px-4 font-bold capitalize text-gray-500 dark:text-gray-200">
+                                <a href="{{ route('formateur.login') }}"
+                                    class="dark:hover:text-primary hover:text-gray-900 hover:underline">
+                                    Login
+                                </a>
+                            </div>
+                        </section>
+
+                    @endguest
+                @endauth
+            @endauth
+
+        </div>
+
+    </div>
+</x-guest-layout>

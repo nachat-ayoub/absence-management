@@ -2,13 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class FormateurAuthMiddleware
-{
+class FormateurAuthMiddleware {
     /**
      * Handle an incoming request.
      *
@@ -16,8 +15,7 @@ class FormateurAuthMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next): Response
-    {
+    public function handle(Request $request, Closure $next): Response {
         if (!Auth::guard('formateur')->check()) {
             return redirect()->route('formateur.login')->with('error', 'Please Login First');
         }
