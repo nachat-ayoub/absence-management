@@ -33,11 +33,11 @@
                         </div>
                         <!-- email -->
                         <div class="w-full flex flex-col gap-2 justify-between md:flex-row">
-                            <div class="inline md:w-1/3">
+                            <div class="inline md:w-1/3" >
                                 <x-input-label for="branche" class="mt-1 mr-7 inline w-full md:mx-auto md:block"
                                 :value="__('Filière')" />
                                 <select name="branche"
-                                class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
+                                class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1" id="selectBranche">
                                 <option>Choisir un Filiere</option>
                                 @foreach ($branches as $branche)
                                 <option value="{{ $branche }}" 
@@ -50,12 +50,9 @@
                             <x-input-label for="num_group" :value="__('Group')"
                             class="mt-1 mr-7 inline  md:mx-auto md:block" />
                             <select name="num_group"
-                            class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
+                            class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1" id="selectGroup">
                             <option>Choisir un Group</option>
-                            @foreach ($groups as $group)
-                            <option value="{{ $group }}"
-                                    {{ $stagiaire->Classe->num_group == $group ? 'selected' : '' }}> s{{ $group }}</option>
-                            @endforeach
+                            
                         </select>
                     </div>
                     <!-- password -->
@@ -86,3 +83,28 @@
     </div>
 
 </x-app-layout>
+<script>
+        var selectBranche = document.getElementById('selectBranche');
+        var selectGroup = document.getElementById('selectGroup');
+        var data = {!! $data !!}
+        var classes = data.classes;
+        selectGroup.innerHTML += `<option value="${data['stgGroup']}" selected=${true}>${data['stgGroup']}</option>`;
+        selectBranche.onchange = () => {
+            selectGroup.innerHTML = '<option selected>Choisir un group</option>'
+            var options = '';
+            for(let i  = 0; i < classes.length ; i++){
+                if(classes[i].branche === selectBranche.value){
+                    if(classes[i].num_group === data['stgGroup'] && selectBranche.options[i].selected){
+                        options += `
+                        <option value="${classes[i].num_group}" selected ='${true}'>${classes[i].num_group}</option>
+                        `;
+                    }else{
+                        options += `
+                        <option value="${classes[i].num_group}">${classes[i].num_group}</option>
+                        `;
+                    }
+                }
+            }
+            selectGroup.innerHTML += options;
+        }
+</script>

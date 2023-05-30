@@ -248,7 +248,12 @@ class AdminController extends Controller
         $branches = Classe::distinct()->pluck('branche', 'id');
         $groups = Classe::distinct()->pluck('num_group');
         $annee_scolaires = Classe::distinct()->pluck('annee_scolaire');
-        return view('admin.stagiaire.editStagiaire', compact('stagiaire', 'branches', 'groups', 'annee_scolaires'));
+        $classe = Classe::all();
+        $data = [
+            'classes' => $classe,
+            'stgGroup' => $stagiaire->Classe->num_group
+        ];
+        return view('admin.stagiaire.editStagiaire', compact('stagiaire', 'branches', 'groups', 'annee_scolaires'))->with('data', json_encode($data));
     }
 
     // ! save update
