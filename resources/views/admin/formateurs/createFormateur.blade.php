@@ -17,7 +17,7 @@
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
-                    {{ session('success') }}dsvv
+                    {{ session('success') }}
                 </div>
             </div>
         @endif

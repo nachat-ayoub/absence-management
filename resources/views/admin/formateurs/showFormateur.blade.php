@@ -11,10 +11,48 @@
 
         <div class="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                #{{ $formateur->id }} {{ $formateur->nom }} {{ $formateur->prenom }}
+                #{{ $formateur->id }} - {{ $formateur->nom }} {{ $formateur->prenom }}
             </h5>
 
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $formateur->email }}</p>
+            <div class= mx-4 mt-6 flex flex-col justify-between gap-3 px-2 md:flex-row">
+            <div class=" w-full">
+                <table class="min-w-full divide-y divide-gray-200 dark:text-gray-100"
+                    title="Les dernières absences enregistrées.">
+                    <thead
+                        class="dark:bg-gray-950 bg-gray-800 text-left text-xs font-bold uppercase tracking-wider text-gray-50">
+
+                        <tr>
+                            <th class="px-2 py-2 md:px-6 md:py-3" scope="col">#id</th>
+                            <th class="px-2 py-2 md:px-6 md:py-3" scope="col">nom</th>
+                            <th class="px-2 py-2 md:px-6 md:py-3" scope="col">prenom</th>
+                            <th class="px-2 py-2 md:px-6 md:py-3" scope="col">email</th>
+                            <th class="px-2 py-2 md:px-6 md:py-3" scope="col">classe  -  numéro group</th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        class="whitespace-nowrap text-sm font-medium text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100">
+                        <tr>
+                            <td class="px-3 py-2 md:px-6 md:py-4">{{ $formateur->id }}</td>
+                            <td class="px-3 py-2 md:px-6 md:py-4">{{ $formateur->nom }}</td>
+                            <td class="px-3 py-2 md:px-6 md:py-4">{{ $formateur->prenom }}</td>
+                            <td class="px-3 py-2 md:px-6 md:py-4">{{ $formateur->email }}</td>
+                            <td class="px-3 py-2 md:px-6 md:py-4">
+                            <ul>
+                                @foreach($classes as $classe)
+                                    <!-- <li class=" pl-8">{{ $classe->branche }}  -   {{ $classe->num_group }}</li> -->
+                                    <li class=" px-8 py-2">
+                                        <a  href="{{ route('admin.showClasse', $classe->id) }}">
+                                        - {{ $classe->branche }}  -   {{ $classe->num_group }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
 
             <div class="mt-6 flex flex-row gap-4">
 

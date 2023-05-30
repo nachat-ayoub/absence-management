@@ -128,7 +128,8 @@ class AdminController extends Controller {
 
     // ! Show detail of Formateur
     public function showFormateur(Request $request, Formateur $formateur) {
-        return view('admin.formateurs.showFormateur', compact('formateur'));
+        $classes = Classe::whereIn('id', $formateur->classes()->pluck('classes.id'))->get();
+        return view('admin.formateurs.showFormateur', compact('formateur' , 'classes'));
     }
 
     // ! Show the form for editing the specified resource.
@@ -290,7 +291,7 @@ class AdminController extends Controller {
 
         }
 
-        return view('admin.classe.showClasse', compact('classe', 'totalAbsences', 'stagiaireAbsence', 'stagiaires'));
+        return view('admin.classe.showClasse', compact('classe', 'totalAbsences', 'stagiaireAbsence', 'stagiaires',));
     }
 
     // ! Show the form for editing the specified resource.
