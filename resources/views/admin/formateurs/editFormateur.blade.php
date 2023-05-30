@@ -4,7 +4,7 @@
             {{ __('Modifier Les Informations  D\'Un Formateur') }}
         </h2>
     </x-slot>
-    <div class="container mx-auto my-10 px-2 md:px-0">
+    <div class="container mx-auto py-10 px-2 md:px-0">
 
         <button
             class='mb-4 inline-flex items-center justify-center rounded-lg border border-transparent bg-gray-800 px-1 py-2 tracking-widest text-white transition duration-150 ease-in-out hover:text-gray-200 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:border-gray-400 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300 md:px-3 md:py-2'>
@@ -36,7 +36,6 @@
                 <div>
                     <x-input-label for="classes" :value="__('Classes')" />
 
-
                     <x-multi-select>
                         @foreach ($classes as $option)
                             <option value="{{ $option->id }}"
@@ -44,7 +43,6 @@
                                 {{ $option->branche }} {{ $option->num_group }}</option>
                         @endforeach
                     </x-multi-select>
-
 
                 </div>
                 <!-- email -->
@@ -57,8 +55,8 @@
                 <!-- password -->
                 <div class="col-span-2 inline">
                     <x-input-label for="password" :value="__('password')" />
-                    <x-text-input id="password" class="mt-1 block w-full" type="password" name="password"
-                        autofocus autocomplete="password" />
+                    <x-text-input id="password" class="mt-1 block w-full" type="password" name="password" autofocus
+                        autocomplete="password" />
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 

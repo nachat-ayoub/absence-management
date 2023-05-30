@@ -25,7 +25,7 @@
 
         <div>
             <a href="/">
-                <x-application-logo class="text-primary h-40 w-40 fill-current" />
+                <x-application-logo class="dark:text-primary h-40 w-40 fill-current text-gray-800" />
             </a>
         </div>
 

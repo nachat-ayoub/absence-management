@@ -14,7 +14,7 @@
 
         </div>
     </x-slot>
-    <div class="container mx-auto mt-10 px-4">
+    <div class="container mx-auto py-10 px-4">
 
         {{-- * Table --}}
         <div class="mx-4 mt-6 flex flex-col justify-between gap-3 px-2 md:flex-row">

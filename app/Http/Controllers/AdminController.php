@@ -78,14 +78,31 @@ class AdminController extends Controller {
         ]);
     }
 
-    public function inserInClassesFormateurTable($classeData) {
-        $classeData = explode(',', $classeData);
-        $formateur_id = DB::table('formateurs')->select('id')->orderBy('id', "desc")->take(1)->get();
-        $formateurId = $formateur_id[0]->id;
-        foreach ($classeData as $data) {
+    public function inserInClassesFormateurTable($classesID, $formateurId) {
+        $classesID = explode(',', $classesID);
+        foreach ($classesID as $classeID) {
             DB::table('classe_formateur')->insert(
-                ['classe_id' => $data, 'formateur_id' => $formateurId]
+                ['classe_id' => $classeID, 'formateur_id' => $formateurId]
             );
+        }
+    }
+
+    public function updateClassesFormateurTable($classesID, $formateurId) {
+        $classesID = explode(',', $classesID);
+
+        // Delete old records not included in $classesID
+        DB::table('classe_formateur')
+            ->where('formateur_id', $formateurId)
+            ->whereNotIn('classe_id', $classesID)
+            ->delete();
+
+        // Insert new records
+        foreach ($classesID as $classeID) {
+            DB::table('classe_formateur')
+                ->updateOrInsert(
+                    ['classe_id' => $classeID, 'formateur_id' => $formateurId],
+                    ['formateur_id' => $formateurId]
+                );
         }
     }
 
@@ -117,11 +134,10 @@ class AdminController extends Controller {
         $formateur['password'] = Hash::make($request->password);
 
         $formateur['admin_id'] = 1;
-        Formateur::create($formateur);
+        $formateurId = Formateur::create($formateur)->id;
 
         $classes_ids = $request->input('classes');
-
-        $this->inserInClassesFormateurTable($classes_ids);
+        $this->inserInClassesFormateurTable($classes_ids, $formateurId);
 
         return redirect()->route('admin.createFormateur')->with('success', 'Le Formateur a été Bien Ajouté !');
     }
@@ -145,11 +161,18 @@ class AdminController extends Controller {
 
     // ! save update
     public function updateFormateur(Request $request, Formateur $formateur) {
+
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
             'email' => 'required',
+            'classes' => 'required|string',
         ]);
+
+        $classesID = $request->classes;
+
+        $this->updateClassesFormateurTable($classesID, $formateur->id);
+
         $formateur->nom = $request->nom;
         $formateur->prenom = $request->prenom;
         $formateur->email = $request->email;
