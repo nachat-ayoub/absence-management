@@ -118,7 +118,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="dark my-4">
+        <div class="dark my-4 pagination-container">
             {{ $classes->links() }}
         </div>
     </div>

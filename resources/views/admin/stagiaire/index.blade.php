@@ -105,7 +105,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="my-2" id="pagination-link">
+        <div class="my-2 pagination-container" >
             {{ $stagiaires->links() }}
         </div>
     </div>
