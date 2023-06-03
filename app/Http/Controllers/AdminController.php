@@ -322,7 +322,7 @@ class AdminController extends Controller
     public function showClasse(Classe $classe)
     {
 
-        $stagiaires = $classe->stagiaires()->paginate(12);
+        $stagiaires = $classe->stagiaires()->paginate(7);
         $stagiaireAbsence = [];
         $totalAbsences = 0;
         $absenceAvecPreuv = 0;
