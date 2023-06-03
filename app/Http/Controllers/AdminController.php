@@ -115,7 +115,7 @@ class AdminController extends Controller
     // ! afficher les formateurs
     public function indexFormateur()
     {
-        $formateurs = Formateur::paginate(7);
+        $formateurs = Formateur::paginate(10);
         $data = Formateur::all();
         return view('admin.formateurs.indexformateur', compact('formateurs'))->with('data', json_encode($data));
     }
@@ -211,7 +211,7 @@ class AdminController extends Controller
     // ! afficher les stagiaires
     public function indexStagiaire()
     {
-        $stagiaires = Stagiaire::paginate(6);
+        $stagiaires = Stagiaire::paginate(10);
         $stagiaires_localstor = Stagiaire::all();
         return view('admin.stagiaire.index', compact('stagiaires'))->with('data', json_encode($stagiaires_localstor));
     }
@@ -292,7 +292,7 @@ class AdminController extends Controller
 
     public function indexClasses()
     {
-        $classes = Classe::paginate(7);
+        $classes = Classe::paginate(10);
         $data = Classe::all();
         return view('admin.classe.indexClasse', compact('classes'))->with('data', json_encode($data));
     }
@@ -322,7 +322,7 @@ class AdminController extends Controller
     public function showClasse(Classe $classe)
     {
 
-        $stagiaires = $classe->stagiaires()->paginate(7);
+        $stagiaires = $classe->stagiaires()->paginate(12);
         $stagiaireAbsence = [];
         $totalAbsences = 0;
         $absenceAvecPreuv = 0;
