@@ -222,7 +222,8 @@ class AdminController extends Controller
         $branches = Classe::distinct()->pluck('branche');
         $groups = Classe::distinct()->pluck('num_group');
         $annee_scolaires = Classe::distinct()->pluck('annee_scolaire');
-        return view('admin.stagiaire.createStagiaire', compact('branches', 'groups', 'annee_scolaires'));
+        $classe = Classe::all();
+        return view('admin.stagiaire.createStagiaire', compact('branches', 'groups', 'annee_scolaires'))->with('classe', json_encode($classe));
     }
 
     // ! insert stagiaire dans db
@@ -237,16 +238,8 @@ class AdminController extends Controller
             'prenom' => 'required',
         ]);
         $stagiaire['classe_id'] = $classe_id[0]->id;
-        // *
-        $id_classe = $stagiaire['classe_id'];
-        $classe = Classe::find($id_classe);
-        $num_stagiaires = $classe->stagiaires()->count();
-        if ($num_stagiaires >= 25 ) {
-            return redirect()->route('admin.createStagiaire')->with('error', 'La Classe A Atteint La Limite Maximale De Stagiaires !');
-        }else{
-            Stagiaire::create($stagiaire);
-            return redirect()->route('admin.createStagiaire')->with('success', 'Le Stagiaire a été Bien Ajouté !');
-        }
+        Stagiaire::create($stagiaire);
+        return redirect()->route('admin.createStagiaire')->with('success', 'Le Stagiaire a été Bien Ajouté !');
     }
 
     // ! Show detail of stagiaire

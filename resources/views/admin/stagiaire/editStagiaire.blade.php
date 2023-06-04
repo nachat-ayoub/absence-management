@@ -59,7 +59,7 @@
                     <div class="inline md:w-1/3">
                         <x-input-label for="annee_scolaire" :value="__('Année scolaire')" 
                         class="mt-1 mr-7 inline  md:mx-auto md:block" />
-                        <select name="branche"
+                        <select name="annee_scolaire"
                         class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
                         <option>Choisir l'Année scolaire</option>
                         @foreach ($annee_scolaires as $annee_scolaire)
