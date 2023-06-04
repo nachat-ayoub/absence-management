@@ -237,8 +237,16 @@ class AdminController extends Controller
             'prenom' => 'required',
         ]);
         $stagiaire['classe_id'] = $classe_id[0]->id;
-        Stagiaire::create($stagiaire);
-        return redirect()->route('admin.createStagiaire')->with('success', 'Le Stagiaire a été Bien Ajouté !');
+        // *
+        $id_classe = $stagiaire['classe_id'];
+        $classe = Classe::find($id_classe);
+        $num_stagiaires = $classe->stagiaires()->count();
+        if ($num_stagiaires >= 25 ) {
+            return redirect()->route('admin.createStagiaire')->with('error', 'La Classe A Atteint La Limite Maximale De Stagiaires !');
+        }else{
+            Stagiaire::create($stagiaire);
+            return redirect()->route('admin.createStagiaire')->with('success', 'Le Stagiaire a été Bien Ajouté !');
+        }
     }
 
     // ! Show detail of stagiaire
