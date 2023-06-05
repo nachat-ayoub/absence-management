@@ -80,5 +80,8 @@
                 </table>
             </div>
         </div>
+        <div class="dark my-4">
+            {{ $classes->links() }}
+        </div>
     </div>
 </x-app-layout>

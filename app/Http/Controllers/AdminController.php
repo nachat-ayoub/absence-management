@@ -400,7 +400,7 @@ class AdminController extends Controller {
     }
 
     function getCLasses(Request $request) {
-        $classes = Classe::all();
+        $classes = Classe::paginate(7);
         return view('absence.index', compact('classes'));
     }
     //

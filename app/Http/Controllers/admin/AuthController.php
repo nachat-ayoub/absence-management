@@ -20,6 +20,10 @@ class AuthController extends Controller {
         return view('auth.admin.register');
     }
 
+
+
+
+    
     public function register(RegisterAdminRequest $request) {
         $request->validate($request->rules());
 
@@ -40,6 +44,11 @@ class AuthController extends Controller {
 
         return redirect()->route('admin.dashboard');
     }
+
+
+
+
+
     public function loginView() {
         return view('auth.admin.login');
     }
