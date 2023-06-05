@@ -60,6 +60,9 @@
                             Classe</th>
                         <th scope="col"
                             class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-50 md:px-6 md:py-3">
+                            Annee Scolaire</th>
+                        <th scope="col"
+                            class="dark:bg-gray-950 px-0 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-50 md:px-6 md:py-3">
                             Operation</th>
                     </tr>
                 </thead>
@@ -77,7 +80,11 @@
                                 {{ $stagiaire->prenom }}</td>
                             <td
                                 class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
-                                {{ $stagiaire->classe->branche }}</td>
+                                {{ $stagiaire->classe->branche }} - Group {{$stagiaire->classe->num_group}}</td>
+                            <td
+                            <td
+                                class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
+                                {{ $stagiaire->classe->annee_scolaire }}</td>
                             <td
                                 class="whitespace-nowrap px-3 py-2 text-lg font-medium dark:bg-gray-800 dark:text-gray-100 md:px-2 md:py-1">
                                 <div class="flex space-y-2 md:flex-row md:space-y-0 md:space-x-4">
