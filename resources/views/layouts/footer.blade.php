@@ -18,12 +18,12 @@
                                     'github_link' => 'https://github.com/nachat-ayoub',
                                 ],
                                 [
-                                    'full_name' => 'Zaaraoui Mustapha',
-                                    'github_link' => 'https://github.com/mustapha-zaaraoui',
-                                ],
-                                [
                                     'full_name' => 'Abodo Hatim',
                                     'github_link' => 'https://github.com/Abodo-Hatim',
+                                ],
+                                [
+                                    'full_name' => 'Zaaraoui Mustapha',
+                                    'github_link' => 'https://github.com/mustapha-zaaraoui',
                                 ],
                                 [
                                     'full_name' => 'Ouakili Badreddine',

@@ -110,7 +110,7 @@ class AdminController extends Controller {
 
     // ! afficher les formateurs
     public function indexFormateur() {
-        $formateurs = Formateur::paginate(7);
+        $formateurs = Formateur::paginate(10);
         $data = Formateur::all();
         return view('admin.formateurs.indexformateur', compact('formateurs'))->with('data', json_encode($data));
     }
@@ -199,15 +199,18 @@ class AdminController extends Controller {
 
     // ! afficher les stagiaires
     public function indexStagiaire() {
-        $stagiaires = Stagiaire::paginate(6);
+        $stagiaires = Stagiaire::paginate(10);
         $stagiaires_localstor = Stagiaire::all();
         return view('admin.stagiaire.index', compact('stagiaires'))->with('data', json_encode($stagiaires_localstor));
     }
 
     // ! create stagiaire
     public function createStagiaire() {
-        $branches = Classe::distinct()->pluck('branche', 'id');
-        return view('admin.stagiaire.createStagiaire', compact('branches'));
+        $branches = Classe::distinct()->pluck('branche');
+        $groups = Classe::distinct()->pluck('num_group');
+        $annee_scolaires = Classe::distinct()->pluck('annee_scolaire');
+        $classe = Classe::all();
+        return view('admin.stagiaire.createStagiaire', compact('branches', 'groups', 'annee_scolaires'))->with('classe', json_encode($classe));
     }
 
     // ! insert stagiaire dans db
@@ -233,7 +236,14 @@ class AdminController extends Controller {
     // ! Show the form for editing the specified resource.
     public function editStagiaire(Stagiaire $stagiaire) {
         $branches = Classe::distinct()->pluck('branche', 'id');
-        return view('admin.stagiaire.editStagiaire', compact('stagiaire', 'branches'));
+        $groups = Classe::distinct()->pluck('num_group');
+        $annee_scolaires = Classe::distinct()->pluck('annee_scolaire');
+        $classe = Classe::all();
+        $data = [
+            'classes' => $classe,
+            'stgGroup' => $stagiaire->Classe->num_group,
+        ];
+        return view('admin.stagiaire.editStagiaire', compact('stagiaire', 'branches', 'groups', 'annee_scolaires'))->with('data', json_encode($data));
     }
 
     // ! save update
@@ -264,7 +274,7 @@ class AdminController extends Controller {
     // ! afficher les classes
 
     public function indexClasses() {
-        $classes = Classe::paginate(7);
+        $classes = Classe::paginate(10);
         $data = Classe::all();
         return view('admin.classe.indexClasse', compact('classes'))->with('data', json_encode($data));
     }
@@ -323,7 +333,7 @@ class AdminController extends Controller {
 
     // ! Show the form for editing the specified resource.
     public function editClasse(Request $request, Classe $classe) {
-        return view('admin.classe.editClasse', compact('classe'));
+        return view('admin.classe.editClasse', compact('classe'))->with('data', json_encode($classe->annee_scolaire));
     }
 
     // ! save update

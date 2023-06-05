@@ -34,17 +34,21 @@
                     value="{{ old('branche') }}" required autofocus autocomplete="branche" />
                 <x-input-error :messages="$errors->get('branche')" class="mt-2" />
             </div>
-            <div class="col-span-2 inline">
-                <x-input-label for="num_group" :value="__('Group')" />
-                <x-text-input id="num_group" class="mt-1 block w-full" type="text" name="num_group"
+            <div class="w-full flex flex-col gap-2 justify-between md:flex-row">
+                <div class="w-full  md:w-2/3">
+                    <x-input-label for="num_group" :value="__('Group')" />
+                    <x-text-input id="num_group" class="mt-1 block w-full" type="text" name="num_group"
                     value="{{ old('num_group') }}" required autofocus autocomplete="num_group" />
-                <x-input-error :messages="$errors->get('num_group')" class="mt-2" />
-            </div>
-            <div class="col-span-2 inline">
-                <x-input-label for="annee_scolaire" :value="__('Annee scolaire')" />
-                <x-text-input id="annee_scolaire" class="mt-1 block w-full" type="text" name="annee_scolaire"
-                    value="{{ old('annee_scolaire') }}" required autofocus autocomplete="annee_scolaire" />
-                <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('num_group')" class="mt-2" />
+                </div>
+                <div class="w-full md:w-1/3">
+                    <x-input-label for="annee_scolaire" :value="__('Annee scolaire')" />
+                    <select name="annee_scolaire" value="{{old('annee_scolaire')}}"
+                        class="mt-5 w-full rounded-lg py-2 dark:bg-gray-800 dark:text-slate-200 md:mt-1">
+                        <option>Choisir l'année scolaire</option>
+                        
+                    </select>
+                </div>
             </div>
             <input type="hidden" name="admin_id" value="{{ Auth::guard('admin')->user()->id }}">
             <div class="mt-8">
@@ -59,3 +63,15 @@
     </div>
 
 </x-app-layout>
+<script>
+    onload =  function() {
+        var select = document.querySelector('select');
+        var options = "";
+        for(let i  =  2020 ; i < 2040  ; i++ ) {
+            options += `
+            <option value"${i}-${i+1}">${i}-${i+1}</option>
+            `;
+        }
+        select.innerHTML += options;
+    }
+</script>
