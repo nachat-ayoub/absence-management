@@ -17,7 +17,7 @@
     </div>
     @auth('admin')
         <div class="dark:bg-gray-800 flex  flex-col-reverse justify-center py-12 sm:flex-col">
-            <div class="bg-gray-100  dark:bg-gray-800 mx-8  mt-4 flex flex-col justify-between gap-3 px-2 lg:mx-12 sm:flex-row lg:px-12">
+            <div class="bg-gray-100  dark:bg-gray-800 mx-8  mt-4 flex flex-col justify-between  gap-3 px-2 lg:mx-12 sm:flex-row lg:px-12">
                 <div class="flex flex-col w-full gap-x-3 sm:flex-row sm:w-1/2">
                     <div
                     class="dark:bg-gray-800 mt-4 rounded-lg bg-gray-50 ring-1 ring-slate-200 p-8 text-center font-medium shadow dark:text-gray-100 dark:ring-2 dark:rounded dark:ring-gray-700 md:mt-0 md:py-6 md:px-6 md:text-start lg:w-1/2">
@@ -109,14 +109,14 @@
                         <thead>
                             <tr>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     N°</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    class="dark:bg-gray-800 px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
                                     Classe</th>
                                 <th scope="col"
-                                    class="dark:bg-gray-800 px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
-                                    Nombre d'absences</th>
+                                    class="dark:bg-gray-800 px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-50">
+                                    N.d'absences</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white dark:text-gray-100" id="tableClasses">
