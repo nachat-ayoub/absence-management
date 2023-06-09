@@ -80,7 +80,7 @@
                 </table>
             </div>
         </div>
-        <div class="dark my-4">
+        <div class="pagination-container my-4">
             {{ $classes->links() }}
         </div>
     </div>
