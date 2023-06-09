@@ -112,7 +112,7 @@ class FormateurController extends Controller {
     }
 
     function getCLasses(Request $request) {
-        $classes = Formateur::find(Auth::guard('formateur')->user()->getAuthIdentifier())->classes->paginate(7);
+        $classes = Formateur::find(Auth::guard('formateur')->user()->getAuthIdentifier())->classes()->paginate(7);
         return view('absence.index', compact('classes'));
     }
 
